@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -461,9 +461,12 @@
             .main-content { padding: 20px; }
         }
 
-        /* Estilos Ocultos para Impressão do PDF Timbrado */
+        /* AJUSTE FIX: Esconde o template da visão sem dar display:none */
         #pdf-template {
-            display: none;
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            width: 800px;
             background-color: #ffffff;
             color: #1a1a1a;
             padding: 40px;
@@ -741,7 +744,6 @@
   appId: "1:1010303888432:web:4892849f840824542e91f5",
   measurementId: "G-958FX0F2D5"
 };
-
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
@@ -1112,7 +1114,7 @@
             document.getElementById('orcModal').style.display = 'flex';
         }
 
-        /* GERADOR DE PDF PROFISSIONAL */
+        /* GERADOR DE PDF PROFISSIONAL COM CORREÇÃO DE RENDERING */
         function gerarPDF(index) {
             const orc = dbOrcamentos[index];
             const containerPDF = document.getElementById('pdf-template');
@@ -1120,22 +1122,22 @@
             containerPDF.innerHTML = `
                 <div style="border-bottom: 3px solid #ffcc00; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <h1 style="font-size: 26px; color: #111; margin-bottom: 5px; font-weight: bold;">CUBO GLASS DISTRIBUIDORA</h1>
+                        <h1 style="font-size: 24px; color: #111; margin-bottom: 5px; font-weight: bold;">CUBO GLASS DISTRIBUIDORA</h1>
                         <p style="font-size: 13px; color: #666;">Soluções em Vidros, Esquadrias e Acessórios</p>
                     </div>
                     <div style="text-align: right;">
-                        <h2 style="font-size: 18px; color: #ffcc00; margin-bottom: 5px; font-weight: bold;">ORÇAMENTO #${orc.id}</h2>
+                        <h2 style="font-size: 18px; color: #d4a000; margin-bottom: 5px; font-weight: bold;">ORÇAMENTO #${orc.id}</h2>
                         <p style="font-size: 12px; color: #666;">Data de Emissão: ${new Date(orc.dataCriacao).toLocaleDateString('pt-BR')}</p>
                     </div>
                 </div>
 
                 <div style="background-color: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 30px; border: 1px solid #eee;">
                     <h3 style="font-size: 14px; color: #444; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px;">Dados do Cliente</h3>
-                    <p style="font-size: 15px; margin-bottom: 4px;"><strong>Nome/Razão Social:</strong> ${orc.cliente}</p>
+                    <p style="font-size: 15px; margin-bottom: 4px; color: #111;"><strong>Nome/Razão Social:</strong> ${orc.cliente}</p>
                     <p style="font-size: 13px; color: #555;"><strong>Classificação comercial de cadastro:</strong> Tabela ${orc.nivel}</p>
                 </div>
 
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px;">
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
                     <thead>
                         <tr style="background-color: #111; color: #fff;">
                             <th style="padding: 12px; text-align: left; font-size: 13px;">Descrição do Item</th>
@@ -1146,27 +1148,27 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; font-size: 14px;"><strong>${orc.item}</strong></td>
-                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: center; font-size: 14px;">${orc.altura} x ${orc.largura} mm</td>
-                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: center; font-size: 14px;">${orc.area.toFixed(2)} m²</td>
-                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: right; font-size: 14px;">R$ ${orc.precoM2.toFixed(2).replace('.', ',')}</td>
+                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; font-size: 14px; color: #111;"><strong>${orc.item}</strong></td>
+                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: center; font-size: 14px; color: #111;">${orc.altura} x ${orc.largura} mm</td>
+                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: center; font-size: 14px; color: #111;">${orc.area.toFixed(2)} m²</td>
+                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: right; font-size: 14px; color: #111;">R$ ${orc.precoM2.toFixed(2).replace('.', ',')}</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 40px; border: 1px solid #eee;">
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 30px; border: 1px solid #eee;">
                     <h3 style="font-size: 14px; color: #444; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px;">Componentes Adicionais / Ferragens</h3>
-                    <p style="font-size: 14px;"><strong>Item incluso:</strong> ${orc.acessorio} - <span style="color: #666;">R$ ${orc.valorAcessorio.toFixed(2).replace('.', ',')}</span></p>
+                    <p style="font-size: 14px; color: #111;"><strong>Item incluso:</strong> ${orc.acessorio} - <span style="color: #666;">R$ ${orc.valorAcessorio.toFixed(2).replace('.', ',')}</span></p>
                 </div>
 
                 <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px;">
                     <div style="text-align: right; border-top: 2px solid #111; padding-top: 15px; width: 250px;">
                         <span style="font-size: 14px; color: #666; text-transform: uppercase; font-weight: bold;">Valor Total do Pedido</span>
-                        <h2 style="font-size: 26px; color: #111; font-weight: bold; margin-top: 5px;">R$ ${orc.total.toFixed(2).replace('.', ',')}</h2>
+                        <h2 style="font-size: 24px; color: #111; font-weight: bold; margin-top: 5px;">R$ ${orc.total.toFixed(2).replace('.', ',')}</h2>
                     </div>
                 </div>
 
-                <div style="margin-top: 100px; text-align: center; font-size: 11px; color: #999; border-top: 1px solid #eee; padding-top: 15px;">
+                <div style="margin-top: 60px; text-align: center; font-size: 11px; color: #999; border-top: 1px solid #eee; padding-top: 15px;">
                     Este documento é uma simulação de orçamento oficial gerada eletronicamente pelo ERP Cubo Glass Distribuidora.
                 </div>
             `;
@@ -1175,11 +1177,14 @@
                 margin: 10,
                 filename: `Orcamento_CuboGlass_${orc.id}_${orc.cliente.replace(/\s+/g, '_')}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
+                html2canvas: { scale: 2, useCORS: true, logging: false },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            html2pdf().from(containerPDF).set(opcoes).save();
+            // Pequeno timeout para garantir que o DOM do PDF seja processado antes do render
+            setTimeout(() => {
+                html2pdf().from(containerPDF).set(opcoes).save();
+            }, 100);
         }
 
         function fecharModal() { document.getElementById('orcModal').style.display = 'none'; }
@@ -1238,6 +1243,4 @@
     </script>
 </body>
 </html>
-       
-          
-            
+           
