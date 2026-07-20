@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cubo Glass - ERP Premium Cloud v10</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <!-- Google Fonts para Tipografia Moderna -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0f111a;
+            --bg-card: #161924;
+            --bg-input: #1e2230;
+            --primary: #ffcc00;
+            --primary-hover: #e6b800;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: #272c3f;
+            --radius: 12px;
+            --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            letter-spacing: -0.2px;
+        }
+
+        /* Sidebar Executiva */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-card);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 25px;
+        }
+
+        .brand img {
+            width: 90px;
+            height: 90px;
+            border-radius: 16px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+            object-fit: contain;
+            background-color: #000;
+        }
+
+        .brand-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: var(--radius);
+            margin-bottom: 6px;
+            transition: all 0.2s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(255, 204, 0, 0.05);
+            color: var(--text-main);
+        }
+
+        .nav-btn.active {
+            background-color: var(--primary);
+            color: #0f111a;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.25);
+        }
+
+        /* Mobile Header */
+        .mobile-header {
+            display: none;
+            background-color: var(--bg-card);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+        }
+
+        .mobile-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .mobile-brand img {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        /* Área de Conteúdo Principal */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .header-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #fff;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .header-title::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 4px; bottom: 4px;
+            width: 4px;
+            background-color: var(--primary);
+            border-radius: 4px;
+        }
+
+        /* Cards de Indicadores */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card p {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .card .highlight {
+            color: var(--primary);
+        }
+
+        /* Painéis e Formulários */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-panel {
+            background-color: var(--bg-card);
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin-bottom: 35px;
+        }
+
+        .form-panel h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            color: #fff;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+            outline: none;
+        }
+
+        /* Listas de Sugestões / Filtros */
+        .search-results {
+            position: absolute;
+            top: 74px;
+            left: 0; right: 0;
+            background-color: var(--bg-input);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            z-index: 10;
+            max-height: 180px;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        .search-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            transition: all 0.15s ease;
+        }
+
+        .search-item:hover {
+            background-color: var(--primary);
+            color: #0f111a;
+            font-weight: 600;
+        }
+
+        /* Botões */
+        .btn {
+            background-color: var(--primary);
+            color: #0f111a;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            border: none;
+            transition: transform 0.1s ease;
+        }
+        .btn-small:active { transform: scale(0.95); }
+
+        /* Tabelas Modernas */
+        .table-container {
+            overflow-x: auto;
+            background-color: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+            margin-bottom: 35px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: rgba(39, 44, 63, 0.3);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 16px 20px;
+            font-size: 14px;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: rgba(255,255,255,0.02); }
+
+        /* Badges Minimalistas */
+        .badge {
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .badge-premium { background-color: rgba(123, 31, 162, 0.15); color: #e1bee7; border: 1px solid rgba(123, 31, 162, 0.3); }
+        .badge-ouro { background-color: rgba(245, 124, 0, 0.15); color: #ffe0b2; border: 1px solid rgba(245, 124, 0, 0.3); }
+        .badge-prata { background-color: rgba(144, 164, 174, 0.15); color: #eceff1; border: 1px solid rgba(144, 164, 174, 0.3); }
+        .badge-bronze { background-color: rgba(141, 110, 99, 0.15); color: #d7ccc8; border: 1px solid rgba(141, 110, 99, 0.3); }
+        
+        .badge-success { background-color: rgba(46, 125, 50, 0.15); color: #c8e6c9; border: 1px solid rgba(46, 125, 50, 0.3); }
+        .badge-warning { background-color: rgba(255, 152, 0, 0.15); color: #ffe0b2; border: 1px solid rgba(255, 152, 0, 0.3); }
+        .badge-danger { background-color: rgba(198, 40, 40, 0.15); color: #ffcdd2; border: 1px solid rgba(198, 40, 40, 0.3); }
+
+        .category-header {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Modal Clean */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(10, 11, 16, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            max-width: 550px;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: none; border: none;
+            color: var(--text-muted); font-size: 24px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .close-modal:hover { color: #fff; }
+
+        .matrix-table input {
+            padding: 8px;
+            font-size: 14px;
+            text-align: center;
+            width: 85px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            color: #fff;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; padding-top: 65px; }
+            .sidebar {
+                position: fixed;
+                top: 65px; left: -280px; bottom: 0;
+                z-index: 99; width: 280px;
+                box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            }
+            .sidebar.active { left: 0; }
+            .mobile-header { display: flex; }
+            .main-content { padding: 20px; }
+        }
+
+        /* Estilos Ocultos para Impressão limpa do PDF Timbrado */
+        #pdf-template {
+            display: none;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            padding: 40px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+
+    <!-- Scripts do Firebase v9 (Compatibilizado) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Biblioteca Geradora de PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+    <div class="mobile-header">
+        <div class="mobile-brand">
+            <img src="logo.png" alt="Logo Cubo Glass">
+            <span>CUBO GLASS</span>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="brand">
+            <img src="logo.png" alt="Logo Cubo Glass">
+            <div class="brand-text">Cubo Glass</div>
+        </div>
+        <button class="nav-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
+        <button class="nav-btn" onclick="switchTab('clientes')">👥 Clientes</button>
+        <button class="nav-btn" onclick="switchTab('orcamentos')">📝 Novo Orçamento</button>
+        <button class="nav-btn" onclick="switchTab('historico')">📂 Histórico Pedidos</button>
+        <button class="nav-btn" onclick="switchTab('estoque')">📦 Estoque</button>
+        <button class="nav-btn" onclick="switchTab('configuracoes')">⚙️ Tabela m² Config</button>
+    </div>
+
+    <div class="main-content">
+        <!-- Dashboard -->
+        <div id="dashboard" class="tab-content active">
+            <h2 class="header-title">Indicadores Gerais</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Clientes na Base</h3>
+                    <p class="highlight" id="dash-clientes">0</p>
+                </div>
+                <div class="card">
+                    <h3>Orçamentos Emitidos</h3>
+                    <p class="highlight" id="dash-orcamentos">0</p>
+                </div>
+                <div class="card">
+                    <h3>Total Faturado</h3>
+                    <p id="dash-faturado" style="color: #4caf50;">R$ 0,00</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clientes -->
+        <div id="clientes" class="tab-content">
+            <h2 class="header-title">Gestão de Clientes</h2>
+            <div class="form-panel">
+                <h3>+ Cadastrar Novo Cliente</h3>
+                <form id="form-add-cliente" onsubmit="adicionarCliente(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome Completo / Razão Social</label>
+                            <input type="text" id="cli-nome" required placeholder="Ex: Vidraçaria Aliança">
+                        </div>
+                        <div class="form-group">
+                            <label>CPF ou CNPJ</label>
+                            <input type="text" id="cli-doc" required placeholder="000.000.000-00">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Telefone de Contato</label>
+                            <input type="text" id="cli-tel" placeholder="(11) 99999-0000">
+                        </div>
+                        <div class="form-group">
+                            <label>Nível Comercial</label>
+                            <select id="cli-nivel">
+                                <option value="Bronze">Bronze (Tabela Padrão)</option>
+                                <option value="Prata">Prata</option>
+                                <option value="Ouro">Ouro</option>
+                                <option value="Premium">Premium</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Salvar na Nuvem</button>
+                </form>
+            </div>
+
+            <h3>Clientes Cadastrados</h3>
+            <div class="table-container">
+                <table id="table-clientes">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF/CNPJ</th>
+                            <th>Telefone</th>
+                            <th>Nível Comercial</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Novo Orçamento -->
+        <div id="orcamentos" class="tab-content">
+            <h2 class="header-title">Calculadora Comercial</h2>
+            <div class="form-panel">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Buscar Cliente</label>
+                        <input type="text" id="orc-cliente-search" placeholder="Digite para filtrar..." oninput="filtrarClientesOrcamento(this.value)">
+                        <div id="orc-cliente-results" class="search-results"></div>
+                        <input type="hidden" id="orc-cliente-selected-nivel">
+                        <input type="hidden" id="orc-cliente-selected-nome">
+                    </div>
+                    <div class="form-group">
+                        <label>Cor do Vidro / Box</label>
+                        <select id="orc-cor" onchange="calcularSistema()">
+                            <option value="Incolor">Incolor</option>
+                            <option value="Fume">Fumê</option>
+                            <option value="Verde">Verde</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Espessura / Tipo</label>
+                        <select id="orc-espessura" onchange="calcularSistema()">
+                            <option value="6 mm">Vidro 6 mm</option>
+                            <option value="8 mm">Vidro 8 mm</option>
+                            <option value="10 mm">Vidro 10 mm</option>
+                            <option value="4 mm Espelho">Espelho 4 mm</option>
+                            <option value="8 mm Box Padrao">Box Padrão 8 mm</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Altura (mm)</label>
+                        <input type="number" id="orc-altura" value="1500" oninput="calcularSistema()">
+                    </div>
+                    <div class="form-group">
+                        <label>Largura (mm)</label>
+                        <input type="number" id="orc-largura" value="1200" oninput="calcularSistema()">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Adicionar Acessório / Insumo</label>
+                        <input type="text" id="orc-acessorio-search" placeholder="Digite para buscar no estoque..." oninput="filtrarAcessoriosOrcamento(this.value)">
+                        <div id="orc-acessorio-results" class="search-results"></div>
+                        <input type="hidden" id="orc-acessorio-selected-preco" value="0">
+                        <input type="hidden" id="orc-acessorio-selected-nome" value="Nenhum">
+                    </div>
+                </div>
+
+                <div class="card-grid" style="margin-top: 25px;">
+                    <div class="card">
+                        <h3>Área M²</h3>
+                        <p class="highlight" id="res-area">0.00 m²</p>
+                    </div>
+                    <div class="card">
+                        <h3>Preço m² Aplicado</h3>
+                        <p id="res-valorm2">R$ 0,00</p>
+                    </div>
+                    <div class="card">
+                        <h3>Total Geral</h3>
+                        <p class="highlight" id="res-total" style="color: var(--primary);">R$ 0,00</p>
+                    </div>
+                </div>
+                <button class="btn" style="width: 100%; margin-top: 10px;" onclick="registrarOrcamento()">Salvar Orçamento Oficial</button>
+            </div>
+        </div>
+
+        <!-- Histórico -->
+        <div id="historico" class="tab-content">
+            <h2 class="header-title">Histórico de Pedidos</h2>
+            <div class="table-container">
+                <table id="table-historico">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Item / Cor</th>
+                            <th>Área</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Estoque -->
+        <div id="estoque" class="tab-content">
+            <h2 class="header-title">Gerenciamento de Estoque</h2>
+            <div class="form-panel">
+                <h3>+ Adicionar Produto / Insumo</h3>
+                <form id="form-add-estoque" onsubmit="adicionarEstoque(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Descrição do Item</label>
+                            <input type="text" id="est-nome" required placeholder="Ex: Perfil Alumínio U 8mm">
+                        </div>
+                        <div class="form-group">
+                            <label>Categoria</label>
+                            <select id="est-categoria">
+                                <option value="ferragens">Ferragens</option>
+                                <option value="aluminios">Alumínios</option>
+                                <option value="selantes">Selantes</option>
+                                <option value="puxadores">Puxadores</option>
+                                <option value="kit box">Kit Box</option>
+                                <option value="kit pia">Kit Pia</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Marca / Fabricante</label>
+                            <input type="text" id="est-marca" required placeholder="Ex: AL Indústria">
+                        </div>
+                        <div class="form-group">
+                            <label>Quantidade Inicial</label>
+                            <input type="number" id="est-qtd" required placeholder="Ex: 50" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Preço Unitário de Venda (R$)</label>
+                            <input type="number" id="est-preco" required placeholder="Ex: 45.00" step="0.01">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Cadastrar Item</button>
+                </form>
+            </div>
+
+            <div id="categorias-estoque-container"></div>
+        </div>
+
+        <!-- Tabela m² Config -->
+        <div id="configuracoes" class="tab-content">
+            <h2 class="header-title">Configuração de Tabelas</h2>
+            <p style="margin-bottom: 25px; color: var(--text-muted); font-size: 14px;">Os valores abaixo refletem globalmente para os cálculos comerciais do sistema.</p>
+            <div id="matrix-container">
+                <p style="color: var(--text-muted); italic">Carregando matriz de preços por nível...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalhes -->
+    <div id="orcModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="fecharModal()">×</button>
+            <h3 style="color: var(--primary); font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">📄 Resumo do Pedido</h3>
+            <div id="modal-body" style="line-height: 1.7; font-size: 14px; color: var(--text-main);"></div>
+        </div>
+    </div>
+
+    <!-- Container Escondido estruturado para a exportação do PDF -->
+    <div id="pdf-template"></div>
+
+    <script>
+        // CONFIGURAÇÃO DO FIREBASE
+        const firebaseConfig = {
+            apiKey: "COLE_AQUI_SUA_API_KEY",
+            authDomain: "COLE_AQUI_SEU_AUTH_DOMAIN",
+            projectId: "COLE_AQUI_SEU_PROJECT_ID",
+            storageBucket: "COLE_AQUI_SEU_STORAGE_BUCKET",
+            messagingSenderId: "COLE_AQUI_SEU_MESSAGING_SENDER_ID",
+            appId: "COLE_AQUI_SEU_APP_ID"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
+        let dbClientes = [];
+        let dbEstoque = [];
+        let dbOrcamentos = [];
+
+        const matrizPadrao = {
+            'Incolor': {
+                '6 mm': {'Bronze': 120, 'Prata': 110, 'Ouro': 100, 'Premium': 90},
+                '8 mm': {'Bronze': 150, 'Prata': 140, 'Ouro': 130, 'Premium': 120},
+                '10 mm': {'Bronze': 190, 'Prata': 180, 'Ouro': 170, 'Premium': 160},
+                '4 mm Espelho': {'Bronze': 220, 'Prata': 200, 'Ouro': 190, 'Premium': 180},
+                '8 mm Box Padrao': {'Bronze': 180, 'Prata': 170, 'Ouro': 160, 'Premium': 150}
+            },
+            'Fume': {
+                '6 mm': {'Bronze': 140, 'Prata': 130, 'Ouro': 120, 'Premium': 110},
+                '8 mm': {'Bronze': 170, 'Prata': 160, 'Ouro': 150, 'Premium': 140},
+                '10 mm': {'Bronze': 220, 'Prata': 210, 'Ouro': 200, 'Premium': 190},
+                '4 mm Espelho': {'Bronze': 250, 'Prata': 240, 'Ouro': 230, 'Premium': 220},
+                '8 mm Box Padrao': {'Bronze': 210, 'Prata': 200, 'Ouro': 190, 'Premium': 180}
+            },
+            'Verde': {
+                '6 mm': {'Bronze': 135, 'Prata': 125, 'Ouro': 115, 'Premium': 105},
+                '8 mm': {'Bronze': 165, 'Prata': 155, 'Ouro': 145, 'Premium': 135},
+                '10 mm': {'Bronze': 210, 'Prata': 200, 'Ouro': 190, 'Premium': 180},
+                '4 mm Espelho': {'Bronze': 240, 'Prata': 230, 'Ouro': 220, 'Premium': 210},
+                '8 mm Box Padrao': {'Bronze': 200, 'Prata': 190, 'Ouro': 180, 'Premium': 170}
+            }
+        };
+
+        let tabelaPrecos = matrizPadrao;
+
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            const targetTab = document.getElementById(tabId);
+            if(targetTab) targetTab.classList.add('active');
+
+            if (window.event && window.event.currentTarget && window.event.currentTarget.classList) {
+                window.event.currentTarget.classList.add('active');
+            }
+            document.getElementById('sidebar').classList.remove('active');
+            
+            if(tabId === 'orcamentos') limparBuscasOrcamento();
+            if(tabId === 'configuracoes') renderizarFormConfig();
+        }
+
+        /* CONEXÕES EM TEMPO REAL */
+        db.collection("clientes").onSnapshot((snapshot) => {
+            dbClientes = [];
+            const tbody = document.querySelector('#table-clientes tbody');
+            if(tbody) tbody.innerHTML = '';
+            snapshot.forEach((doc) => {
+                let cli = doc.data();
+                dbClientes.push(cli);
+                if(tbody) {
+                    tbody.innerHTML += `<tr>
+                        <td><strong>${cli.nome}</strong></td>
+                        <td>${cli.doc}</td>
+                        <td>${cli.tel}</td>
+                        <td><span class="badge badge-${cli.nivel ? cli.nivel.toLowerCase() : 'bronze'}">${cli.nivel}</span></td>
+                    </tr>`;
+                }
+            });
+            atualizarDashboard();
+        });
+
+        db.collection("estoque").onSnapshot((snapshot) => {
+            dbEstoque = [];
+            snapshot.forEach((doc) => {
+                let item = doc.data();
+                item.id = doc.id;
+                dbEstoque.push(item);
+            });
+            renderizarEstoque();
+        });
+
+        db.collection("orcamentos").onSnapshot((snapshot) => {
+            dbOrcamentos = [];
+            snapshot.forEach((doc) => {
+                let orc = doc.data();
+                orc.idDoc = doc.id;
+                dbOrcamentos.push(orc);
+            });
+            renderizarHistorico();
+            atualizarDashboard();
+        });
+
+        /* ESCUTA DO BANCO COM FALLBACK PARA RENDERIZAR TABELA DE NÍVEIS SEM FALHAR */
+        db.collection("config").doc("matrizM2").onSnapshot((doc) => {
+            if(doc.exists()) {
+                tabelaPrecos = doc.data();
+            } else {
+                tabelaPrecos = matrizPadrao;
+                db.collection("config").doc("matrizM2").set(matrizPadrao).catch(e => console.log("Modo offline / fallback ativo"));
+            }
+            renderizarFormConfig();
+        }, (error) => {
+            console.error("Erro ao sincronizar Firestore:", error);
+            tabelaPrecos = matrizPadrao;
+            renderizarFormConfig();
+        });
+
+        /* FILTROS DE BUSCA */
+        function limparBuscasOrcamento() {
+            document.getElementById('orc-cliente-search').value = '';
+            document.getElementById('orc-cliente-selected-nome').value = '';
+            document.getElementById('orc-cliente-selected-nivel').value = '';
+            document.getElementById('orc-acessorio-search').value = '';
+            document.getElementById('orc-acessorio-selected-nome').value = 'Nenhum';
+            document.getElementById('orc-acessorio-selected-preco').value = '0';
+            calcularSistema();
+        }
+
+        function filtrarClientesOrcamento(query) {
+            const container = document.getElementById('orc-cliente-results');
+            if(!query) { container.style.display = 'none'; return; }
+            const filtrados = dbClientes.filter(c => c.nome.toLowerCase().includes(query.toLowerCase()));
+            container.innerHTML = '';
+            if(filtrados.length > 0) {
+                filtrados.forEach(c => {
+                    container.innerHTML += `<div class="search-item" onclick="selecionarClienteOrcamento('${c.nome}', '${c.nivel}')">${c.nome} (${c.nivel})</div>`;
+                });
+                container.style.display = 'block';
+            } else {
+                container.innerHTML = '<div class="search-item" style="color: var(--text-muted);">Nenhum cliente cadastrado</div>';
+                container.style.display = 'block';
+            }
+        }
+
+        function selecionarClienteOrcamento(nome, nivel) {
+            document.getElementById('orc-cliente-search').value = nome;
+            document.getElementById('orc-cliente-selected-nome').value = nome;
+            document.getElementById('orc-cliente-selected-nivel').value = nivel;
+            document.getElementById('orc-cliente-results').style.display = 'none';
+            calcularSistema();
+        }
+
+        function filtrarAcessoriosOrcamento(query) {
+            const container = document.getElementById('orc-acessorio-results');
+            if(!query) { container.style.display = 'none'; return; }
+            const filtrados = dbEstoque.filter(e => e.nome.toLowerCase().includes(query.toLowerCase()) && e.qtd > 0);
+            container.innerHTML = '';
+            container.innerHTML += `<div class="search-item" onclick="selecionarAcessorioOrcamento('Nenhum', 0)">-- Remover Acessório --</div>`;
+            if(filtrados.length > 0) {
+                filtrados.forEach(e => {
+                    container.innerHTML += `<div class="search-item" onclick="selecionarAcessorioOrcamento('${e.nome}', ${e.preco})">${e.nome} [${e.categoria.toUpperCase()}] (+ R$ ${e.preco.toFixed(2)})</div>`;
+                });
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'block';
+            }
+        }
+
+        function selecionarAcessorioOrcamento(nome, preco) {
+            document.getElementById('orc-acessorio-search').value = nome === 'Nenhum' ? '' : nome;
+            document.getElementById('orc-acessorio-selected-nome').value = nome;
+            document.getElementById('orc-acessorio-selected-preco').value = preco;
+            document.getElementById('orc-acessorio-results').style.display = 'none';
+            calcularSistema();
+        }
+
+        function calcularSistema() {
+            const nivel = document.getElementById('orc-cliente-selected-nivel').value;
+            if(!nivel) {
+                document.getElementById('res-area').innerText = "0.00 m²";
+                document.getElementById('res-valorm2').innerText = "Aguardando Cliente...";
+                document.getElementById('res-total').innerText = "R$ 0,00";
+                return;
+            }
+            const cor = document.getElementById('orc-cor').value;
+            const espessura = document.getElementById('orc-espessura').value;
+            const alt = parseFloat(document.getElementById('orc-altura').value) || 0;
+            const larg = parseFloat(document.getElementById('orc-largura').value) || 0;
+            const precoAcessorio = parseFloat(document.getElementById('orc-acessorio-selected-preco').value) || 0;
+
+            const area = (alt * larg) / 1000000;
+            document.getElementById('res-area').innerText = area.toFixed(2) + " m²";
+
+            const precoM2 = tabelaPrecos[cor]?.[espessura]?.[nivel] || 0;
+            document.getElementById('res-valorm2').innerText = "R$ " + precoM2.toFixed(2).replace('.', ',');
+
+            const total = (area * precoM2) + precoAcessorio;
+            document.getElementById('res-total').innerText = "R$ " + total.toFixed(2).replace('.', ',');
+        }
+
+        function renderizarFormConfig() {
+            const container = document.getElementById('matrix-container');
+            if(!container) return;
+            container.innerHTML = '';
+
+            for (let cor in tabelaPrecos) {
+                let html = `
+                    <div class="form-panel">
+                        <h3 style="color: #fff;">Matriz Comercial - ${cor}</h3>
+                        <div class="table-container">
+                            <table class="matrix-table">
+                                <thead>
+                                    <tr>
+                                        <th>Espessura / Modelo</th>
+                                        <th>Bronze (R$)</th>
+                                        <th>Prata (R$)</th>
+                                        <th>Ouro (R$)</th>
+                                        <th>Premium (R$)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                for (let esp in tabelaPrecos[cor]) {
+                    html += `
+                        <tr>
+                            <td><strong>${esp === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : esp}</strong></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Bronze'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Bronze', this.value)"></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Prata'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Prata', this.value)"></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Ouro'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Ouro', this.value)"></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Premium'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Premium', this.value)"></td>
+                        </tr>`;
+                }
+                html += `</tbody></table></div></div>`;
+                container.innerHTML += html;
+            }
+        }
+
+        function salvarPrecoConfig(cor, esp, nivel, valor) {
+            if(!tabelaPrecos[cor]) tabelaPrecos[cor] = {};
+            if(!tabelaPrecos[cor][esp]) tabelaPrecos[cor][esp] = {};
+            tabelaPrecos[cor][esp][nivel] = parseFloat(valor) || 0;
+            db.collection("config").doc("matrizM2").set(tabelaPrecos);
+        }
+
+        function renderizarEstoque() {
+            const container = document.getElementById('categorias-estoque-container');
+            if(!container) return;
+            container.innerHTML = '';
+            const categorias = ['ferragens', 'aluminios', 'selantes', 'puxadores', 'kit box', 'kit pia'];
+            
+            categorias.forEach(cat => {
+                const itensFiltrados = dbEstoque.filter(i => i.categoria === cat);
+                let html = `
+                    <div class="category-header">📦 <span>${cat.toUpperCase()}</span></div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Marca</th>
+                                    <th>Estoque</th>
+                                    <th>Preço Un. Venda</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                if(itensFiltrados.length === 0) {
+                    html += `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Nenhum produto cadastrado.</td></tr>`;
+                } else {
+                    itensFiltrados.forEach(item => {
+                        let statusBadge = '<span class="badge badge-success">Disponível</span>';
+                        if (item.qtd === 0) statusBadge = '<span class="badge badge-danger">Zerado</span>';
+                        else if (item.qtd <= 5) statusBadge = '<span class="badge badge-warning">Mínimo</span>';
+
+                        html += `<tr>
+                            <td><strong>${item.nome}</strong></td>
+                            <td>${item.marca}</td>
+                            <td>${item.qtd} un</td>
+                            <td>R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
+                            <td>${statusBadge}</td>
+                        </tr>`;
+                    });
+                }
+                html += `</tbody></table></div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        function registrarOrcamento() {
+            const nomeCliente = document.getElementById('orc-cliente-selected-nome').value;
+            const nivelCliente = document.getElementById('orc-cliente-selected-nivel').value;
+            if(!nomeCliente) return alert('Busque e selecione um cliente da lista!');
+            
+            const cor = document.getElementById('orc-cor').value;
+            const espessura = document.getElementById('orc-espessura').value;
+            const alt = document.getElementById('orc-altura').value;
+            const larg = document.getElementById('orc-largura').value;
+            const nomeAcessorio = document.getElementById('orc-acessorio-selected-nome').value;
+            const precoAcessorio = parseFloat(document.getElementById('orc-acessorio-selected-preco').value);
+
+            const area = (parseFloat(alt) * parseFloat(larg)) / 1000000;
+            const precoM2 = tabelaPrecos[cor]?.[espessura]?.[nivelCliente] || 0;
+            const total = (area * precoM2) + precoAcessorio;
+
+            const novoOrc = {
+                id: Math.floor(1000 + Math.random() * 9000),
+                cliente: nomeCliente,
+                nivel: nivelCliente,
+                item: `${espessura === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : espessura} (${cor})`,
+                altura: alt,
+                largura: larg,
+                area: area,
+                acessorio: nomeAcessorio,
+                valorAcessorio: precoAcessorio,
+                precoM2: precoM2,
+                total: total,
+                status: 'Aguardando',
+                dataCriacao: new Date().getTime()
+            };
+
+            db.collection("orcamentos").add(novoOrc).then(() => {
+                alert('Orçamento gravado com sucesso!');
+                limparBuscasOrcamento();
+            });
+        }
+
+        function renderizarHistorico() {
+            const tbody = document.querySelector('#table-historico tbody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            dbOrcamentos.sort((a,b) => b.dataCriacao - a.dataCriacao);
+
+            dbOrcamentos.forEach((orc, index) => {
+                let colorBadge = 'badge-warning';
+                if(orc.status === 'Pago') colorBadge = 'badge-success';
+                if(orc.status === 'Cancelado') colorBadge = 'badge-danger';
+
+                tbody.innerHTML += `<tr>
+                    <td>#${orc.id}</td>
+                    <td><strong>${orc.cliente}</strong></td>
+                    <td>${orc.item}</td>
+                    <td>${orc.area.toFixed(2)} m²</td>
+                    <td style="color: var(--primary); font-weight: 600;">R$ ${orc.total.toFixed(2).replace('.', ',')}</td>
+                    <td><span class="badge ${colorBadge}">${orc.status}</span></td>
+                    <td>
+                        <button class="btn-small" style="background-color: var(--bg-input); color: #fff;" onclick="abrirOrcamento(${index})">👁️ Ver</button>
+                        <button class="btn-small" style="background-color: #ffcc00; color: #000;" onclick="gerarPDF(${index})">📄 PDF</button>
+                        <button class="btn-small" style="background-color: #2e7d32; color: white;" onclick="mudarStatus('${orc.idDoc}', 'Pago')">💵</button>
+                        <button class="btn-small" style="background-color: #c62828; color: white;" onclick="mudarStatus('${orc.idDoc}', 'Cancelado')">❌</button>
+                    </td>
+                </tr>`;
+            });
+        }
+
+        function mudarStatus(idDoc, novoStatus) {
+            db.collection("orcamentos").doc(idDoc).update({ status: novoStatus });
+        }
+
+        function abrirOrcamento(index) {
+            const orc = dbOrcamentos[index];
+            const body = document.getElementById('modal-body');
+            body.innerHTML = `
+                <p style="margin-bottom: 8px;"><strong>Pedido:</strong> #${orc.id}</p>
+                <p style="margin-bottom: 8px;"><strong>Cliente:</strong> ${orc.cliente} <span class="badge badge-${orc.nivel ? orc.nivel.toLowerCase() : 'bronze'}">${orc.nivel}</span></p>
+                <p style="margin-bottom: 8px;"><strong>Especificação:</strong> ${orc.item}</p>
+                <p style="margin-bottom: 8px;"><strong>Corte:</strong> ${orc.altura}mm x ${orc.largura}mm (${orc.area.toFixed(2)} m²)</p>
+                <p style="margin-bottom: 8px;"><strong>Valor m²:</strong> R$ ${orc.precoM2.toFixed(2).replace('.', ',')}</p>
+                <p style="margin-bottom: 8px;"><strong>Insumo Extra:</strong> ${orc.acessorio} (R$ ${orc.valorAcessorio.toFixed(2).replace('.', ',')})</p>
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
+                <p style="font-size: 20px; font-weight: 700; color: #fff;">Total Comercial: <span style="color: var(--primary);">R$ ${orc.total.toFixed(2).replace('.', ',')}</span></p>
+            `;
+            document.getElementById('orcModal').style.display = 'flex';
+        }
+
+        /* FUNÇÃO GERADORA DE PDF PROFISSIONAL */
+        function gerarPDF(index) {
+            const orc = dbOrcamentos[index];
+            const containerPDF = document.getElementById('pdf-template');
+            
+            containerPDF.innerHTML = `
+                <div style="border-bottom: 3px solid #ffcc00; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h1 style="font-size: 26px; color: #111; margin-bottom: 5px; font-weight: bold;">CUBO GLASS DISTRIBUIDORA</h1>
+                        <p style="font-size: 13px; color: #666;">Soluções em Vidros, Esquadrias e Acessórios</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <h2 style="font-size: 18px; color: #ffcc00; margin-bottom: 5px; font-weight: bold;">ORÇAMENTO #${orc.id}</h2>
+                        <p style="font-size: 12px; color: #666;">Data de Emissão: ${new Date(orc.dataCriacao).toLocaleDateString('pt-BR')}</p>
+                    </div>
+                </div>
+
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 30px; border: 1px solid #eee;">
+                    <h3 style="font-size: 14px; color: #444; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px;">Dados do Cliente</h3>
+                    <p style="font-size: 15px; margin-bottom: 4px;"><strong>Nome/Razão Social:</strong> ${orc.cliente}</p>
+                    <p style="font-size: 13px; color: #555;"><strong>Classificação comercial de cadastro:</strong> Tabela ${orc.nivel}</p>
+                </div>
+
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px;">
+                    <thead>
+                        <tr style="background-color: #111; color: #fff;">
+                            <th style="padding: 12px; text-align: left; font-size: 13px;">Descrição do Item</th>
+                            <th style="padding: 12px; text-align: center; font-size: 13px;">Dimensões</th>
+                            <th style="padding: 12px; text-align: center; font-size: 13px;">Área Total</th>
+                            <th style="padding: 12px; text-align: right; font-size: 13px;">Valor Unitário M²</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; font-size: 14px;"><strong>${orc.item}</strong></td>
+                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: center; font-size: 14px;">${orc.altura} x ${orc.largura} mm</td>
+                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: center; font-size: 14px;">${orc.area.toFixed(2)} m²</td>
+                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: right; font-size: 14px;">R$ ${orc.precoM2.toFixed(2).replace('.', ',')}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 40px; border: 1px solid #eee;">
+                    <h3 style="font-size: 14px; color: #444; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px;">Componentes Adicionais / Ferragens</h3>
+                    <p style="font-size: 14px;"><strong>Item incluso:</strong> ${orc.acessorio} - <span style="color: #666;">R$ ${orc.valorAcessorio.toFixed(2).replace('.', ',')}</span></p>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px;">
+                    <div style="text-align: right; border-top: 2px solid #111; padding-top: 15px; width: 250px;">
+                        <span style="font-size: 14px; color: #666; text-transform: uppercase; font-weight: bold;">Valor Total do Pedido</span>
+                        <h2 style="font-size: 26px; color: #111; font-weight: bold; margin-top: 5px;">R$ ${orc.total.toFixed(2).replace('.', ',')}</h2>
+                    </div>
+                </div>
+
+                <div style="margin-top: 100px; text-align: center; font-size: 11px; color: #999; border-top: 1px solid #eee; padding-top: 15px;">
+                    Este documento é uma simulação de orçamento oficial gerada eletronicamente pelo ERP Cubo Glass Distribuidora.
+                </div>
+            `;
+
+            const opcoes = {
+                margin: 10,
+                filename: `Orcamento_CuboGlass_${orc.id}_${orc.cliente.replace(/\s+/g, '_')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().from(containerPDF).set(opcoes).save();
+        }
+
+        function fecharModal() { document.getElementById('orcModal').style.display = 'none'; }
+
+        function adicionarCliente(e) {
+            e.preventDefault();
+            const nome = document.getElementById('cli-nome').value;
+            const doc = document.getElementById('cli-doc').value;
+            const tel = document.getElementById('cli-tel').value;
+            const nivel = document.getElementById('cli-nivel').value;
+            db.collection("clientes").add({nome, doc, tel, nivel}).then(() => {
+                document.getElementById('form-add-cliente').reset();
+                alert('Cliente cadastrado globalmente!');
+            });
+        }
+
+        function adicionarEstoque(e) {
+            e.preventDefault();
+            const nome = document.getElementById('est-nome').value;
+            const categoria = document.getElementById('est-categoria').value;
+            const marca = document.getElementById('est-marca').value;
+            const qtd = parseInt(document.getElementById('est-qtd').value);
+            const preco = parseFloat(document.getElementById('est-preco').value);
+            db.collection("estoque").add({nome, categoria, marca, qtd, preco}).then(() => {
+                document.getElementById('form-add-estoque').reset();
+                alert('Produto adicionado ao estoque!');
+            });
+        }
+
+        function atualizarDashboard() {
+            const cElem = document.getElementById('dash-clientes');
+            const oElem = document.getElementById('dash-orcamentos');
+            const fElem = document.getElementById('dash-faturado');
+            if(cElem) cElem.innerText = dbClientes.length;
+            if(oElem) oElem.innerText = dbOrcamentos.length;
+            let totalPago = 0;
+            dbOrcamentos.forEach(orc => { if(orc.status === 'Pago') totalPago += orc.total; });
+            if(fElem) fElem.innerText = "R$ " + totalPago.toFixed(2).replace('.', ',');
+        }
+
+        document.addEventListener('click', function(e) {
+            if(!e.target.closest('#orc-cliente-search')) {
+                const el = document.getElementById('orc-cliente-results');
+                if(el) el.style.display = 'none';
+            }
+            if(!e.target.closest('#orc-acessorio-search')) {
+                const el = document.getElementById('orc-acessorio-results');
+                if(el) el.style.display = 'none';
+            }
+        });
+
+        window.onload = function() {
+            renderizarFormConfig();
+            atualizarDashboard();
+        };
+    </script>
+</body>
+</html>
