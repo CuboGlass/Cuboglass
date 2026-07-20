@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cubo Glass - ERP Premium Cloud v10</title>
     
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cubo Glass">
     <link rel="apple-touch-icon" href="logo.png">
     
     <!-- Google Fonts para Tipografia Moderna -->
@@ -459,7 +461,7 @@
             .main-content { padding: 20px; }
         }
 
-        /* Estilos Ocultos para Impressão limpa do PDF Timbrado */
+        /* Estilos Ocultos para Impressão do PDF Timbrado */
         #pdf-template {
             display: none;
             background-color: #ffffff;
@@ -711,7 +713,7 @@
             <h2 class="header-title">Configuração de Tabelas</h2>
             <p style="margin-bottom: 25px; color: var(--text-muted); font-size: 14px;">Os valores abaixo refletem globalmente para os cálculos comerciais do sistema.</p>
             <div id="matrix-container">
-                <p style="color: var(--text-muted); italic">Carregando matriz de preços por nível...</p>
+                <p style="color: var(--text-muted); font-style: italic;">Carregando matriz de preços por nível...</p>
             </div>
         </div>
     </div>
@@ -729,8 +731,8 @@
     <div id="pdf-template"></div>
 
     <script>
-        // CONFIGURAÇÃO DO FIREBASE
-        firebaseConfig = {
+        // CONFIGURAÇÃO DO FIREBASE (LEMBRE-SE DE MANTER SUAS CHAVES AQUI)
+       const firebaseConfig = {
   apiKey: "AIzaSyD-bH7MY-VFHJYhuYGa18UKu2EslksAjgM",
   authDomain: "cubo-glass.firebaseapp.com",
   projectId: "cubo-glass",
@@ -836,32 +838,20 @@
             atualizarDashboard();
         });
 
-        /* ESCUTA DO BANCO COM FALLBACK PARA RENDERIZAR TABELA DE NÍVEIS SEM FALHAR */
+        /* OUVINTE DO FIREBASE PARA A MATRIZ DE PREÇOS */
         db.collection("config").doc("matrizM2").onSnapshot((doc) => {
             if(doc.exists()) {
                 tabelaPrecos = doc.data();
             } else {
                 tabelaPrecos = matrizPadrao;
-                db.collection("config").doc("matrizM2").set(matrizPadrao).catch(e => console.log("Modo offline / fallback ativo"));
+                db.collection("config").doc("matrizM2").set(matrizPadrao).catch(e => console.log("Aviso: modo offline ou permissão restrita"));
             }
-                    function salvarPrecoConfig(cor, esp, nivel, valor) {
-            if (!tabelaPrecos[cor]) tabelaPrecos[cor] = {};
-            if (!tabelaPrecos[cor][esp]) tabelaPrecos[cor][esp] = {};
-            
-            // Atualiza a memória local
-            tabelaPrecos[cor][esp][nivel] = parseFloat(valor) || 0;
-
-            // Salva e força a persistência na nuvem (Firestore)
-            db.collection("config").doc("matrizM2").set(tabelaPrecos, { merge: true })
-            .then(() => {
-                console.log("Preço atualizado com sucesso na nuvem!");
-            })
-            .catch((error) => {
-                console.error("Erro ao salvar preço:", error);
-                alert("Erro ao salvar no banco. Verifique suas regras no Firebase.");
-            });
-        }
-
+            renderizarFormConfig();
+        }, (error) => {
+            console.error("Erro na leitura da matriz de preços:", error);
+            tabelaPrecos = matrizPadrao;
+            renderizarFormConfig();
+        });
 
         /* FILTROS DE BUSCA */
         function limparBuscasOrcamento() {
@@ -982,52 +972,15 @@
             }
         }
 
-        function         function renderizarFormConfig() {
-            const container = document.getElementById('matrix-container');
-            if(!container) return;
-            container.innerHTML = '';
-
-            for (let cor in tabelaPrecos) {
-                let html = `
-                    <div class="form-panel">
-                        <h3 style="color: #fff;">Matriz Comercial - ${cor}</h3>
-                        <div class="table-container">
-                            <table class="matrix-table">
-                                <thead>
-                                    <tr>
-                                        <th>Espessura / Modelo</th>
-                                        <th>Bronze (R$)</th>
-                                        <th>Prata (R$)</th>
-                                        <th>Ouro (R$)</th>
-                                        <th>Premium (R$)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>`;
-                for (let esp in tabelaPrecos[cor]) {
-                    html += `
-                        <tr>
-                            <td><strong>${esp === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : esp}</strong></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Bronze'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Bronze', this.value)"></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Prata'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Prata', this.value)"></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Ouro'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Ouro', this.value)"></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Premium'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Premium', this.value)"></td>
-                        </tr>`;
-                }
-                html += `</tbody></table></div></div>`;
-                container.innerHTML += html;
-            }
-        }
-
         function salvarPrecoConfig(cor, esp, nivel, valor) {
             if (!tabelaPrecos[cor]) tabelaPrecos[cor] = {};
             if (!tabelaPrecos[cor][esp]) tabelaPrecos[cor][esp] = {};
             tabelaPrecos[cor][esp][nivel] = parseFloat(valor) || 0;
             
-            // Grava a tabela completa com mesclagem na nuvem
+            // Grava a matriz atualizada no Firestore com mesclagem
             db.collection("config").doc("matrizM2").set(tabelaPrecos, { merge: true })
             .catch(err => console.error("Erro ao salvar preço:", err));
         }
-
 
         function renderizarEstoque() {
             const container = document.getElementById('categorias-estoque-container');
@@ -1159,7 +1112,7 @@
             document.getElementById('orcModal').style.display = 'flex';
         }
 
-        /* FUNÇÃO GERADORA DE PDF PROFISSIONAL */
+        /* GERADOR DE PDF PROFISSIONAL */
         function gerarPDF(index) {
             const orc = dbOrcamentos[index];
             const containerPDF = document.getElementById('pdf-template');
@@ -1285,3 +1238,5 @@
     </script>
 </body>
 </html>
+
+        
