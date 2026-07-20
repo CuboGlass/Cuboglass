@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -731,8 +731,8 @@
     <div id="pdf-template"></div>
 
     <script>
-        // CONFIGURAÇÃO DO FIREBASE (LEMBRE-SE DE MANTER SUAS CHAVES AQUI)
-       const firebaseConfig = {
+        // CONFIGURAÇÃO DO FIREBASE (SUBSTITUA PELAS SUAS CHAVES DO GOOGLE CONSOLE)
+        const firebaseConfig = {
   apiKey: "AIzaSyD-bH7MY-VFHJYhuYGa18UKu2EslksAjgM",
   authDomain: "cubo-glass.firebaseapp.com",
   projectId: "cubo-glass",
@@ -838,13 +838,13 @@
             atualizarDashboard();
         });
 
-        /* OUVINTE DO FIREBASE PARA A MATRIZ DE PREÇOS */
+        /* OUVINTE EM TEMPO REAL PARA A MATRIZ DE PREÇOS NO FIRESTORE */
         db.collection("config").doc("matrizM2").onSnapshot((doc) => {
             if(doc.exists()) {
                 tabelaPrecos = doc.data();
             } else {
                 tabelaPrecos = matrizPadrao;
-                db.collection("config").doc("matrizM2").set(matrizPadrao).catch(e => console.log("Aviso: modo offline ou permissão restrita"));
+                db.collection("config").doc("matrizM2").set(matrizPadrao).catch(e => console.log("Inicializando matriz padrão no Firebase"));
             }
             renderizarFormConfig();
         }, (error) => {
@@ -977,9 +977,9 @@
             if (!tabelaPrecos[cor][esp]) tabelaPrecos[cor][esp] = {};
             tabelaPrecos[cor][esp][nivel] = parseFloat(valor) || 0;
             
-            // Grava a matriz atualizada no Firestore com mesclagem
+            // Grava e sincroniza com mesclagem permanente no Firestore
             db.collection("config").doc("matrizM2").set(tabelaPrecos, { merge: true })
-            .catch(err => console.error("Erro ao salvar preço:", err));
+            .catch(err => console.error("Erro ao salvar preço no banco de dados:", err));
         }
 
         function renderizarEstoque() {
@@ -1238,5 +1238,6 @@
     </script>
 </body>
 </html>
-
-        
+       
+          
+            
