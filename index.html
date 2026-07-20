@@ -844,12 +844,24 @@
                 tabelaPrecos = matrizPadrao;
                 db.collection("config").doc("matrizM2").set(matrizPadrao).catch(e => console.log("Modo offline / fallback ativo"));
             }
-            renderizarFormConfig();
-        }, (error) => {
-            console.error("Erro ao sincronizar Firestore:", error);
-            tabelaPrecos = matrizPadrao;
-            renderizarFormConfig();
-        });
+                    function salvarPrecoConfig(cor, esp, nivel, valor) {
+            if (!tabelaPrecos[cor]) tabelaPrecos[cor] = {};
+            if (!tabelaPrecos[cor][esp]) tabelaPrecos[cor][esp] = {};
+            
+            // Atualiza a memória local
+            tabelaPrecos[cor][esp][nivel] = parseFloat(valor) || 0;
+
+            // Salva e força a persistência na nuvem (Firestore)
+            db.collection("config").doc("matrizM2").set(tabelaPrecos, { merge: true })
+            .then(() => {
+                console.log("Preço atualizado com sucesso na nuvem!");
+            })
+            .catch((error) => {
+                console.error("Erro ao salvar preço:", error);
+                alert("Erro ao salvar no banco. Verifique suas regras no Firebase.");
+            });
+        }
+
 
         /* FILTROS DE BUSCA */
         function limparBuscasOrcamento() {
