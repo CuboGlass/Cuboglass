@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-title" content="Cubo Glass">
     <link rel="apple-touch-icon" href="logo.png">
     
-    <!-- Google Fonts para Tipografia Moderna -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -45,7 +45,6 @@
             letter-spacing: -0.2px;
         }
 
-        /* Sidebar Executiva */
         .sidebar {
             width: 280px;
             background-color: var(--bg-card);
@@ -114,7 +113,6 @@
             box-shadow: 0 4px 15px rgba(255, 204, 0, 0.25);
         }
 
-        /* Mobile Header */
         .mobile-header {
             display: none;
             background-color: var(--bg-card);
@@ -150,7 +148,6 @@
             cursor: pointer;
         }
 
-        /* Área de Conteúdo Principal */
         .main-content {
             flex: 1;
             padding: 40px;
@@ -175,7 +172,6 @@
             border-radius: 4px;
         }
 
-        /* Cards de Indicadores */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -213,7 +209,6 @@
             color: var(--primary);
         }
 
-        /* Painéis e Formulários */
         .tab-content {
             display: none;
         }
@@ -277,7 +272,6 @@
             outline: none;
         }
 
-        /* Listas de Sugestões / Filtros */
         .search-results {
             position: absolute;
             top: 74px;
@@ -306,7 +300,6 @@
             font-weight: 600;
         }
 
-        /* Botões */
         .btn {
             background-color: var(--primary);
             color: #0f111a;
@@ -336,7 +329,6 @@
         }
         .btn-small:active { transform: scale(0.95); }
 
-        /* Tabelas Modernas */
         .table-container {
             overflow-x: auto;
             background-color: var(--bg-card);
@@ -374,7 +366,6 @@
         tr:last-child td { border-bottom: none; }
         tr:hover td { background-color: rgba(255,255,255,0.02); }
 
-        /* Badges Minimalistas */
         .badge {
             padding: 6px 10px;
             border-radius: 6px;
@@ -405,7 +396,6 @@
             gap: 8px;
         }
 
-        /* Modal Clean */
         .modal {
             display: none;
             position: fixed;
@@ -461,20 +451,22 @@
             .main-content { padding: 20px; }
         }
 
-        /* AJUSTE FIX: Esconde o template da visão sem dar display:none */
+        /* CONTAINER PARA IMPRESSÃO DE PDF (FIX PÁGINA BRANCA) */
         #pdf-template {
-            position: absolute;
+            display: block;
+            position: fixed;
             left: -9999px;
-            top: -9999px;
-            width: 800px;
-            background-color: #ffffff;
-            color: #1a1a1a;
-            padding: 40px;
+            top: 0;
+            width: 750px;
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            padding: 30px;
             font-family: Arial, sans-serif;
+            z-index: -999;
         }
     </style>
 
-    <!-- Scripts do Firebase v9 (Compatibilizado) -->
+    <!-- Scripts do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     
@@ -714,10 +706,11 @@
         <!-- Tabela m² Config -->
         <div id="configuracoes" class="tab-content">
             <h2 class="header-title">Configuração de Tabelas</h2>
-            <p style="margin-bottom: 25px; color: var(--text-muted); font-size: 14px;">Os valores abaixo refletem globalmente para os cálculos comerciais do sistema.</p>
+            <p style="margin-bottom: 25px; color: var(--text-muted); font-size: 14px;">Altere os valores e clique no botão **Salvar Tabela** ao final da página para gravar permanentemente na nuvem.</p>
             <div id="matrix-container">
                 <p style="color: var(--text-muted); font-style: italic;">Carregando matriz de preços por nível...</p>
             </div>
+            <button class="btn" style="width: 100%; margin-top: 20px; font-size: 16px; padding: 16px;" onclick="salvarTabelaPrecosCompleta()">💾 Salvar Tabela de Preços na Nuvem</button>
         </div>
     </div>
 
@@ -730,11 +723,11 @@
         </div>
     </div>
 
-    <!-- Container Escondido estruturado para a exportação do PDF -->
+    <!-- Container do PDF -->
     <div id="pdf-template"></div>
 
     <script>
-        // CONFIGURAÇÃO DO FIREBASE (SUBSTITUA PELAS SUAS CHAVES DO GOOGLE CONSOLE)
+        // CONFIGURAÇÃO DO FIREBASE (SUBSTITUA COM AS SUAS CHAVES SE NESCESSÁRIO)
         const firebaseConfig = {
   apiKey: "AIzaSyD-bH7MY-VFHJYhuYGa18UKu2EslksAjgM",
   authDomain: "cubo-glass.firebaseapp.com",
@@ -744,6 +737,7 @@
   appId: "1:1010303888432:web:4892849f840824542e91f5",
   measurementId: "G-958FX0F2D5"
 };
+
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
@@ -799,7 +793,7 @@
             if(tabId === 'configuracoes') renderizarFormConfig();
         }
 
-        /* CONEXÕES EM TEMPO REAL */
+        /* BANCO DE DADOS EM TEMPO REAL */
         db.collection("clientes").onSnapshot((snapshot) => {
             dbClientes = [];
             const tbody = document.querySelector('#table-clientes tbody');
@@ -840,22 +834,24 @@
             atualizarDashboard();
         });
 
-        /* OUVINTE EM TEMPO REAL PARA A MATRIZ DE PREÇOS NO FIRESTORE */
-        db.collection("config").doc("matrizM2").onSnapshot((doc) => {
-            if(doc.exists()) {
-                tabelaPrecos = doc.data();
-            } else {
+        /* LER MATRIZ DO FIREBASE UMA VEZ PARA NÃO SOBRESCREVER A DIGITAÇÃO */
+        function carregarMatrizPrecos() {
+            db.collection("config").doc("matrizM2").get().then((doc) => {
+                if(doc.exists) {
+                    tabelaPrecos = doc.data();
+                } else {
+                    tabelaPrecos = matrizPadrao;
+                    db.collection("config").doc("matrizM2").set(matrizPadrao);
+                }
+                renderizarFormConfig();
+            }).catch(err => {
+                console.error("Erro ao ler matriz:", err);
                 tabelaPrecos = matrizPadrao;
-                db.collection("config").doc("matrizM2").set(matrizPadrao).catch(e => console.log("Inicializando matriz padrão no Firebase"));
-            }
-            renderizarFormConfig();
-        }, (error) => {
-            console.error("Erro na leitura da matriz de preços:", error);
-            tabelaPrecos = matrizPadrao;
-            renderizarFormConfig();
-        });
+                renderizarFormConfig();
+            });
+        }
 
-        /* FILTROS DE BUSCA */
+        /* FILTROS E BUSCAS */
         function limparBuscasOrcamento() {
             document.getElementById('orc-cliente-search').value = '';
             document.getElementById('orc-cliente-selected-nome').value = '';
@@ -963,10 +959,10 @@
                     html += `
                         <tr>
                             <td><strong>${esp === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : esp}</strong></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Bronze'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Bronze', this.value)"></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Prata'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Prata', this.value)"></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Ouro'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Ouro', this.value)"></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Premium'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Premium', this.value)"></td>
+                            <td><input type="number" id="inp_${cor}_${esp}_Bronze" value="${tabelaPrecos[cor][esp]['Bronze'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Bronze', this.value)"></td>
+                            <td><input type="number" id="inp_${cor}_${esp}_Prata" value="${tabelaPrecos[cor][esp]['Prata'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Prata', this.value)"></td>
+                            <td><input type="number" id="inp_${cor}_${esp}_Ouro" value="${tabelaPrecos[cor][esp]['Ouro'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Ouro', this.value)"></td>
+                            <td><input type="number" id="inp_${cor}_${esp}_Premium" value="${tabelaPrecos[cor][esp]['Premium'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Premium', this.value)"></td>
                         </tr>`;
                 }
                 html += `</tbody></table></div></div>`;
@@ -974,14 +970,22 @@
             }
         }
 
-        function salvarPrecoConfig(cor, esp, nivel, valor) {
+        function atualizarMemoriaConfig(cor, esp, nivel, valor) {
             if (!tabelaPrecos[cor]) tabelaPrecos[cor] = {};
             if (!tabelaPrecos[cor][esp]) tabelaPrecos[cor][esp] = {};
             tabelaPrecos[cor][esp][nivel] = parseFloat(valor) || 0;
-            
-            // Grava e sincroniza com mesclagem permanente no Firestore
-            db.collection("config").doc("matrizM2").set(tabelaPrecos, { merge: true })
-            .catch(err => console.error("Erro ao salvar preço no banco de dados:", err));
+        }
+
+        /* GRAVAÇÃO DEFINITIVA DA TABELA NO FIREBASE */
+        function salvarTabelaPrecosCompleta() {
+            db.collection("config").doc("matrizM2").set(tabelaPrecos)
+            .then(() => {
+                alert('✅ Tabela de Preços gravada com sucesso na Nuvem!');
+            })
+            .catch((err) => {
+                console.error("Erro ao salvar preços:", err);
+                alert('❌ Erro ao salvar na nuvem. Verifique a conexão com o Firebase.');
+            });
         }
 
         function renderizarEstoque() {
@@ -1114,61 +1118,61 @@
             document.getElementById('orcModal').style.display = 'flex';
         }
 
-        /* GERADOR DE PDF PROFISSIONAL COM CORREÇÃO DE RENDERING */
+        /* GERADOR DE PDF 100% CORRIGIDO SEM PÁGINAS EM BRANCO */
         function gerarPDF(index) {
             const orc = dbOrcamentos[index];
             const containerPDF = document.getElementById('pdf-template');
             
             containerPDF.innerHTML = `
-                <div style="border-bottom: 3px solid #ffcc00; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="border-bottom: 3px solid #ffcc00; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; color: #000000;">
                     <div>
-                        <h1 style="font-size: 24px; color: #111; margin-bottom: 5px; font-weight: bold;">CUBO GLASS DISTRIBUIDORA</h1>
-                        <p style="font-size: 13px; color: #666;">Soluções em Vidros, Esquadrias e Acessórios</p>
+                        <h1 style="font-size: 22px; color: #111111; margin-bottom: 5px; font-weight: bold;">CUBO GLASS DISTRIBUIDORA</h1>
+                        <p style="font-size: 12px; color: #444444;">Soluções em Vidros, Esquadrias e Acessórios</p>
                     </div>
                     <div style="text-align: right;">
-                        <h2 style="font-size: 18px; color: #d4a000; margin-bottom: 5px; font-weight: bold;">ORÇAMENTO #${orc.id}</h2>
-                        <p style="font-size: 12px; color: #666;">Data de Emissão: ${new Date(orc.dataCriacao).toLocaleDateString('pt-BR')}</p>
+                        <h2 style="font-size: 16px; color: #d4a000; margin-bottom: 5px; font-weight: bold;">ORÇAMENTO #${orc.id}</h2>
+                        <p style="font-size: 11px; color: #444444;">Data: ${new Date(orc.dataCriacao).toLocaleDateString('pt-BR')}</p>
                     </div>
                 </div>
 
-                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 30px; border: 1px solid #eee;">
-                    <h3 style="font-size: 14px; color: #444; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px;">Dados do Cliente</h3>
-                    <p style="font-size: 15px; margin-bottom: 4px; color: #111;"><strong>Nome/Razão Social:</strong> ${orc.cliente}</p>
-                    <p style="font-size: 13px; color: #555;"><strong>Classificação comercial de cadastro:</strong> Tabela ${orc.nivel}</p>
+                <div style="background-color: #f2f2f2; padding: 12px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #cccccc; color: #000000;">
+                    <h3 style="font-size: 13px; color: #222222; text-transform: uppercase; margin-bottom: 6px; border-bottom: 1px solid #cccccc; padding-bottom: 4px;">Dados do Cliente</h3>
+                    <p style="font-size: 14px; margin-bottom: 4px; color: #000000;"><strong>Nome/Razão Social:</strong> ${orc.cliente}</p>
+                    <p style="font-size: 12px; color: #333333;"><strong>Classificação comercial de cadastro:</strong> Tabela ${orc.nivel}</p>
                 </div>
 
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; background-color: #ffffff; color: #000000;">
                     <thead>
-                        <tr style="background-color: #111; color: #fff;">
-                            <th style="padding: 12px; text-align: left; font-size: 13px;">Descrição do Item</th>
-                            <th style="padding: 12px; text-align: center; font-size: 13px;">Dimensões</th>
-                            <th style="padding: 12px; text-align: center; font-size: 13px;">Área Total</th>
-                            <th style="padding: 12px; text-align: right; font-size: 13px;">Valor Unitário M²</th>
+                        <tr style="background-color: #111111; color: #ffffff;">
+                            <th style="padding: 10px; text-align: left; font-size: 12px;">Descrição do Item</th>
+                            <th style="padding: 10px; text-align: center; font-size: 12px;">Dimensões</th>
+                            <th style="padding: 10px; text-align: center; font-size: 12px;">Área Total</th>
+                            <th style="padding: 10px; text-align: right; font-size: 12px;">Valor Unitário M²</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; font-size: 14px; color: #111;"><strong>${orc.item}</strong></td>
-                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: center; font-size: 14px; color: #111;">${orc.altura} x ${orc.largura} mm</td>
-                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: center; font-size: 14px; color: #111;">${orc.area.toFixed(2)} m²</td>
-                            <td style="padding: 14px 12px; border-bottom: 1px solid #ddd; text-align: right; font-size: 14px; color: #111;">R$ ${orc.precoM2.toFixed(2).replace('.', ',')}</td>
+                            <td style="padding: 12px 10px; border-bottom: 1px solid #cccccc; font-size: 13px; color: #000000;"><strong>${orc.item}</strong></td>
+                            <td style="padding: 12px 10px; border-bottom: 1px solid #cccccc; text-align: center; font-size: 13px; color: #000000;">${orc.altura} x ${orc.largura} mm</td>
+                            <td style="padding: 12px 10px; border-bottom: 1px solid #cccccc; text-align: center; font-size: 13px; color: #000000;">${orc.area.toFixed(2)} m²</td>
+                            <td style="padding: 12px 10px; border-bottom: 1px solid #cccccc; text-align: right; font-size: 13px; color: #000000;">R$ ${orc.precoM2.toFixed(2).replace('.', ',')}</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 30px; border: 1px solid #eee;">
-                    <h3 style="font-size: 14px; color: #444; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px;">Componentes Adicionais / Ferragens</h3>
-                    <p style="font-size: 14px; color: #111;"><strong>Item incluso:</strong> ${orc.acessorio} - <span style="color: #666;">R$ ${orc.valorAcessorio.toFixed(2).replace('.', ',')}</span></p>
+                <div style="background-color: #f2f2f2; padding: 12px; border-radius: 6px; margin-bottom: 25px; border: 1px solid #cccccc; color: #000000;">
+                    <h3 style="font-size: 13px; color: #222222; text-transform: uppercase; margin-bottom: 6px; border-bottom: 1px solid #cccccc; padding-bottom: 4px;">Componentes Adicionais / Ferragens</h3>
+                    <p style="font-size: 13px; color: #000000;"><strong>Item incluso:</strong> ${orc.acessorio} - <span style="color: #444444;">R$ ${orc.valorAcessorio.toFixed(2).replace('.', ',')}</span></p>
                 </div>
 
-                <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px;">
-                    <div style="text-align: right; border-top: 2px solid #111; padding-top: 15px; width: 250px;">
-                        <span style="font-size: 14px; color: #666; text-transform: uppercase; font-weight: bold;">Valor Total do Pedido</span>
-                        <h2 style="font-size: 24px; color: #111; font-weight: bold; margin-top: 5px;">R$ ${orc.total.toFixed(2).replace('.', ',')}</h2>
+                <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 15px; background-color: #ffffff;">
+                    <div style="text-align: right; border-top: 2px solid #111111; padding-top: 10px; width: 220px;">
+                        <span style="font-size: 12px; color: #444444; text-transform: uppercase; font-weight: bold;">Valor Total do Pedido</span>
+                        <h2 style="font-size: 22px; color: #000000; font-weight: bold; margin-top: 4px;">R$ ${orc.total.toFixed(2).replace('.', ',')}</h2>
                     </div>
                 </div>
 
-                <div style="margin-top: 60px; text-align: center; font-size: 11px; color: #999; border-top: 1px solid #eee; padding-top: 15px;">
+                <div style="margin-top: 40px; text-align: center; font-size: 10px; color: #777777; border-top: 1px solid #dddddd; padding-top: 10px;">
                     Este documento é uma simulação de orçamento oficial gerada eletronicamente pelo ERP Cubo Glass Distribuidora.
                 </div>
             `;
@@ -1177,14 +1181,19 @@
                 margin: 10,
                 filename: `Orcamento_CuboGlass_${orc.id}_${orc.cliente.replace(/\s+/g, '_')}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
+                html2canvas: { 
+                    scale: 2, 
+                    useCORS: true, 
+                    backgroundColor: '#ffffff',
+                    scrollX: 0,
+                    scrollY: 0
+                },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // Pequeno timeout para garantir que o DOM do PDF seja processado antes do render
             setTimeout(() => {
                 html2pdf().from(containerPDF).set(opcoes).save();
-            }, 100);
+            }, 200);
         }
 
         function fecharModal() { document.getElementById('orcModal').style.display = 'none'; }
@@ -1237,10 +1246,11 @@
         });
 
         window.onload = function() {
-            renderizarFormConfig();
+            carregarMatrizPrecos();
             atualizarDashboard();
         };
     </script>
 </body>
 </html>
-           
+
+        
