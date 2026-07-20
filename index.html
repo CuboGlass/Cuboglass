@@ -982,12 +982,52 @@
             }
         }
 
-        function salvarPrecoConfig(cor, esp, nivel, valor) {
-            if(!tabelaPrecos[cor]) tabelaPrecos[cor] = {};
-            if(!tabelaPrecos[cor][esp]) tabelaPrecos[cor][esp] = {};
-            tabelaPrecos[cor][esp][nivel] = parseFloat(valor) || 0;
-            db.collection("config").doc("matrizM2").set(tabelaPrecos);
+        function         function renderizarFormConfig() {
+            const container = document.getElementById('matrix-container');
+            if(!container) return;
+            container.innerHTML = '';
+
+            for (let cor in tabelaPrecos) {
+                let html = `
+                    <div class="form-panel">
+                        <h3 style="color: #fff;">Matriz Comercial - ${cor}</h3>
+                        <div class="table-container">
+                            <table class="matrix-table">
+                                <thead>
+                                    <tr>
+                                        <th>Espessura / Modelo</th>
+                                        <th>Bronze (R$)</th>
+                                        <th>Prata (R$)</th>
+                                        <th>Ouro (R$)</th>
+                                        <th>Premium (R$)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                for (let esp in tabelaPrecos[cor]) {
+                    html += `
+                        <tr>
+                            <td><strong>${esp === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : esp}</strong></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Bronze'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Bronze', this.value)"></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Prata'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Prata', this.value)"></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Ouro'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Ouro', this.value)"></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Premium'] || 0}" onchange="salvarPrecoConfig('${cor}', '${esp}', 'Premium', this.value)"></td>
+                        </tr>`;
+                }
+                html += `</tbody></table></div></div>`;
+                container.innerHTML += html;
+            }
         }
+
+        function salvarPrecoConfig(cor, esp, nivel, valor) {
+            if (!tabelaPrecos[cor]) tabelaPrecos[cor] = {};
+            if (!tabelaPrecos[cor][esp]) tabelaPrecos[cor][esp] = {};
+            tabelaPrecos[cor][esp][nivel] = parseFloat(valor) || 0;
+            
+            // Grava a tabela completa com mesclagem na nuvem
+            db.collection("config").doc("matrizM2").set(tabelaPrecos, { merge: true })
+            .catch(err => console.error("Erro ao salvar preço:", err));
+        }
+
 
         function renderizarEstoque() {
             const container = document.getElementById('categorias-estoque-container');
