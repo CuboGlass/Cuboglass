@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -14,22 +14,20 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Paleta Dark & Amarelo Moderno */
-            --bg-main: #0b0b0d;
-            --bg-card: rgba(22, 22, 26, 0.65);
-            --bg-input: rgba(0, 0, 0, 0.4);
-            --primary: #eab308; /* Amarelo Vibrante */
-            --primary-hover: #facc15;
+            --bg-main: #0f111a;
+            --bg-card: #161924;
+            --bg-input: #1e2230;
+            --primary: #ffcc00;
+            --primary-hover: #e6b800;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
-            --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(234, 179, 8, 0.5);
-            --radius: 16px;
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --border: #272c3f;
+            --radius: 12px;
+            --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
         }
 
         * {
@@ -39,103 +37,51 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* Scrollbar Customizada */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-main); }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
-
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
             display: flex;
             min-height: 100vh;
             letter-spacing: -0.2px;
-            
-            /* Fundo com Iluminação Neon e Grid */
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(234, 179, 8, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(234, 179, 8, 0.08) 0%, transparent 35%),
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
-            background-attachment: fixed;
-        }
-
-        /* EFEITO GLASSMORPHISM GLOBAL */
-        .glass-panel {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-panel:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px -10px rgba(234, 179, 8, 0.2);
-        }
-
-        /* ANIMAÇÃO DE REVELAÇÃO (Simulando scroll) */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active {
-            display: block;
-            animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
         .sidebar {
             width: 280px;
-            background: rgba(15, 15, 18, 0.8);
-            backdrop-filter: blur(20px);
+            background-color: var(--bg-card);
             border-right: 1px solid var(--border);
             padding: 30px 20px;
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease;
-            z-index: 100;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .brand {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 35px;
             border-bottom: 1px solid var(--border);
             padding-bottom: 25px;
         }
 
         .brand img {
-            width: 80px;
-            height: 80px;
-            border-radius: 18px;
-            border: 2px solid rgba(234, 179, 8, 0.4);
-            box-shadow: 0 0 20px rgba(234, 179, 8, 0.2);
+            width: 90px;
+            height: 90px;
+            border-radius: 16px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
             object-fit: contain;
             background-color: #000;
-            transition: all 0.3s ease;
-        }
-        .brand:hover img {
-            border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(234, 179, 8, 0.4);
-            transform: scale(1.05);
         }
 
         .brand-text {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: 2px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
-        .brand-text span { color: var(--primary); }
 
         .nav-btn {
             background: none;
@@ -143,12 +89,12 @@
             color: var(--text-muted);
             padding: 14px 18px;
             text-align: left;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            transition: all 0.3s ease;
+            border-radius: var(--radius);
+            margin-bottom: 6px;
+            transition: all 0.2s ease;
             width: 100%;
             display: flex;
             align-items: center;
@@ -156,125 +102,136 @@
         }
 
         .nav-btn:hover {
-            background-color: rgba(234, 179, 8, 0.1);
-            color: var(--primary);
-            transform: translateX(5px);
+            background-color: rgba(255, 204, 0, 0.05);
+            color: var(--text-main);
         }
 
         .nav-btn.active {
             background-color: var(--primary);
-            color: #0b0b0d;
-            box-shadow: 0 0 20px rgba(234, 179, 8, 0.4);
+            color: #0f111a;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.25);
         }
 
         .mobile-header {
             display: none;
-            background: rgba(15, 15, 18, 0.9);
-            backdrop-filter: blur(10px);
+            background-color: var(--bg-card);
             padding: 15px 20px;
             border-bottom: 1px solid var(--border);
             justify-content: space-between;
             align-items: center;
             position: fixed;
             top: 0; left: 0; right: 0;
-            z-index: 101;
+            z-index: 100;
         }
 
-        .mobile-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: #fff; }
-        .mobile-brand span { color: var(--primary); }
-        .mobile-brand img { width: 35px; height: 35px; border-radius: 8px; border: 1px solid var(--primary); }
-        .menu-toggle { background: none; border: none; color: var(--primary); font-size: 26px; cursor: pointer; }
+        .mobile-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .mobile-brand img {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 26px;
+            cursor: pointer;
+        }
 
         .main-content {
             flex: 1;
             padding: 40px;
             overflow-y: auto;
-            position: relative;
         }
 
         .header-title {
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 30px;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 25px;
             color: #fff;
             position: relative;
-            padding-left: 18px;
-            display: flex;
-            align-items: center;
+            padding-left: 15px;
         }
 
         .header-title::before {
             content: '';
             position: absolute;
-            left: 0; 
-            height: 100%;
-            width: 6px;
+            left: 0; top: 4px; bottom: 4px;
+            width: 4px;
             background-color: var(--primary);
-            border-radius: 6px;
-            box-shadow: 0 0 15px rgba(234, 179, 8, 0.6);
+            border-radius: 4px;
         }
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 25px;
             margin-bottom: 35px;
         }
 
         .card {
-            @extend .glass-panel;
+            background-color: var(--bg-card);
             padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            text-align: left;
             position: relative;
             overflow: hidden;
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            transition: all 0.4s ease;
-        }
-        .card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-6px);
-            box-shadow: 0 15px 35px -10px rgba(234, 179, 8, 0.3);
         }
 
         .card h3 {
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: 600;
             color: var(--text-muted);
             margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .card p {
-            font-size: 32px;
-            font-weight: 800;
+            font-size: 28px;
+            font-weight: 700;
             color: #fff;
         }
-        .card .highlight { color: var(--primary); text-shadow: 0 0 20px rgba(234, 179, 8, 0.3); }
+
+        .card .highlight {
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
 
         .form-panel {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            background-color: var(--bg-card);
             padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
             margin-bottom: 35px;
-            transition: all 0.4s ease;
         }
-        .form-panel:hover { border-color: rgba(255,255,255,0.15); }
 
         .form-panel h3 {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--primary);
-            margin-bottom: 25px;
-            padding-bottom: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
@@ -291,121 +248,125 @@
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             position: relative;
         }
 
         label {
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 500;
             color: var(--text-muted);
-            letter-spacing: 0.5px;
         }
 
         input, select {
             width: 100%;
-            padding: 14px 18px;
+            padding: 12px 16px;
             background-color: var(--bg-input);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--border);
             color: #fff;
-            border-radius: 10px;
-            font-size: 14px;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s ease;
         }
 
         input:focus, select:focus {
             border-color: var(--primary);
-            background-color: rgba(0,0,0,0.6);
-            box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.15);
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
             outline: none;
         }
 
         .search-results {
             position: absolute;
-            top: 78px; left: 0; right: 0;
-            background-color: #1a1a24;
+            top: 74px;
+            left: 0; right: 0;
+            background-color: var(--bg-input);
             border: 1px solid var(--primary);
-            border-radius: 10px;
-            z-index: 20;
+            border-radius: 8px;
+            z-index: 10;
             max-height: 180px;
             overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             display: none;
         }
 
         .search-item {
-            padding: 14px 18px;
+            padding: 12px 16px;
             cursor: pointer;
             border-bottom: 1px solid var(--border);
             font-size: 14px;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
         }
-        .search-item:hover { background-color: var(--primary); color: #000; font-weight: 700; }
 
-        /* Botões Modernos */
+        .search-item:hover {
+            background-color: var(--primary);
+            color: #0f111a;
+            font-weight: 600;
+        }
+
         .btn {
-            background: linear-gradient(135deg, var(--primary) 0%, #d97706 100%);
-            color: #000;
-            padding: 16px 28px;
+            background-color: var(--primary);
+            color: #0f111a;
+            padding: 14px 24px;
             border: none;
-            border-radius: 10px;
-            font-weight: 800;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
             font-size: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.15);
+            transition: all 0.2s ease;
         }
+
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(234, 179, 8, 0.5);
-            background: linear-gradient(135deg, var(--primary-hover) 0%, #f59e0b 100%);
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
         }
 
         .btn-small {
-            padding: 8px 14px;
-            font-size: 12px;
-            font-weight: 700;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: 8px;
-            border: 1px solid transparent;
-            transition: all 0.2s ease;
-            margin-right: 4px;
-            margin-bottom: 4px;
+            border-radius: 6px;
+            border: none;
+            transition: transform 0.1s ease;
+            margin-right: 2px;
+            margin-bottom: 2px;
         }
-        .btn-small:hover { transform: translateY(-2px); filter: brightness(1.2); }
+        .btn-small:active { transform: scale(0.95); }
 
         .btn-add-item {
-            background-color: rgba(234, 179, 8, 0.1);
+            background-color: rgba(255, 204, 0, 0.15);
             color: var(--primary);
             border: 1px dashed var(--primary);
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
-        .btn-add-item:hover { background-color: var(--primary); color: #000; box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+        .btn-add-item:hover {
+            background-color: var(--primary);
+            color: #000;
+        }
 
         .btn-remove-item {
-            background-color: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            padding: 10px 15px;
-            border-radius: 8px;
+            background-color: rgba(198, 40, 40, 0.2);
+            color: #ffcdd2;
+            border: 1px solid rgba(198, 40, 40, 0.4);
+            padding: 8px 12px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.2s;
         }
-        .btn-remove-item:hover { background-color: #ef4444; color: #fff; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+        .btn-remove-item:hover {
+            background-color: #c62828;
+            color: #fff;
+        }
 
-        /* Tabelas Glassmorphism */
         .table-container {
             overflow-x: auto;
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
+            background-color: var(--bg-card);
             border-radius: var(--radius);
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
@@ -413,78 +374,82 @@
             margin-bottom: 35px;
         }
 
-        table { width: 100%; border-collapse: collapse; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
         th {
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(39, 44, 63, 0.3);
             color: var(--primary);
-            font-weight: 700;
-            font-size: 12px;
+            font-weight: 600;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 18px 20px;
+            letter-spacing: 0.5px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
         }
+
         td {
-            padding: 18px 20px;
+            padding: 16px 20px;
             font-size: 14px;
             color: var(--text-main);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid var(--border);
             white-space: nowrap;
         }
-        tr:hover td { background-color: rgba(255,255,255,0.03); }
+
         tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: rgba(255,255,255,0.02); }
 
         .badge {
-            padding: 6px 12px;
-            border-radius: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
             font-size: 11px;
-            font-weight: 800;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             display: inline-block;
         }
 
-        /* Badges de Cores Vibrantes */
-        .badge-premium { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.4); }
-        .badge-ouro { background: rgba(245, 158, 11, 0.15); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.4); }
-        .badge-prata { background: rgba(148, 163, 184, 0.15); color: #e2e8f0; border: 1px solid rgba(148, 163, 184, 0.4); }
-        .badge-bronze { background: rgba(168, 162, 158, 0.15); color: #e7e5e4; border: 1px solid rgba(168, 162, 158, 0.4); }
-        .badge-success { background: rgba(34, 197, 94, 0.15); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
-        .badge-warning { background: rgba(234, 179, 8, 0.15); color: #fef08a; border: 1px solid rgba(234, 179, 8, 0.4); }
-        .badge-danger { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .badge-premium { background-color: rgba(123, 31, 162, 0.15); color: #e1bee7; border: 1px solid rgba(123, 31, 162, 0.3); }
+        .badge-ouro { background-color: rgba(245, 124, 0, 0.15); color: #ffe0b2; border: 1px solid rgba(245, 124, 0, 0.3); }
+        .badge-prata { background-color: rgba(144, 164, 174, 0.15); color: #eceff1; border: 1px solid rgba(144, 164, 174, 0.3); }
+        .badge-bronze { background-color: rgba(141, 110, 99, 0.15); color: #d7ccc8; border: 1px solid rgba(141, 110, 99, 0.3); }
+        
+        .badge-success { background-color: rgba(46, 125, 50, 0.15); color: #c8e6c9; border: 1px solid rgba(46, 125, 50, 0.3); }
+        .badge-warning { background-color: rgba(255, 152, 0, 0.15); color: #ffe0b2; border: 1px solid rgba(255, 152, 0, 0.3); }
+        .badge-danger { background-color: rgba(198, 40, 40, 0.15); color: #ffcdd2; border: 1px solid rgba(198, 40, 40, 0.3); }
 
         .category-header {
-            font-size: 16px;
-            font-weight: 800;
+            font-size: 14px;
+            font-weight: 700;
             color: var(--primary);
-            letter-spacing: 1px;
-            margin-top: 35px;
+            letter-spacing: 0.5px;
+            margin-top: 30px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        /* Modal com Fundo Blur (Glassmorphism) */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
+            background-color: rgba(10, 11, 16, 0.8);
+            backdrop-filter: blur(4px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
         .modal-content {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--primary);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(234, 179, 8, 0.15);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             max-width: 650px;
             width: 100%;
-            padding: 40px;
+            padding: 30px;
             position: relative;
             max-height: 90vh;
             overflow-y: auto;
@@ -492,144 +457,141 @@
         .close-modal {
             position: absolute;
             top: 20px; right: 20px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border);
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            color: var(--text-muted); font-size: 20px;
+            background: none; border: none;
+            color: var(--text-muted); font-size: 24px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: color 0.2s ease;
         }
-        .close-modal:hover { color: #fff; background: rgba(239,68,68,0.2); border-color: #ef4444; }
+        .close-modal:hover { color: #fff; }
 
         .matrix-table input {
-            padding: 10px;
+            padding: 8px;
             font-size: 14px;
             text-align: center;
-            width: 90px;
-            background-color: rgba(0,0,0,0.4);
+            width: 85px;
+            background-color: var(--bg-input);
             border: 1px solid var(--border);
             color: #fff;
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
-        /* TOAST ANIMADO */
+        /* NOTIFICAÇÃO TOAST */
         #toast-container {
             position: fixed;
-            bottom: 30px; right: 30px;
+            bottom: 25px; right: 25px;
             z-index: 9999;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
         .toast {
-            min-width: 300px;
-            padding: 16px 24px;
-            background: rgba(15, 15, 18, 0.95);
-            backdrop-filter: blur(10px);
-            border-left: 5px solid var(--primary);
+            min-width: 280px;
+            padding: 14px 20px;
+            background-color: var(--bg-card);
+            border-left: 4px solid var(--primary);
             border-top: 1px solid var(--border);
             border-right: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
             color: #fff;
             font-size: 14px;
-            font-weight: 600;
-            border-radius: 10px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            font-weight: 500;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            animation: slideIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation: slideIn 0.3s ease forwards;
         }
-        .toast.success { border-left-color: #22c55e; }
-        .toast.error { border-left-color: #ef4444; }
-        .toast.warning { border-left-color: #f59e0b; }
+        .toast.success { border-left-color: #4caf50; }
+        .toast.error { border-left-color: #f44336; }
+        .toast.warning { border-left-color: #ff9800; }
         
         @keyframes slideIn {
-            from { transform: translateX(120%); opacity: 0; }
+            from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
 
         /* PAINEL DO CUBO 3D DE METAS */
         .cube-dashboard-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
+            background-color: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 35px;
+            padding: 24px;
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 25px;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 35px;
             box-shadow: var(--shadow);
-            transition: all 0.4s ease;
         }
-        .cube-dashboard-card:hover { border-color: rgba(255,255,255,0.15); }
-        .cube-controls { flex: 1; min-width: 260px; }
-        
+        .cube-controls {
+            flex: 1;
+            min-width: 260px;
+        }
         .cube-viewport {
-            width: 160px; height: 160px;
-            perspective: 800px;
-            display: flex; align-items: center; justify-content: center;
+            width: 140px;
+            height: 140px;
+            perspective: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin: 0 auto;
         }
         .cube-3d {
-            width: 90px; height: 90px;
+            width: 80px;
+            height: 80px;
             position: relative;
             transform-style: preserve-3d;
             transform: rotateX(-22deg) rotateY(38deg);
-            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: transform 0.5s ease;
         }
         .cube-face {
             position: absolute;
-            width: 90px; height: 90px;
+            width: 80px;
+            height: 80px;
             border: 2px solid var(--primary);
-            background: rgba(234, 179, 8, 0.03);
-            box-shadow: inset 0 0 15px rgba(234, 179, 8, 0.1);
+            background: rgba(255, 204, 0, 0.05);
+            box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.15);
             overflow: hidden;
-            backdrop-filter: blur(4px);
         }
-        .cube-face.front  { transform: translateZ(45px); }
-        .cube-face.back   { transform: rotateY(180deg) translateZ(45px); }
-        .cube-face.right  { transform: rotateY(90deg) translateZ(45px); }
-        .cube-face.left   { transform: rotateY(-90deg) translateZ(45px); }
-        .cube-face.top    { transform: rotateX(90deg) translateZ(45px); }
-        .cube-face.bottom { transform: rotateX(-90deg) translateZ(45px); }
+        .cube-face.front  { transform: translateZ(40px); }
+        .cube-face.back   { transform: rotateY(180deg) translateZ(40px); }
+        .cube-face.right  { transform: rotateY(90deg) translateZ(40px); }
+        .cube-face.left   { transform: rotateY(-90deg) translateZ(40px); }
+        .cube-face.top    { transform: rotateX(90deg) translateZ(40px); }
+        .cube-face.bottom { transform: rotateX(-90deg) translateZ(40px); }
 
+        /* LÍQUIDO AMATELO INTERNO */
         .liquid-fill {
             position: absolute;
             bottom: 0; left: 0; right: 0;
-            background: linear-gradient(180deg, rgba(234, 179, 8, 0.9) 0%, rgba(202, 138, 4, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(255, 204, 0, 0.85) 0%, rgba(212, 160, 0, 0.95) 100%);
             height: 0%;
-            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 20px rgba(234, 179, 8, 0.8);
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
         }
 
+        /* LINHA DE ITEM / MEDIDA DINÂMICA */
         .dynamic-item-row {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
+            background-color: rgba(30, 34, 48, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) auto;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
-            transition: all 0.3s ease;
-        }
-        .dynamic-item-row:hover {
-            background-color: rgba(255,255,255,0.02);
-            border-color: rgba(255,255,255,0.1);
         }
 
         @media (max-width: 768px) {
             body { flex-direction: column; padding-top: 65px; }
             .sidebar {
-                position: fixed; top: 65px; left: -280px; bottom: 0;
+                position: fixed;
+                top: 65px; left: -280px; bottom: 0;
                 z-index: 99; width: 280px;
-                box-shadow: 10px 0 40px rgba(0,0,0,0.8);
+                box-shadow: 10px 0 30px rgba(0,0,0,0.5);
             }
             .sidebar.active { left: 0; }
             .mobile-header { display: flex; }
@@ -637,7 +599,7 @@
             .cube-dashboard-card { flex-direction: column; text-align: center; }
         }
 
-        /* CONTAINER DO PDF (Intocado - Fundo Branco Obrigatório) */
+        /* CONTAINER DO PDF (Ajustado para não sair em branco) */
         #pdf-template {
             display: none;
             background-color: #ffffff !important;
@@ -661,16 +623,16 @@
 
     <div class="mobile-header">
         <div class="mobile-brand">
-            <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
-            <span>CUBO <span>GLASS</span></span>
+            <img src="logo.png" alt="Logo Cubo Glass">
+            <span>CUBO GLASS</span>
         </div>
         <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     </div>
 
     <div class="sidebar" id="sidebar">
         <div class="brand">
-            <img src="logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/80/eab308/000000?text=CG'">
-            <div class="brand-text">CUBO <span>GLASS</span></div>
+            <img src="logo.png" alt="Logo Cubo Glass">
+            <div class="brand-text">Cubo Glass</div>
         </div>
         <button class="nav-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
         <button class="nav-btn" onclick="switchTab('clientes')">👥 Clientes</button>
@@ -700,25 +662,25 @@
                 </div>
                 <div class="card">
                     <h3>Total Faturado</h3>
-                    <p id="dash-faturado" style="color: #4ade80;">R$ 0,00</p>
+                    <p id="dash-faturado" style="color: #4caf50;">R$ 0,00</p>
                 </div>
             </div>
 
             <!-- CARD DA META 3D COM CUBO AMARELO -->
             <div class="cube-dashboard-card">
                 <div class="cube-controls">
-                    <h3 style="font-size: 18px; color: var(--primary); font-weight: 800; margin-bottom: 15px;">🎯 Meta de Vendas</h3>
-                    <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <h3 style="font-size: 16px; color: var(--primary); margin-bottom: 10px;">🎯 Meta de Vendas</h3>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
                         <select id="meta-tipo" style="width: auto; flex: 1;" onchange="atualizarMetaEProgresso()">
                             <option value="diaria">Meta Diária</option>
                             <option value="semanal">Meta Semanal</option>
                             <option value="mensal" selected>Meta Mensal</option>
                         </select>
-                        <input type="number" id="meta-valor" placeholder="R$ Meta (ex: 50000)" style="width: 180px;" value="50000" oninput="atualizarMetaEProgresso()">
+                        <input type="number" id="meta-valor" placeholder="R$ Meta (ex: 50000)" style="width: 160px;" value="50000" oninput="atualizarMetaEProgresso()">
                     </div>
-                    <p style="font-size: 14px; color: var(--text-muted); background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
-                        Realizado no período: <strong id="lbl-realizado-periodo" style="color: #fff; font-size: 16px;">R$ 0,00</strong> 
-                        (<strong id="lbl-porcentagem-meta" style="color: var(--primary); font-size: 16px;">0%</strong>)
+                    <p style="font-size: 13px; color: var(--text-muted);">
+                        Realizado no período: <strong id="lbl-realizado-periodo" style="color: #fff;">R$ 0,00</strong> 
+                        (<strong id="lbl-porcentagem-meta" style="color: var(--primary);">0%</strong>)
                     </p>
                 </div>
 
@@ -770,7 +732,7 @@
                 </form>
             </div>
 
-            <h3 style="color: #fff; font-size: 20px; margin-bottom: 15px;">Clientes Cadastrados</h3>
+            <h3>Clientes Cadastrados</h3>
             <div class="table-container">
                 <table id="table-clientes">
                     <thead>
@@ -803,8 +765,8 @@
                 </div>
 
                 <!-- SEÇÃO 1: MÚLTIPLAS MEDIDAS DE VIDRO -->
-                <div style="margin-top: 25px; margin-bottom: 30px;">
-                    <h3 style="border:none; padding:0; margin-bottom: 15px;">
+                <div style="margin-top: 15px; margin-bottom: 25px;">
+                    <h3>
                         <span>🪟 Itens / Medidas do Vidro</span>
                         <button type="button" class="btn-add-item" onclick="adicionarLinhaMedida()">+ Adicionar Medida</button>
                     </h3>
@@ -812,15 +774,15 @@
                 </div>
 
                 <!-- SEÇÃO 2: MÚLTIPLOS ACESSÓRIOS DO ESTOQUE -->
-                <div style="margin-top: 25px; margin-bottom: 30px;">
-                    <h3 style="border:none; padding:0; margin-bottom: 15px;">
+                <div style="margin-top: 15px; margin-bottom: 25px;">
+                    <h3>
                         <span>📦 Acessórios / Insumos Adicionais</span>
                         <button type="button" class="btn-add-item" onclick="adicionarLinhaAcessorio()">+ Adicionar Insumo</button>
                     </h3>
                     <div id="container-acessorios"></div>
                 </div>
 
-                <div class="card-grid" style="margin-top: 35px;">
+                <div class="card-grid" style="margin-top: 25px;">
                     <div class="card">
                         <h3>Área Total m²</h3>
                         <p class="highlight" id="res-area">0.00 m²</p>
@@ -833,25 +795,25 @@
                         <h3>Total Insumos</h3>
                         <p id="res-total-insumos">R$ 0,00</p>
                     </div>
-                    <div class="card" style="border-color: var(--primary); background: rgba(234, 179, 8, 0.05);">
+                    <div class="card">
                         <h3>Total Geral do Pedido</h3>
                         <p class="highlight" id="res-total" style="color: var(--primary);">R$ 0,00</p>
                     </div>
                 </div>
 
-                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">
                     ⏳ <strong>Validade do Orçamento:</strong> 7 dias após a data de emissão.
                 </p>
 
-                <button class="btn" style="width: 100%; padding: 20px; font-size: 16px;" onclick="registrarOrcamento()">Salvar Orçamento Oficial</button>
+                <button class="btn" style="width: 100%;" onclick="registrarOrcamento()">Salvar Orçamento Oficial</button>
             </div>
         </div>
 
-        <!-- Histórico -->
+        <!-- Histórico (Com Filtros de Busca e Botão WhatsApp) -->
         <div id="historico" class="tab-content">
             <h2 class="header-title">Histórico de Pedidos</h2>
             
-            <div class="form-row" style="margin-bottom: 25px; background: var(--bg-card); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border); backdrop-filter: blur(16px);">
+            <div class="form-row" style="margin-bottom: 20px;">
                 <div class="form-group">
                     <label>🔍 Buscar por Cliente ou N° Orçamento</label>
                     <input type="text" id="hist-filtro-texto" placeholder="Digite para filtrar instantaneamente..." oninput="filtrarHistoricoLocal()">
@@ -932,11 +894,11 @@
         <!-- Tabela m² Config -->
         <div id="configuracoes" class="tab-content">
             <h2 class="header-title">Configuração de Tabelas</h2>
-            <p style="margin-bottom: 30px; color: var(--text-muted); font-size: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">Altere os valores e clique no botão <strong>Salvar Tabela</strong> ao final da página para gravar permanentemente na nuvem.</p>
+            <p style="margin-bottom: 25px; color: var(--text-muted); font-size: 14px;">Altere os valores e clique no botão **Salvar Tabela** ao final da página para gravar permanentemente na nuvem.</p>
             <div id="matrix-container">
                 <p style="color: var(--text-muted); font-style: italic;">Carregando matriz de preços por nível...</p>
             </div>
-            <button class="btn" style="width: 100%; margin-top: 20px; font-size: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(234, 179, 8, 0.4);" onclick="salvarTabelaPrecosCompleta()">💾 Salvar Tabela de Preços na Nuvem</button>
+            <button class="btn" style="width: 100%; margin-top: 20px; font-size: 16px; padding: 16px;" onclick="salvarTabelaPrecosCompleta()">💾 Salvar Tabela de Preços na Nuvem</button>
         </div>
     </div>
 
@@ -944,8 +906,8 @@
     <div id="orcModal" class="modal">
         <div class="modal-content">
             <button class="close-modal" onclick="fecharModal()">×</button>
-            <h3 style="color: var(--primary); font-size: 20px; font-weight: 800; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">📄 Resumo Detalhado do Pedido</h3>
-            <div id="modal-body" style="line-height: 1.8; font-size: 15px; color: var(--text-main);"></div>
+            <h3 style="color: var(--primary); font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">📄 Resumo Detalhado do Pedido</h3>
+            <div id="modal-body" style="line-height: 1.7; font-size: 14px; color: var(--text-main);"></div>
         </div>
     </div>
 
@@ -953,16 +915,16 @@
     <div id="pdf-template"></div>
 
     <script>
-        // CONFIGURAÇÃO DO FIREBASE (MANTIDA INTACTA)
+        // CONFIGURAÇÃO DO FIREBASE (SEUS DADOS)
         const firebaseConfig = {
-            apiKey: "AIzaSyD-bH7MY-VFHJYhuYGa18UKu2EslksAjgM",
-            authDomain: "cubo-glass.firebaseapp.com",
-            projectId: "cubo-glass",
-            storageBucket: "cubo-glass.firebasestorage.app",
-            messagingSenderId: "1010303888432",
-            appId: "1:1010303888432:web:4892849f840824542e91f5",
-            measurementId: "G-958FX0F2D5"
-        };
+  apiKey: "AIzaSyD-bH7MY-VFHJYhuYGa18UKu2EslksAjgM",
+  authDomain: "cubo-glass.firebaseapp.com",
+  projectId: "cubo-glass",
+  storageBucket: "cubo-glass.firebasestorage.app",
+  messagingSenderId: "1010303888432",
+  appId: "1:1010303888432:web:4892849f840824542e91f5",
+  measurementId: "G-958FX0F2D5"
+};
 
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
@@ -972,6 +934,8 @@
         let dbClientes = [];
         let dbEstoque = [];
         let dbOrcamentos = [];
+
+        // ESTRUTURA BASE DAS LINHAS DE MEDIDA E ACESSÓRIOS DO ORÇAMENTO
         let linhasMedidas = [];
         let linhasAcessorios = [];
 
@@ -1001,30 +965,39 @@
 
         let tabelaPrecos = matrizPadrao;
 
+        /* NOTIFICAÇÃO TOAST CUSTOMIZADA */
         function showToast(msg, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
-            toast.innerHTML = `<span>${msg}</span><button style="background:none; border:none; color:#fff; cursor:pointer; font-size:16px;" onclick="this.parentElement.remove()">✕</button>`;
+            toast.innerHTML = `<span>${msg}</span><button style="background:none; border:none; color:#fff; cursor:pointer;" onclick="this.parentElement.remove()">✕</button>`;
             container.appendChild(toast);
-            setTimeout(() => { if (toast.parentElement) toast.remove(); }, 4000);
+            setTimeout(() => {
+                if (toast.parentElement) toast.remove();
+            }, 4000);
         }
 
-        function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); }
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
             const targetTab = document.getElementById(tabId);
             if(targetTab) targetTab.classList.add('active');
+
             if (window.event && window.event.currentTarget && window.event.currentTarget.classList) {
                 window.event.currentTarget.classList.add('active');
             }
             document.getElementById('sidebar').classList.remove('active');
+            
             if(tabId === 'orcamentos') limparBuscasOrcamento();
             if(tabId === 'configuracoes') renderizarFormConfig();
         }
 
+        /* BANCO DE DADOS EM TEMPO REAL */
         db.collection("clientes").onSnapshot((snapshot) => {
             dbClientes = [];
             const tbody = document.querySelector('#table-clientes tbody');
@@ -1034,7 +1007,7 @@
                 dbClientes.push(cli);
                 if(tbody) {
                     tbody.innerHTML += `<tr>
-                        <td><strong style="color:#fff;">${cli.nome}</strong></td>
+                        <td><strong>${cli.nome}</strong></td>
                         <td>${cli.doc}</td>
                         <td>${cli.tel || '-'}</td>
                         <td><span class="badge badge-${cli.nivel ? cli.nivel.toLowerCase() : 'bronze'}">${cli.nivel}</span></td>
@@ -1067,8 +1040,12 @@
 
         function carregarMatrizPrecos() {
             db.collection("config").doc("matrizM2").get().then((doc) => {
-                if(doc.exists) tabelaPrecos = doc.data();
-                else { tabelaPrecos = matrizPadrao; db.collection("config").doc("matrizM2").set(matrizPadrao); }
+                if(doc.exists) {
+                    tabelaPrecos = doc.data();
+                } else {
+                    tabelaPrecos = matrizPadrao;
+                    db.collection("config").doc("matrizM2").set(matrizPadrao);
+                }
                 renderizarFormConfig();
             }).catch(err => {
                 console.error("Erro ao ler matriz:", err);
@@ -1077,9 +1054,17 @@
             });
         }
 
+        /* GERENCIADOR DE INÚMERAS MEDIDAS DE VIDRO */
         function adicionarLinhaMedida() {
             const id = Date.now() + Math.random();
-            linhasMedidas.push({ id: id, cor: 'Incolor', espessura: '8 mm', altura: 1500, largura: 1200, qtd: 1 });
+            linhasMedidas.push({
+                id: id,
+                cor: 'Incolor',
+                espessura: '8 mm',
+                altura: 1500,
+                largura: 1200,
+                qtd: 1
+            });
             renderizarLinhasMedidas();
             calcularSistemaMultiplo();
         }
@@ -1092,13 +1077,17 @@
 
         function atualizarLinhaMedida(id, campo, valor) {
             const linha = linhasMedidas.find(l => l.id === id);
-            if (linha) { linha[campo] = valor; calcularSistemaMultiplo(); }
+            if (linha) {
+                linha[campo] = valor;
+                calcularSistemaMultiplo();
+            }
         }
 
         function renderizarLinhasMedidas() {
             const container = document.getElementById('container-medidas');
             if(!container) return;
             container.innerHTML = '';
+
             linhasMedidas.forEach((l, index) => {
                 container.innerHTML += `
                     <div class="dynamic-item-row">
@@ -1140,9 +1129,16 @@
             });
         }
 
+        /* GERENCIADOR DE INÚMEROS ACESSÓRIOS DO ESTOQUE */
         function adicionarLinhaAcessorio() {
             const id = Date.now() + Math.random();
-            linhasAcessorios.push({ id: id, idEstoque: '', nome: '', preco: 0, qtd: 1 });
+            linhasAcessorios.push({
+                id: id,
+                idEstoque: '',
+                nome: '',
+                preco: 0,
+                qtd: 1
+            });
             renderizarLinhasAcessorios();
             calcularSistemaMultiplo();
         }
@@ -1157,26 +1153,38 @@
             const linha = linhasAcessorios.find(a => a.id === id);
             const itemEst = dbEstoque.find(e => e.id === idEstoque);
             if (linha) {
-                if (itemEst) { linha.idEstoque = itemEst.id; linha.nome = itemEst.nome; linha.preco = itemEst.preco; }
-                else { linha.idEstoque = ''; linha.nome = ''; linha.preco = 0; }
+                if (itemEst) {
+                    linha.idEstoque = itemEst.id;
+                    linha.nome = itemEst.nome;
+                    linha.preco = itemEst.preco;
+                } else {
+                    linha.idEstoque = '';
+                    linha.nome = '';
+                    linha.preco = 0;
+                }
                 calcularSistemaMultiplo();
             }
         }
 
         function atualizarQtdAcessorio(id, qtd) {
             const linha = linhasAcessorios.find(a => a.id === id);
-            if(linha) { linha.qtd = Math.max(1, parseInt(qtd) || 1); calcularSistemaMultiplo(); }
+            if(linha) {
+                linha.qtd = Math.max(1, parseInt(qtd) || 1);
+                calcularSistemaMultiplo();
+            }
         }
 
         function renderizarLinhasAcessorios() {
             const container = document.getElementById('container-acessorios');
             if(!container) return;
             container.innerHTML = '';
+
             linhasAcessorios.forEach((a) => {
                 let options = `<option value="">-- Selecione do Estoque --</option>`;
                 dbEstoque.forEach(e => {
                     options += `<option value="${e.id}" ${e.id === a.idEstoque ? 'selected' : ''}>${e.nome} (Qtd Disp: ${e.qtd}) - R$ ${e.preco.toFixed(2)}</option>`;
                 });
+
                 container.innerHTML += `
                     <div class="dynamic-item-row" style="grid-template-columns: 2fr 1fr 1fr auto;">
                         <div>
@@ -1185,7 +1193,7 @@
                         </div>
                         <div>
                             <label>Preço Unit.</label>
-                            <input type="text" value="R$ ${a.preco.toFixed(2).replace('.',',')}" disabled style="opacity: 0.7; background: rgba(0,0,0,0.6);">
+                            <input type="text" value="R$ ${a.preco.toFixed(2).replace('.',',')}" disabled style="opacity: 0.7;">
                         </div>
                         <div>
                             <label>Qtd Requerida</label>
@@ -1206,7 +1214,7 @@
             document.getElementById('orc-cliente-selected-tel').value = '';
             linhasMedidas = [];
             linhasAcessorios = [];
-            adicionarLinhaMedida();
+            adicionarLinhaMedida(); // Inicia com 1 medida padrão
             calcularSistemaMultiplo();
         }
 
@@ -1216,7 +1224,9 @@
             const filtrados = dbClientes.filter(c => c.nome.toLowerCase().includes(query.toLowerCase()));
             container.innerHTML = '';
             if(filtrados.length > 0) {
-                filtrados.forEach(c => { container.innerHTML += `<div class="search-item" onclick="selecionarClienteOrcamento('${c.nome}', '${c.nivel}', '${c.tel || ''}')">${c.nome} (${c.nivel})</div>`; });
+                filtrados.forEach(c => {
+                    container.innerHTML += `<div class="search-item" onclick="selecionarClienteOrcamento('${c.nome}', '${c.nivel}', '${c.tel || ''}')">${c.nome} (${c.nivel})</div>`;
+                });
                 container.style.display = 'block';
             } else {
                 container.innerHTML = '<div class="search-item" style="color: var(--text-muted);">Nenhum cliente encontrado</div>';
@@ -1243,8 +1253,11 @@
                 return;
             }
 
-            let areaTotal = 0; let totalVidros = 0; let totalInsumos = 0;
+            let areaTotal = 0;
+            let totalVidros = 0;
+            let totalInsumos = 0;
 
+            // Calcula total dos vidros
             linhasMedidas.forEach(m => {
                 const area = ((m.altura * m.largura) / 1000000) * m.qtd;
                 areaTotal += area;
@@ -1252,7 +1265,10 @@
                 totalVidros += (area * precoM2);
             });
 
-            linhasAcessorios.forEach(a => { totalInsumos += (a.preco * a.qtd); });
+            // Calcula total dos acessórios
+            linhasAcessorios.forEach(a => {
+                totalInsumos += (a.preco * a.qtd);
+            });
 
             const totalGeral = totalVidros + totalInsumos;
 
@@ -1266,10 +1282,11 @@
             const container = document.getElementById('matrix-container');
             if(!container) return;
             container.innerHTML = '';
+
             for (let cor in tabelaPrecos) {
                 let html = `
                     <div class="form-panel">
-                        <h3 style="color: #fff;">Matriz Comercial - <span style="color:var(--primary);">${cor}</span></h3>
+                        <h3 style="color: #fff;">Matriz Comercial - ${cor}</h3>
                         <div class="table-container">
                             <table class="matrix-table">
                                 <thead>
@@ -1285,7 +1302,7 @@
                 for (let esp in tabelaPrecos[cor]) {
                     html += `
                         <tr>
-                            <td><strong style="color:#fff;">${esp === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : esp}</strong></td>
+                            <td><strong>${esp === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : esp}</strong></td>
                             <td><input type="number" value="${tabelaPrecos[cor][esp]['Bronze'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Bronze', this.value)"></td>
                             <td><input type="number" value="${tabelaPrecos[cor][esp]['Prata'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Prata', this.value)"></td>
                             <td><input type="number" value="${tabelaPrecos[cor][esp]['Ouro'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Ouro', this.value)"></td>
@@ -1305,8 +1322,13 @@
 
         function salvarTabelaPrecosCompleta() {
             db.collection("config").doc("matrizM2").set(tabelaPrecos)
-            .then(() => { showToast('✅ Tabela de Preços gravada com sucesso na Nuvem!', 'success'); })
-            .catch((err) => { console.error("Erro ao salvar preços:", err); showToast('❌ Erro ao salvar na nuvem.', 'error'); });
+            .then(() => {
+                showToast('✅ Tabela de Preços gravada com sucesso na Nuvem!', 'success');
+            })
+            .catch((err) => {
+                console.error("Erro ao salvar preços:", err);
+                showToast('❌ Erro ao salvar na nuvem.', 'error');
+            });
         }
 
         function renderizarEstoque() {
@@ -1340,9 +1362,9 @@
                         else if (item.qtd <= 5) statusBadge = '<span class="badge badge-warning">Mínimo</span>';
 
                         html += `<tr>
-                            <td><strong style="color:#fff;">${item.nome}</strong></td>
+                            <td><strong>${item.nome}</strong></td>
                             <td>${item.marca}</td>
-                            <td><strong style="color:var(--primary); font-size:15px;">${item.qtd} un</strong></td>
+                            <td><strong>${item.qtd} un</strong></td>
                             <td>R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
                             <td>${statusBadge}</td>
                         </tr>`;
@@ -1353,6 +1375,7 @@
             });
         }
 
+        /* REGISTRAR ORÇAMENTO COM MÚLTIPLOS ITENS E VALIDADE DE 7 DIAS */
         function registrarOrcamento() {
             const nomeCliente = document.getElementById('orc-cliente-selected-nome').value;
             const nivelCliente = document.getElementById('orc-cliente-selected-nivel').value;
@@ -1361,14 +1384,26 @@
             if(!nomeCliente) return showToast('Busque e selecione um cliente da lista!', 'warning');
             if(linhasMedidas.length === 0) return showToast('Adicione ao menos uma medida!', 'warning');
 
-            let areaTotal = 0; let totalVidros = 0; let totalInsumos = 0;
+            let areaTotal = 0;
+            let totalVidros = 0;
+            let totalInsumos = 0;
 
             const listaMedidasSalvar = linhasMedidas.map(m => {
                 const area = ((m.altura * m.largura) / 1000000) * m.qtd;
                 const precoM2 = tabelaPrecos[m.cor]?.[m.espessura]?.[nivelCliente] || 0;
                 const subtotal = area * precoM2;
-                areaTotal += area; totalVidros += subtotal;
-                return { cor: m.cor, espessura: m.espessura, altura: m.altura, largura: m.largura, qtd: m.qtd, area: area, precoM2: precoM2, subtotal: subtotal };
+                areaTotal += area;
+                totalVidros += subtotal;
+                return {
+                    cor: m.cor,
+                    espessura: m.espessura,
+                    altura: m.altura,
+                    largura: m.largura,
+                    qtd: m.qtd,
+                    area: area,
+                    precoM2: precoM2,
+                    subtotal: subtotal
+                };
             });
 
             const listaAcessoriosSalvar = [];
@@ -1376,7 +1411,13 @@
                 if(a.idEstoque && a.nome) {
                     const subtotal = a.preco * a.qtd;
                     totalInsumos += subtotal;
-                    listaAcessoriosSalvar.push({ idEstoque: a.idEstoque, nome: a.nome, preco: a.preco, qtd: a.qtd, subtotal: subtotal });
+                    listaAcessoriosSalvar.push({
+                        idEstoque: a.idEstoque,
+                        nome: a.nome,
+                        preco: a.preco,
+                        qtd: a.qtd,
+                        subtotal: subtotal
+                    });
                 }
             });
 
@@ -1386,10 +1427,18 @@
 
             const novoOrc = {
                 id: Math.floor(1000 + Math.random() * 9000),
-                cliente: nomeCliente, nivel: nivelCliente, tel: telCliente,
-                medidas: listaMedidasSalvar, acessorios: listaAcessoriosSalvar,
-                areaTotal: areaTotal, totalVidros: totalVidros, totalInsumos: totalInsumos, total: totalGeral,
-                status: 'Aguardando', dataCriacao: hoje, dataValidade: validade7Dias
+                cliente: nomeCliente,
+                nivel: nivelCliente,
+                tel: telCliente,
+                medidas: listaMedidasSalvar,
+                acessorios: listaAcessoriosSalvar,
+                areaTotal: areaTotal,
+                totalVidros: totalVidros,
+                totalInsumos: totalInsumos,
+                total: totalGeral,
+                status: 'Aguardando',
+                dataCriacao: hoje,
+                dataValidade: validade7Dias
             };
 
             db.collection("orcamentos").add(novoOrc).then(() => {
@@ -1398,9 +1447,11 @@
             });
         }
 
+        /* FILTRAGEM LOCAL RÁPIDA NO HISTÓRICO DE PEDIDOS */
         function filtrarHistoricoLocal() {
             const texto = document.getElementById('hist-filtro-texto')?.value.toLowerCase() || '';
             const status = document.getElementById('hist-filtro-status')?.value || 'Todos';
+            
             const tbody = document.querySelector('#table-historico tbody');
             if(!tbody) return;
             tbody.innerHTML = '';
@@ -1417,41 +1468,48 @@
                 let colorBadge = 'badge-warning';
                 if(orc.status === 'Pago') colorBadge = 'badge-success';
                 if(orc.status === 'Cancelado') colorBadge = 'badge-danger';
+
                 const indexOriginal = dbOrcamentos.findIndex(o => o.idDoc === orc.idDoc);
 
                 tbody.innerHTML += `<tr>
-                    <td><strong style="color:var(--text-muted)">#${orc.id}</strong></td>
-                    <td><strong style="color:#fff">${orc.cliente}</strong></td>
+                    <td>#${orc.id}</td>
+                    <td><strong>${orc.cliente}</strong></td>
                     <td>${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}</td>
                     <td>${(orc.areaTotal || orc.area || 0).toFixed(2)} m²</td>
-                    <td style="color: var(--primary); font-weight: 800;">R$ ${orc.total.toFixed(2).replace('.', ',')}</td>
+                    <td style="color: var(--primary); font-weight: 600;">R$ ${orc.total.toFixed(2).replace('.', ',')}</td>
                     <td><span class="badge ${colorBadge}">${orc.status}</span></td>
                     <td>
-                        <button class="btn-small" style="background: rgba(255,255,255,0.1); color: #fff;" onclick="abrirOrcamento(${indexOriginal})">👁️ Ver</button>
-                        <button class="btn-small" style="background: var(--primary); color: #000;" onclick="gerarPDF(${indexOriginal})">📄 PDF</button>
-                        <button class="btn-small" style="background: #22c55e; color: #000;" onclick="enviarWhatsApp(${indexOriginal})">💬 Whats</button>
-                        ${orc.status !== 'Pago' ? `<button class="btn-small" style="background: rgba(34,197,94,0.2); border:1px solid #22c55e; color: #86efac;" onclick="mudarStatusEAjustarEstoque('${orc.idDoc}', 'Pago', ${indexOriginal})">💵 Baixar</button>` : ''}
-                        ${orc.status !== 'Cancelado' ? `<button class="btn-small" style="background: rgba(239,68,68,0.2); border:1px solid #ef4444; color: #fca5a5;" onclick="mudarStatusEAjustarEstoque('${orc.idDoc}', 'Cancelado', ${indexOriginal})">❌</button>` : ''}
+                        <button class="btn-small" style="background-color: var(--bg-input); color: #fff;" onclick="abrirOrcamento(${indexOriginal})">👁️ Ver</button>
+                        <button class="btn-small" style="background-color: #ffcc00; color: #000;" onclick="gerarPDF(${indexOriginal})">📄 PDF</button>
+                        <button class="btn-small" style="background-color: #25d366; color: #fff;" onclick="enviarWhatsApp(${indexOriginal})">💬 Whats</button>
+                        ${orc.status !== 'Pago' ? `<button class="btn-small" style="background-color: #2e7d32; color: white;" title="Dar Baixa e Faturar" onclick="mudarStatusEAjustarEstoque('${orc.idDoc}', 'Pago', ${indexOriginal})">💵 Baixar</button>` : ''}
+                        ${orc.status !== 'Cancelado' ? `<button class="btn-small" style="background-color: #c62828; color: white;" onclick="mudarStatusEAjustarEstoque('${orc.idDoc}', 'Cancelado', ${indexOriginal})">❌</button>` : ''}
                     </td>
                 </tr>`;
             });
         }
 
+        /* ENVIO DIRETO VIA WHATSAPP COM MENSAGEM FORMATADA */
         function enviarWhatsApp(index) {
             const orc = dbOrcamentos[index];
             let num = (orc.tel || '').replace(/\D/g, '');
+            
             let mensagem = `Olá *${orc.cliente}*, segue o resumo do seu Orçamento *#${orc.id}* na *Cubo Glass*:%0A%0A`;
             
             if(orc.medidas && orc.medidas.length > 0) {
                 mensagem += `*Itens / Vidros:*%0A`;
-                orc.medidas.forEach((m, i) => { mensagem += `• Peça ${i+1}: ${m.espessura} ${m.cor} (${m.altura}x${m.largura}mm) x${m.qtd}%0A`; });
+                orc.medidas.forEach((m, i) => {
+                    mensagem += `• Peça ${i+1}: ${m.espessura} ${m.cor} (${m.altura}x${m.largura}mm) x${m.qtd}%0A`;
+                });
             } else if(orc.item) {
                 mensagem += `• ${orc.item} (${orc.altura}x${orc.largura}mm)%0A`;
             }
 
             if(orc.acessorios && orc.acessorios.length > 0) {
                 mensagem += `%0A*Componentes / Insumos:*%0A`;
-                orc.acessorios.forEach(a => { mensagem += `• ${a.nome} (x${a.qtd})%0A`; });
+                orc.acessorios.forEach(a => {
+                    mensagem += `• ${a.nome} (x${a.qtd})%0A`;
+                });
             } else if(orc.acessorio && orc.acessorio !== 'Nenhum') {
                 mensagem += `%0A*Acessório:* ${orc.acessorio}%0A`;
             }
@@ -1463,11 +1521,16 @@
             if (num) {
                 if(!num.startsWith('55')) num = '55' + num;
                 window.open(`https://wa.me/${num}?text=${mensagem}`, '_blank');
-            } else { window.open(`https://wa.me/?text=${mensagem}`, '_blank'); }
+            } else {
+                window.open(`https://wa.me/?text=${mensagem}`, '_blank');
+            }
         }
 
+        /* MUDAR STATUS E REALIZAR BAIXA AUTOMÁTICA NO ESTOQUE */
         function mudarStatusEAjustarEstoque(idDoc, novoStatus, index) {
             const orc = dbOrcamentos[index];
+            
+            // Se o status estiver mudando para PAGO, dá baixa automática nos produtos do estoque
             if (novoStatus === 'Pago' && orc.status !== 'Pago') {
                 if (orc.acessorios && orc.acessorios.length > 0) {
                     orc.acessorios.forEach(item => {
@@ -1484,6 +1547,7 @@
                 }
                 showToast(`Pedido #${orc.id} faturado! Baixa efetuada no Estoque.`, 'success');
             }
+
             db.collection("orcamentos").doc(idDoc).update({ status: novoStatus });
         }
 
@@ -1494,7 +1558,7 @@
             let htmlVidros = '';
             if(orc.medidas && orc.medidas.length > 0) {
                 orc.medidas.forEach((m, i) => {
-                    htmlVidros += `<p style="padding:8px; background:rgba(0,0,0,0.3); border-radius:8px; margin-bottom:6px;">• Peça ${i+1}: <strong>${m.espessura} ${m.cor}</strong> - ${m.altura}x${m.largura}mm (x${m.qtd}) = <span style="color:var(--primary);">R$ ${m.subtotal.toFixed(2).replace('.',',')}</span></p>`;
+                    htmlVidros += `<p>• Peça ${i+1}: <strong>${m.espessura} ${m.cor}</strong> - ${m.altura}x${m.largura}mm (x${m.qtd}) = R$ ${m.subtotal.toFixed(2).replace('.',',')}</p>`;
                 });
             } else {
                 htmlVidros = `<p>• ${orc.item} - ${orc.altura}x${orc.largura}mm = R$ ${((orc.total || 0) - (orc.valorAcessorio || 0)).toFixed(2)}</p>`;
@@ -1503,45 +1567,36 @@
             let htmlAcessorios = '';
             if(orc.acessorios && orc.acessorios.length > 0) {
                 orc.acessorios.forEach(a => {
-                    htmlAcessorios += `<p style="padding:8px; background:rgba(0,0,0,0.3); border-radius:8px; margin-bottom:6px;">• ${a.nome} (x${a.qtd}) = <span style="color:var(--primary);">R$ ${a.subtotal.toFixed(2).replace('.',',')}</span></p>`;
+                    htmlAcessorios += `<p>• ${a.nome} (x${a.qtd}) = R$ ${a.subtotal.toFixed(2).replace('.',',')}</p>`;
                 });
             } else if(orc.acessorio && orc.acessorio !== 'Nenhum') {
                 htmlAcessorios = `<p>• ${orc.acessorio} = R$ ${(orc.valorAcessorio || 0).toFixed(2)}</p>`;
             } else {
-                htmlAcessorios = `<p style="color: var(--text-muted); font-style:italic;">Nenhum acessório adicional.</p>`;
+                htmlAcessorios = `<p style="color: var(--text-muted);">Nenhum acessório adicional.</p>`;
             }
 
             body.innerHTML = `
-                <div style="display:flex; justify-content:space-between; margin-bottom: 20px;">
-                    <div>
-                        <p style="margin-bottom: 5px; color:var(--text-muted);">Orçamento: <strong style="color:#fff;">#${orc.id}</strong></p>
-                        <p style="margin-bottom: 5px; color:var(--text-muted);">Cliente: <strong style="color:#fff;">${orc.cliente}</strong> <span class="badge badge-${orc.nivel ? orc.nivel.toLowerCase() : 'bronze'}">${orc.nivel}</span></p>
-                    </div>
-                    <div style="text-align:right;">
-                        <p style="margin-bottom: 5px; color:var(--text-muted);">Status: <span class="badge badge-${orc.status==='Pago'?'success':orc.status==='Cancelado'?'danger':'warning'}">${orc.status}</span></p>
-                        <p style="margin-bottom: 5px; color:var(--text-muted);">Validade: <strong style="color:#fff;">${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}</strong></p>
-                    </div>
-                </div>
+                <p style="margin-bottom: 8px;"><strong>Orçamento:</strong> #${orc.id}</p>
+                <p style="margin-bottom: 8px;"><strong>Cliente:</strong> ${orc.cliente} <span class="badge badge-${orc.nivel ? orc.nivel.toLowerCase() : 'bronze'}">${orc.nivel}</span></p>
+                <p style="margin-bottom: 15px;"><strong>Validade:</strong> até ${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}</p>
                 
-                <h4 style="color: var(--primary); margin-top: 15px; margin-bottom: 10px; font-weight:800;">Vidros e Esquadrias:</h4>
+                <h4 style="color: var(--primary); margin-top: 15px; margin-bottom: 5px;">Vidros e Esquadrias:</h4>
                 ${htmlVidros}
 
-                <h4 style="color: var(--primary); margin-top: 25px; margin-bottom: 10px; font-weight:800;">Insumos e Acessórios:</h4>
+                <h4 style="color: var(--primary); margin-top: 15px; margin-bottom: 5px;">Insumos e Acessórios:</h4>
                 ${htmlAcessorios}
 
-                <hr style="margin: 25px 0; border: 0; border-top: 1px dashed rgba(255,255,255,0.2);">
-                <div style="text-align:right;">
-                    <p style="font-size: 16px; color: var(--text-muted); text-transform:uppercase;">Total do Pedido</p>
-                    <p style="font-size: 32px; font-weight: 800; color: var(--primary);">R$ ${orc.total.toFixed(2).replace('.', ',')}</p>
-                </div>
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
+                <p style="font-size: 20px; font-weight: 700; color: #fff;">Total do Pedido: <span style="color: var(--primary);">R$ ${orc.total.toFixed(2).replace('.', ',')}</span></p>
             `;
             document.getElementById('orcModal').style.display = 'flex';
         }
 
-        /* GERADOR DE PDF (Totalmente Intocado) */
+        /* GERADOR DE PDF MANTIDO INTEGRALMENTE (Sem sair em branco) */
         function gerarPDF(index) {
             const orc = dbOrcamentos[index];
             const containerPDF = document.getElementById('pdf-template');
+            
             let tabelaItensHTML = '';
             if (orc.medidas && orc.medidas.length > 0) {
                 orc.medidas.forEach(m => {
@@ -1588,11 +1643,13 @@
                         <p style="font-size: 11px; color: #c62828; font-weight: bold;">Validade: ${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}</p>
                     </div>
                 </div>
+
                 <div style="background-color: #f2f2f2; padding: 12px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #cccccc; color: #000000;">
                     <h3 style="font-size: 13px; color: #222222; text-transform: uppercase; margin-bottom: 6px; border-bottom: 1px solid #cccccc; padding-bottom: 4px;">Dados do Cliente</h3>
                     <p style="font-size: 14px; margin-bottom: 4px; color: #000000;"><strong>Nome/Razão Social:</strong> ${orc.cliente}</p>
                     <p style="font-size: 12px; color: #333333;"><strong>Classificação comercial:</strong> Tabela ${orc.nivel}</p>
                 </div>
+
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; background-color: #ffffff; color: #000000;">
                     <thead>
                         <tr style="background-color: #111111; color: #ffffff;">
@@ -1602,18 +1659,23 @@
                             <th style="padding: 10px; text-align: right; font-size: 12px;">Subtotal</th>
                         </tr>
                     </thead>
-                    <tbody>${tabelaItensHTML}</tbody>
+                    <tbody>
+                        ${tabelaItensHTML}
+                    </tbody>
                 </table>
+
                 <div style="background-color: #f2f2f2; padding: 12px; border-radius: 6px; margin-bottom: 25px; border: 1px solid #cccccc; color: #000000;">
                     <h3 style="font-size: 13px; color: #222222; text-transform: uppercase; margin-bottom: 6px; border-bottom: 1px solid #cccccc; padding-bottom: 4px;">Componentes Adicionais / Ferragens</h3>
                     ${tabelaAcessoriosHTML}
                 </div>
+
                 <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 15px; background-color: #ffffff;">
                     <div style="text-align: right; border-top: 2px solid #111111; padding-top: 10px; width: 220px;">
                         <span style="font-size: 12px; color: #444444; text-transform: uppercase; font-weight: bold;">Valor Total do Pedido</span>
                         <h2 style="font-size: 22px; color: #000000; font-weight: bold; margin-top: 4px;">R$ ${orc.total.toFixed(2).replace('.', ',')}</h2>
                     </div>
                 </div>
+
                 <div style="margin-top: 40px; text-align: center; font-size: 10px; color: #777777; border-top: 1px solid #dddddd; padding-top: 10px;">
                     Este documento é uma simulação de orçamento oficial com validade de 7 dias, gerada eletronicamente pelo ERP Cubo Glass Distribuidora.
                 </div>
@@ -1637,6 +1699,7 @@
             });
         }
 
+        /* ATUALIZAÇÃO DO DASHBOARD E PREENCHIMENTO ANIMAÇÃO DO CUBO 3D */
         function atualizarDashboard() {
             const cElem = document.getElementById('dash-clientes');
             const oElem = document.getElementById('dash-orcamentos');
@@ -1654,6 +1717,7 @@
         function atualizarMetaEProgresso() {
             const tipoMeta = document.getElementById('meta-tipo')?.value || 'mensal';
             const valorMeta = parseFloat(document.getElementById('meta-valor')?.value) || 50000;
+            
             const agora = new Date();
             let totalPeriodo = 0;
 
@@ -1678,6 +1742,7 @@
             if (lblRealizado) lblRealizado.innerText = "R$ " + totalPeriodo.toFixed(2).replace('.', ',');
             if (lblPorcentagem) lblPorcentagem.innerText = porcentagem.toFixed(1) + "%";
 
+            // Preenche o líquido amarelo das faces do cubo 3D
             const fills = ['fill-front', 'fill-back', 'fill-right', 'fill-left'];
             fills.forEach(id => {
                 const elem = document.getElementById(id);
@@ -1725,4 +1790,10 @@
             atualizarDashboard();
         };
     </script>
-    
+</body>
+</html>
+
+        
+        
+
+                
