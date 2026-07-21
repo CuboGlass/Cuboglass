@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cubo Glass - ERP Premium Cloud v10</title>
+    <title>Cubo Glass - ERP Premium Cloud v11</title>
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -451,26 +451,24 @@
             .main-content { padding: 20px; }
         }
 
-        /* CONTAINER PARA IMPRESSÃO DE PDF (FIX PÁGINA BRANCA) */
+        /* CONTAINER DO PDF (Ajustado para não sair em branco) */
         #pdf-template {
-            display: block;
-            position: fixed;
-            left: -9999px;
-            top: 0;
-            width: 750px;
+            display: none;
             background-color: #ffffff !important;
             color: #000000 !important;
             padding: 30px;
             font-family: Arial, sans-serif;
-            z-index: -999;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
         }
     </style>
 
-    <!-- Scripts do Firebase -->
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     
-    <!-- Biblioteca Geradora de PDF -->
+    <!-- Gerador de PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
@@ -727,7 +725,7 @@
     <div id="pdf-template"></div>
 
     <script>
-        // CONFIGURAÇÃO DO FIREBASE (SUBSTITUA COM AS SUAS CHAVES SE NESCESSÁRIO)
+        // CONFIGURAÇÃO DO FIREBASE (SEUS DADOS)
         const firebaseConfig = {
   apiKey: "AIzaSyD-bH7MY-VFHJYhuYGa18UKu2EslksAjgM",
   authDomain: "cubo-glass.firebaseapp.com",
@@ -737,7 +735,6 @@
   appId: "1:1010303888432:web:4892849f840824542e91f5",
   measurementId: "G-958FX0F2D5"
 };
-
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
@@ -793,7 +790,7 @@
             if(tabId === 'configuracoes') renderizarFormConfig();
         }
 
-        /* BANCO DE DADOS EM TEMPO REAL */
+        /* ESCUTA EM TEMPO REAL */
         db.collection("clientes").onSnapshot((snapshot) => {
             dbClientes = [];
             const tbody = document.querySelector('#table-clientes tbody');
@@ -834,7 +831,6 @@
             atualizarDashboard();
         });
 
-        /* LER MATRIZ DO FIREBASE UMA VEZ PARA NÃO SOBRESCREVER A DIGITAÇÃO */
         function carregarMatrizPrecos() {
             db.collection("config").doc("matrizM2").get().then((doc) => {
                 if(doc.exists) {
@@ -851,7 +847,6 @@
             });
         }
 
-        /* FILTROS E BUSCAS */
         function limparBuscasOrcamento() {
             document.getElementById('orc-cliente-search').value = '';
             document.getElementById('orc-cliente-selected-nome').value = '';
@@ -976,7 +971,6 @@
             tabelaPrecos[cor][esp][nivel] = parseFloat(valor) || 0;
         }
 
-        /* GRAVAÇÃO DEFINITIVA DA TABELA NO FIREBASE */
         function salvarTabelaPrecosCompleta() {
             db.collection("config").doc("matrizM2").set(tabelaPrecos)
             .then(() => {
@@ -1118,7 +1112,7 @@
             document.getElementById('orcModal').style.display = 'flex';
         }
 
-        /* GERADOR DE PDF 100% CORRIGIDO SEM PÁGINAS EM BRANCO */
+        /* GERADOR DE PDF 100% CORRIGIDO (VISÍVEL NO EXATO MOMENTO DO CAPTURE) */
         function gerarPDF(index) {
             const orc = dbOrcamentos[index];
             const containerPDF = document.getElementById('pdf-template');
@@ -1177,23 +1171,24 @@
                 </div>
             `;
 
+            // Torna visível para o renderizador de imagens capturar pixels
+            containerPDF.style.display = 'block';
+
             const opcoes = {
                 margin: 10,
                 filename: `Orcamento_CuboGlass_${orc.id}_${orc.cliente.replace(/\s+/g, '_')}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { 
-                    scale: 2, 
-                    useCORS: true, 
-                    backgroundColor: '#ffffff',
-                    scrollX: 0,
-                    scrollY: 0
-                },
+                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            setTimeout(() => {
-                html2pdf().from(containerPDF).set(opcoes).save();
-            }, 200);
+            // Baixa o arquivo e oculta de novo
+            html2pdf().set(opcoes).from(containerPDF).save().then(() => {
+                containerPDF.style.display = 'none';
+            }).catch(err => {
+                console.error("Erro ao gerar PDF:", err);
+                containerPDF.style.display = 'none';
+            });
         }
 
         function fecharModal() { document.getElementById('orcModal').style.display = 'none'; }
@@ -1253,4 +1248,5 @@
 </body>
 </html>
 
+            
         
