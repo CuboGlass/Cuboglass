@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cubo Glass - ERP Premium Cloud v11</title>
+    <title>Cubo Glass - ERP Premium Cloud v12</title>
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -174,7 +174,7 @@
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 25px;
             margin-bottom: 35px;
         }
@@ -233,6 +233,9 @@
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .form-row {
@@ -326,8 +329,40 @@
             border-radius: 6px;
             border: none;
             transition: transform 0.1s ease;
+            margin-right: 2px;
+            margin-bottom: 2px;
         }
         .btn-small:active { transform: scale(0.95); }
+
+        .btn-add-item {
+            background-color: rgba(255, 204, 0, 0.15);
+            color: var(--primary);
+            border: 1px dashed var(--primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-add-item:hover {
+            background-color: var(--primary);
+            color: #000;
+        }
+
+        .btn-remove-item {
+            background-color: rgba(198, 40, 40, 0.2);
+            color: #ffcdd2;
+            border: 1px solid rgba(198, 40, 40, 0.4);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-remove-item:hover {
+            background-color: #c62828;
+            color: #fff;
+        }
 
         .table-container {
             overflow-x: auto;
@@ -412,10 +447,12 @@
             border: 1px solid var(--border);
             border-radius: var(--radius);
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            max-width: 550px;
+            max-width: 650px;
             width: 100%;
             padding: 30px;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .close-modal {
             position: absolute;
@@ -438,6 +475,116 @@
             border-radius: 6px;
         }
 
+        /* NOTIFICAÇÃO TOAST */
+        #toast-container {
+            position: fixed;
+            bottom: 25px; right: 25px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            min-width: 280px;
+            padding: 14px 20px;
+            background-color: var(--bg-card);
+            border-left: 4px solid var(--primary);
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease forwards;
+        }
+        .toast.success { border-left-color: #4caf50; }
+        .toast.error { border-left-color: #f44336; }
+        .toast.warning { border-left-color: #ff9800; }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* PAINEL DO CUBO 3D DE METAS */
+        .cube-dashboard-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 35px;
+            box-shadow: var(--shadow);
+        }
+        .cube-controls {
+            flex: 1;
+            min-width: 260px;
+        }
+        .cube-viewport {
+            width: 140px;
+            height: 140px;
+            perspective: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        .cube-3d {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(-22deg) rotateY(38deg);
+            transition: transform 0.5s ease;
+        }
+        .cube-face {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 2px solid var(--primary);
+            background: rgba(255, 204, 0, 0.05);
+            box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.15);
+            overflow: hidden;
+        }
+        .cube-face.front  { transform: translateZ(40px); }
+        .cube-face.back   { transform: rotateY(180deg) translateZ(40px); }
+        .cube-face.right  { transform: rotateY(90deg) translateZ(40px); }
+        .cube-face.left   { transform: rotateY(-90deg) translateZ(40px); }
+        .cube-face.top    { transform: rotateX(90deg) translateZ(40px); }
+        .cube-face.bottom { transform: rotateX(-90deg) translateZ(40px); }
+
+        /* LÍQUIDO AMATELO INTERNO */
+        .liquid-fill {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(180deg, rgba(255, 204, 0, 0.85) 0%, rgba(212, 160, 0, 0.95) 100%);
+            height: 0%;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
+        }
+
+        /* LINHA DE ITEM / MEDIDA DINÂMICA */
+        .dynamic-item-row {
+            background-color: rgba(30, 34, 48, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) auto;
+            gap: 10px;
+            align-items: center;
+        }
+
         @media (max-width: 768px) {
             body { flex-direction: column; padding-top: 65px; }
             .sidebar {
@@ -449,6 +596,7 @@
             .sidebar.active { left: 0; }
             .mobile-header { display: flex; }
             .main-content { padding: 20px; }
+            .cube-dashboard-card { flex-direction: column; text-align: center; }
         }
 
         /* CONTAINER DO PDF (Ajustado para não sair em branco) */
@@ -495,9 +643,14 @@
     </div>
 
     <div class="main-content">
+
+        <!-- CONTÊINER PARA NOTIFICAÇÕES TOAST -->
+        <div id="toast-container"></div>
+
         <!-- Dashboard -->
         <div id="dashboard" class="tab-content active">
             <h2 class="header-title">Indicadores Gerais</h2>
+            
             <div class="card-grid">
                 <div class="card">
                     <h3>Clientes na Base</h3>
@@ -510,6 +663,36 @@
                 <div class="card">
                     <h3>Total Faturado</h3>
                     <p id="dash-faturado" style="color: #4caf50;">R$ 0,00</p>
+                </div>
+            </div>
+
+            <!-- CARD DA META 3D COM CUBO AMARELO -->
+            <div class="cube-dashboard-card">
+                <div class="cube-controls">
+                    <h3 style="font-size: 16px; color: var(--primary); margin-bottom: 10px;">🎯 Meta de Vendas</h3>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                        <select id="meta-tipo" style="width: auto; flex: 1;" onchange="atualizarMetaEProgresso()">
+                            <option value="diaria">Meta Diária</option>
+                            <option value="semanal">Meta Semanal</option>
+                            <option value="mensal" selected>Meta Mensal</option>
+                        </select>
+                        <input type="number" id="meta-valor" placeholder="R$ Meta (ex: 50000)" style="width: 160px;" value="50000" oninput="atualizarMetaEProgresso()">
+                    </div>
+                    <p style="font-size: 13px; color: var(--text-muted);">
+                        Realizado no período: <strong id="lbl-realizado-periodo" style="color: #fff;">R$ 0,00</strong> 
+                        (<strong id="lbl-porcentagem-meta" style="color: var(--primary);">0%</strong>)
+                    </p>
+                </div>
+
+                <div class="cube-viewport">
+                    <div class="cube-3d" id="cube-element">
+                        <div class="cube-face front"><div class="liquid-fill" id="fill-front"></div></div>
+                        <div class="cube-face back"><div class="liquid-fill" id="fill-back"></div></div>
+                        <div class="cube-face right"><div class="liquid-fill" id="fill-right"></div></div>
+                        <div class="cube-face left"><div class="liquid-fill" id="fill-left"></div></div>
+                        <div class="cube-face top"></div>
+                        <div class="cube-face bottom"><div class="liquid-fill" style="height: 100%;"></div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -532,7 +715,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Telefone de Contato</label>
+                            <label>Telefone de Contato (WhatsApp)</label>
                             <input type="text" id="cli-tel" placeholder="(11) 99999-0000">
                         </div>
                         <div class="form-group">
@@ -565,89 +748,96 @@
             </div>
         </div>
 
-        <!-- Novo Orçamento -->
+        <!-- Novo Orçamento (Múltiplas Medidas e Múltiplos Acessórios) -->
         <div id="orcamentos" class="tab-content">
-            <h2 class="header-title">Calculadora Comercial</h2>
+            <h2 class="header-title">Calculadora Comercial Avançada</h2>
+            
             <div class="form-panel">
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Buscar Cliente</label>
+                        <label>Buscar / Selecionar Cliente</label>
                         <input type="text" id="orc-cliente-search" placeholder="Digite para filtrar..." oninput="filtrarClientesOrcamento(this.value)">
                         <div id="orc-cliente-results" class="search-results"></div>
                         <input type="hidden" id="orc-cliente-selected-nivel">
                         <input type="hidden" id="orc-cliente-selected-nome">
-                    </div>
-                    <div class="form-group">
-                        <label>Cor do Vidro / Box</label>
-                        <select id="orc-cor" onchange="calcularSistema()">
-                            <option value="Incolor">Incolor</option>
-                            <option value="Fume">Fumê</option>
-                            <option value="Verde">Verde</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Espessura / Tipo</label>
-                        <select id="orc-espessura" onchange="calcularSistema()">
-                            <option value="6 mm">Vidro 6 mm</option>
-                            <option value="8 mm">Vidro 8 mm</option>
-                            <option value="10 mm">Vidro 10 mm</option>
-                            <option value="4 mm Espelho">Espelho 4 mm</option>
-                            <option value="8 mm Box Padrao">Box Padrão 8 mm</option>
-                        </select>
+                        <input type="hidden" id="orc-cliente-selected-tel">
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Altura (mm)</label>
-                        <input type="number" id="orc-altura" value="1500" oninput="calcularSistema()">
-                    </div>
-                    <div class="form-group">
-                        <label>Largura (mm)</label>
-                        <input type="number" id="orc-largura" value="1200" oninput="calcularSistema()">
-                    </div>
+                <!-- SEÇÃO 1: MÚLTIPLAS MEDIDAS DE VIDRO -->
+                <div style="margin-top: 15px; margin-bottom: 25px;">
+                    <h3>
+                        <span>🪟 Itens / Medidas do Vidro</span>
+                        <button type="button" class="btn-add-item" onclick="adicionarLinhaMedida()">+ Adicionar Medida</button>
+                    </h3>
+                    <div id="container-medidas"></div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Adicionar Acessório / Insumo</label>
-                        <input type="text" id="orc-acessorio-search" placeholder="Digite para buscar no estoque..." oninput="filtrarAcessoriosOrcamento(this.value)">
-                        <div id="orc-acessorio-results" class="search-results"></div>
-                        <input type="hidden" id="orc-acessorio-selected-preco" value="0">
-                        <input type="hidden" id="orc-acessorio-selected-nome" value="Nenhum">
-                    </div>
+                <!-- SEÇÃO 2: MÚLTIPLOS ACESSÓRIOS DO ESTOQUE -->
+                <div style="margin-top: 15px; margin-bottom: 25px;">
+                    <h3>
+                        <span>📦 Acessórios / Insumos Adicionais</span>
+                        <button type="button" class="btn-add-item" onclick="adicionarLinhaAcessorio()">+ Adicionar Insumo</button>
+                    </h3>
+                    <div id="container-acessorios"></div>
                 </div>
 
                 <div class="card-grid" style="margin-top: 25px;">
                     <div class="card">
-                        <h3>Área M²</h3>
+                        <h3>Área Total m²</h3>
                         <p class="highlight" id="res-area">0.00 m²</p>
                     </div>
                     <div class="card">
-                        <h3>Preço m² Aplicado</h3>
-                        <p id="res-valorm2">R$ 0,00</p>
+                        <h3>Total Vidros</h3>
+                        <p id="res-total-vidros">R$ 0,00</p>
                     </div>
                     <div class="card">
-                        <h3>Total Geral</h3>
+                        <h3>Total Insumos</h3>
+                        <p id="res-total-insumos">R$ 0,00</p>
+                    </div>
+                    <div class="card">
+                        <h3>Total Geral do Pedido</h3>
                         <p class="highlight" id="res-total" style="color: var(--primary);">R$ 0,00</p>
                     </div>
                 </div>
-                <button class="btn" style="width: 100%; margin-top: 10px;" onclick="registrarOrcamento()">Salvar Orçamento Oficial</button>
+
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">
+                    ⏳ <strong>Validade do Orçamento:</strong> 7 dias após a data de emissão.
+                </p>
+
+                <button class="btn" style="width: 100%;" onclick="registrarOrcamento()">Salvar Orçamento Oficial</button>
             </div>
         </div>
 
-        <!-- Histórico -->
+        <!-- Histórico (Com Filtros de Busca e Botão WhatsApp) -->
         <div id="historico" class="tab-content">
             <h2 class="header-title">Histórico de Pedidos</h2>
+            
+            <div class="form-row" style="margin-bottom: 20px;">
+                <div class="form-group">
+                    <label>🔍 Buscar por Cliente ou N° Orçamento</label>
+                    <input type="text" id="hist-filtro-texto" placeholder="Digite para filtrar instantaneamente..." oninput="filtrarHistoricoLocal()">
+                </div>
+                <div class="form-group">
+                    <label>Filtrar por Status</label>
+                    <select id="hist-filtro-status" onchange="filtrarHistoricoLocal()">
+                        <option value="Todos">Todos os Status</option>
+                        <option value="Aguardando">Aguardando</option>
+                        <option value="Pago">Pago (Faturado)</option>
+                        <option value="Cancelado">Cancelado</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="table-container">
                 <table id="table-historico">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Cliente</th>
-                            <th>Item / Cor</th>
-                            <th>Área</th>
-                            <th>Total</th>
+                            <th>Validade (7d)</th>
+                            <th>Área Total</th>
+                            <th>Total Geral</th>
                             <th>Status</th>
                             <th>Ações</th>
                         </tr>
@@ -716,25 +906,25 @@
     <div id="orcModal" class="modal">
         <div class="modal-content">
             <button class="close-modal" onclick="fecharModal()">×</button>
-            <h3 style="color: var(--primary); font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">📄 Resumo do Pedido</h3>
+            <h3 style="color: var(--primary); font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">📄 Resumo Detalhado do Pedido</h3>
             <div id="modal-body" style="line-height: 1.7; font-size: 14px; color: var(--text-main);"></div>
         </div>
     </div>
 
-    <!-- Container do PDF -->
+    <!-- Container do PDF (Mantido exatamente para exibição temporária) -->
     <div id="pdf-template"></div>
 
     <script>
         // CONFIGURAÇÃO DO FIREBASE (SEUS DADOS)
         const firebaseConfig = {
-  apiKey: "AIzaSyD-bH7MY-VFHJYhuYGa18UKu2EslksAjgM",
-  authDomain: "cubo-glass.firebaseapp.com",
-  projectId: "cubo-glass",
-  storageBucket: "cubo-glass.firebasestorage.app",
-  messagingSenderId: "1010303888432",
-  appId: "1:1010303888432:web:4892849f840824542e91f5",
-  measurementId: "G-958FX0F2D5"
-};
+            apiKey: "COLE_AQUI_SUA_API_KEY",
+            authDomain: "COLE_AQUI_SEU_AUTH_DOMAIN",
+            projectId: "COLE_AQUI_SEU_PROJECT_ID",
+            storageBucket: "COLE_AQUI_SEU_STORAGE_BUCKET",
+            messagingSenderId: "COLE_AQUI_SEU_MESSAGING_SENDER_ID",
+            appId: "COLE_AQUI_SEU_APP_ID"
+        };
+
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
@@ -743,6 +933,10 @@
         let dbClientes = [];
         let dbEstoque = [];
         let dbOrcamentos = [];
+
+        // ESTRUTURA BASE DAS LINHAS DE MEDIDA E ACESSÓRIOS DO ORÇAMENTO
+        let linhasMedidas = [];
+        let linhasAcessorios = [];
 
         const matrizPadrao = {
             'Incolor': {
@@ -770,6 +964,18 @@
 
         let tabelaPrecos = matrizPadrao;
 
+        /* NOTIFICAÇÃO TOAST CUSTOMIZADA */
+        function showToast(msg, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${msg}</span><button style="background:none; border:none; color:#fff; cursor:pointer;" onclick="this.parentElement.remove()">✕</button>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) toast.remove();
+            }, 4000);
+        }
+
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('active');
         }
@@ -790,7 +996,7 @@
             if(tabId === 'configuracoes') renderizarFormConfig();
         }
 
-        /* ESCUTA EM TEMPO REAL */
+        /* BANCO DE DADOS EM TEMPO REAL */
         db.collection("clientes").onSnapshot((snapshot) => {
             dbClientes = [];
             const tbody = document.querySelector('#table-clientes tbody');
@@ -802,7 +1008,7 @@
                     tbody.innerHTML += `<tr>
                         <td><strong>${cli.nome}</strong></td>
                         <td>${cli.doc}</td>
-                        <td>${cli.tel}</td>
+                        <td>${cli.tel || '-'}</td>
                         <td><span class="badge badge-${cli.nivel ? cli.nivel.toLowerCase() : 'bronze'}">${cli.nivel}</span></td>
                     </tr>`;
                 }
@@ -827,7 +1033,7 @@
                 orc.idDoc = doc.id;
                 dbOrcamentos.push(orc);
             });
-            renderizarHistorico();
+            filtrarHistoricoLocal();
             atualizarDashboard();
         });
 
@@ -847,14 +1053,168 @@
             });
         }
 
+        /* GERENCIADOR DE INÚMERAS MEDIDAS DE VIDRO */
+        function adicionarLinhaMedida() {
+            const id = Date.now() + Math.random();
+            linhasMedidas.push({
+                id: id,
+                cor: 'Incolor',
+                espessura: '8 mm',
+                altura: 1500,
+                largura: 1200,
+                qtd: 1
+            });
+            renderizarLinhasMedidas();
+            calcularSistemaMultiplo();
+        }
+
+        function removerLinhaMedida(id) {
+            linhasMedidas = linhasMedidas.filter(l => l.id !== id);
+            renderizarLinhasMedidas();
+            calcularSistemaMultiplo();
+        }
+
+        function atualizarLinhaMedida(id, campo, valor) {
+            const linha = linhasMedidas.find(l => l.id === id);
+            if (linha) {
+                linha[campo] = valor;
+                calcularSistemaMultiplo();
+            }
+        }
+
+        function renderizarLinhasMedidas() {
+            const container = document.getElementById('container-medidas');
+            if(!container) return;
+            container.innerHTML = '';
+
+            linhasMedidas.forEach((l, index) => {
+                container.innerHTML += `
+                    <div class="dynamic-item-row">
+                        <div>
+                            <label>Item #${index + 1} - Cor</label>
+                            <select onchange="atualizarLinhaMedida(${l.id}, 'cor', this.value)">
+                                <option value="Incolor" ${l.cor === 'Incolor' ? 'selected' : ''}>Incolor</option>
+                                <option value="Fume" ${l.cor === 'Fume' ? 'selected' : ''}>Fumê</option>
+                                <option value="Verde" ${l.cor === 'Verde' ? 'selected' : ''}>Verde</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Espessura</label>
+                            <select onchange="atualizarLinhaMedida(${l.id}, 'espessura', this.value)">
+                                <option value="6 mm" ${l.espessura === '6 mm' ? 'selected' : ''}>Vidro 6 mm</option>
+                                <option value="8 mm" ${l.espessura === '8 mm' ? 'selected' : ''}>Vidro 8 mm</option>
+                                <option value="10 mm" ${l.espessura === '10 mm' ? 'selected' : ''}>Vidro 10 mm</option>
+                                <option value="4 mm Espelho" ${l.espessura === '4 mm Espelho' ? 'selected' : ''}>Espelho 4 mm</option>
+                                <option value="8 mm Box Padrao" ${l.espessura === '8 mm Box Padrao' ? 'selected' : ''}>Box Padrão 8 mm</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Altura (mm)</label>
+                            <input type="number" value="${l.altura}" oninput="atualizarLinhaMedida(${l.id}, 'altura', parseFloat(this.value)||0)">
+                        </div>
+                        <div>
+                            <label>Largura (mm)</label>
+                            <input type="number" value="${l.largura}" oninput="atualizarLinhaMedida(${l.id}, 'largura', parseFloat(this.value)||0)">
+                        </div>
+                        <div>
+                            <label>Qtd Peças</label>
+                            <input type="number" value="${l.qtd}" min="1" oninput="atualizarLinhaMedida(${l.id}, 'qtd', parseInt(this.value)||1)">
+                        </div>
+                        <div style="display:flex; align-items:flex-end;">
+                            <button type="button" class="btn-remove-item" onclick="removerLinhaMedida(${l.id})">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        /* GERENCIADOR DE INÚMEROS ACESSÓRIOS DO ESTOQUE */
+        function adicionarLinhaAcessorio() {
+            const id = Date.now() + Math.random();
+            linhasAcessorios.push({
+                id: id,
+                idEstoque: '',
+                nome: '',
+                preco: 0,
+                qtd: 1
+            });
+            renderizarLinhasAcessorios();
+            calcularSistemaMultiplo();
+        }
+
+        function removerLinhaAcessorio(id) {
+            linhasAcessorios = linhasAcessorios.filter(a => a.id !== id);
+            renderizarLinhasAcessorios();
+            calcularSistemaMultiplo();
+        }
+
+        function atualizarLinhaAcessorio(id, idEstoque) {
+            const linha = linhasAcessorios.find(a => a.id === id);
+            const itemEst = dbEstoque.find(e => e.id === idEstoque);
+            if (linha) {
+                if (itemEst) {
+                    linha.idEstoque = itemEst.id;
+                    linha.nome = itemEst.nome;
+                    linha.preco = itemEst.preco;
+                } else {
+                    linha.idEstoque = '';
+                    linha.nome = '';
+                    linha.preco = 0;
+                }
+                calcularSistemaMultiplo();
+            }
+        }
+
+        function atualizarQtdAcessorio(id, qtd) {
+            const linha = linhasAcessorios.find(a => a.id === id);
+            if(linha) {
+                linha.qtd = Math.max(1, parseInt(qtd) || 1);
+                calcularSistemaMultiplo();
+            }
+        }
+
+        function renderizarLinhasAcessorios() {
+            const container = document.getElementById('container-acessorios');
+            if(!container) return;
+            container.innerHTML = '';
+
+            linhasAcessorios.forEach((a) => {
+                let options = `<option value="">-- Selecione do Estoque --</option>`;
+                dbEstoque.forEach(e => {
+                    options += `<option value="${e.id}" ${e.id === a.idEstoque ? 'selected' : ''}>${e.nome} (Qtd Disp: ${e.qtd}) - R$ ${e.preco.toFixed(2)}</option>`;
+                });
+
+                container.innerHTML += `
+                    <div class="dynamic-item-row" style="grid-template-columns: 2fr 1fr 1fr auto;">
+                        <div>
+                            <label>Insumo / Ferragem</label>
+                            <select onchange="atualizarLinhaAcessorio(${a.id}, this.value)">${options}</select>
+                        </div>
+                        <div>
+                            <label>Preço Unit.</label>
+                            <input type="text" value="R$ ${a.preco.toFixed(2).replace('.',',')}" disabled style="opacity: 0.7;">
+                        </div>
+                        <div>
+                            <label>Qtd Requerida</label>
+                            <input type="number" value="${a.qtd}" min="1" oninput="atualizarQtdAcessorio(${a.id}, this.value)">
+                        </div>
+                        <div style="display:flex; align-items:flex-end;">
+                            <button type="button" class="btn-remove-item" onclick="removerLinhaAcessorio(${a.id})">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
         function limparBuscasOrcamento() {
             document.getElementById('orc-cliente-search').value = '';
             document.getElementById('orc-cliente-selected-nome').value = '';
             document.getElementById('orc-cliente-selected-nivel').value = '';
-            document.getElementById('orc-acessorio-search').value = '';
-            document.getElementById('orc-acessorio-selected-nome').value = 'Nenhum';
-            document.getElementById('orc-acessorio-selected-preco').value = '0';
-            calcularSistema();
+            document.getElementById('orc-cliente-selected-tel').value = '';
+            linhasMedidas = [];
+            linhasAcessorios = [];
+            adicionarLinhaMedida(); // Inicia com 1 medida padrão
+            calcularSistemaMultiplo();
         }
 
         function filtrarClientesOrcamento(query) {
@@ -864,69 +1224,57 @@
             container.innerHTML = '';
             if(filtrados.length > 0) {
                 filtrados.forEach(c => {
-                    container.innerHTML += `<div class="search-item" onclick="selecionarClienteOrcamento('${c.nome}', '${c.nivel}')">${c.nome} (${c.nivel})</div>`;
+                    container.innerHTML += `<div class="search-item" onclick="selecionarClienteOrcamento('${c.nome}', '${c.nivel}', '${c.tel || ''}')">${c.nome} (${c.nivel})</div>`;
                 });
                 container.style.display = 'block';
             } else {
-                container.innerHTML = '<div class="search-item" style="color: var(--text-muted);">Nenhum cliente cadastrado</div>';
+                container.innerHTML = '<div class="search-item" style="color: var(--text-muted);">Nenhum cliente encontrado</div>';
                 container.style.display = 'block';
             }
         }
 
-        function selecionarClienteOrcamento(nome, nivel) {
+        function selecionarClienteOrcamento(nome, nivel, tel) {
             document.getElementById('orc-cliente-search').value = nome;
             document.getElementById('orc-cliente-selected-nome').value = nome;
             document.getElementById('orc-cliente-selected-nivel').value = nivel;
+            document.getElementById('orc-cliente-selected-tel').value = tel;
             document.getElementById('orc-cliente-results').style.display = 'none';
-            calcularSistema();
+            calcularSistemaMultiplo();
         }
 
-        function filtrarAcessoriosOrcamento(query) {
-            const container = document.getElementById('orc-acessorio-results');
-            if(!query) { container.style.display = 'none'; return; }
-            const filtrados = dbEstoque.filter(e => e.nome.toLowerCase().includes(query.toLowerCase()) && e.qtd > 0);
-            container.innerHTML = '';
-            container.innerHTML += `<div class="search-item" onclick="selecionarAcessorioOrcamento('Nenhum', 0)">-- Remover Acessório --</div>`;
-            if(filtrados.length > 0) {
-                filtrados.forEach(e => {
-                    container.innerHTML += `<div class="search-item" onclick="selecionarAcessorioOrcamento('${e.nome}', ${e.preco})">${e.nome} [${e.categoria.toUpperCase()}] (+ R$ ${e.preco.toFixed(2)})</div>`;
-                });
-                container.style.display = 'block';
-            } else {
-                container.style.display = 'block';
-            }
-        }
-
-        function selecionarAcessorioOrcamento(nome, preco) {
-            document.getElementById('orc-acessorio-search').value = nome === 'Nenhum' ? '' : nome;
-            document.getElementById('orc-acessorio-selected-nome').value = nome;
-            document.getElementById('orc-acessorio-selected-preco').value = preco;
-            document.getElementById('orc-acessorio-results').style.display = 'none';
-            calcularSistema();
-        }
-
-        function calcularSistema() {
+        function calcularSistemaMultiplo() {
             const nivel = document.getElementById('orc-cliente-selected-nivel').value;
             if(!nivel) {
                 document.getElementById('res-area').innerText = "0.00 m²";
-                document.getElementById('res-valorm2').innerText = "Aguardando Cliente...";
+                document.getElementById('res-total-vidros').innerText = "R$ 0,00";
+                document.getElementById('res-total-insumos').innerText = "R$ 0,00";
                 document.getElementById('res-total').innerText = "R$ 0,00";
                 return;
             }
-            const cor = document.getElementById('orc-cor').value;
-            const espessura = document.getElementById('orc-espessura').value;
-            const alt = parseFloat(document.getElementById('orc-altura').value) || 0;
-            const larg = parseFloat(document.getElementById('orc-largura').value) || 0;
-            const precoAcessorio = parseFloat(document.getElementById('orc-acessorio-selected-preco').value) || 0;
 
-            const area = (alt * larg) / 1000000;
-            document.getElementById('res-area').innerText = area.toFixed(2) + " m²";
+            let areaTotal = 0;
+            let totalVidros = 0;
+            let totalInsumos = 0;
 
-            const precoM2 = tabelaPrecos[cor]?.[espessura]?.[nivel] || 0;
-            document.getElementById('res-valorm2').innerText = "R$ " + precoM2.toFixed(2).replace('.', ',');
+            // Calcula total dos vidros
+            linhasMedidas.forEach(m => {
+                const area = ((m.altura * m.largura) / 1000000) * m.qtd;
+                areaTotal += area;
+                const precoM2 = tabelaPrecos[m.cor]?.[m.espessura]?.[nivel] || 0;
+                totalVidros += (area * precoM2);
+            });
 
-            const total = (area * precoM2) + precoAcessorio;
-            document.getElementById('res-total').innerText = "R$ " + total.toFixed(2).replace('.', ',');
+            // Calcula total dos acessórios
+            linhasAcessorios.forEach(a => {
+                totalInsumos += (a.preco * a.qtd);
+            });
+
+            const totalGeral = totalVidros + totalInsumos;
+
+            document.getElementById('res-area').innerText = areaTotal.toFixed(2) + " m²";
+            document.getElementById('res-total-vidros').innerText = "R$ " + totalVidros.toFixed(2).replace('.', ',');
+            document.getElementById('res-total-insumos').innerText = "R$ " + totalInsumos.toFixed(2).replace('.', ',');
+            document.getElementById('res-total').innerText = "R$ " + totalGeral.toFixed(2).replace('.', ',');
         }
 
         function renderizarFormConfig() {
@@ -954,10 +1302,10 @@
                     html += `
                         <tr>
                             <td><strong>${esp === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : esp}</strong></td>
-                            <td><input type="number" id="inp_${cor}_${esp}_Bronze" value="${tabelaPrecos[cor][esp]['Bronze'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Bronze', this.value)"></td>
-                            <td><input type="number" id="inp_${cor}_${esp}_Prata" value="${tabelaPrecos[cor][esp]['Prata'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Prata', this.value)"></td>
-                            <td><input type="number" id="inp_${cor}_${esp}_Ouro" value="${tabelaPrecos[cor][esp]['Ouro'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Ouro', this.value)"></td>
-                            <td><input type="number" id="inp_${cor}_${esp}_Premium" value="${tabelaPrecos[cor][esp]['Premium'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Premium', this.value)"></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Bronze'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Bronze', this.value)"></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Prata'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Prata', this.value)"></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Ouro'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Ouro', this.value)"></td>
+                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Premium'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Premium', this.value)"></td>
                         </tr>`;
                 }
                 html += `</tbody></table></div></div>`;
@@ -974,11 +1322,11 @@
         function salvarTabelaPrecosCompleta() {
             db.collection("config").doc("matrizM2").set(tabelaPrecos)
             .then(() => {
-                alert('✅ Tabela de Preços gravada com sucesso na Nuvem!');
+                showToast('✅ Tabela de Preços gravada com sucesso na Nuvem!', 'success');
             })
             .catch((err) => {
                 console.error("Erro ao salvar preços:", err);
-                alert('❌ Erro ao salvar na nuvem. Verifique a conexão com o Firebase.');
+                showToast('❌ Erro ao salvar na nuvem.', 'error');
             });
         }
 
@@ -998,7 +1346,7 @@
                                 <tr>
                                     <th>Item</th>
                                     <th>Marca</th>
-                                    <th>Estoque</th>
+                                    <th>Estoque Disponível</th>
                                     <th>Preço Un. Venda</th>
                                     <th>Status</th>
                                 </tr>
@@ -1009,13 +1357,13 @@
                 } else {
                     itensFiltrados.forEach(item => {
                         let statusBadge = '<span class="badge badge-success">Disponível</span>';
-                        if (item.qtd === 0) statusBadge = '<span class="badge badge-danger">Zerado</span>';
+                        if (item.qtd <= 0) statusBadge = '<span class="badge badge-danger">Esgotado</span>';
                         else if (item.qtd <= 5) statusBadge = '<span class="badge badge-warning">Mínimo</span>';
 
                         html += `<tr>
                             <td><strong>${item.nome}</strong></td>
                             <td>${item.marca}</td>
-                            <td>${item.qtd} un</td>
+                            <td><strong>${item.qtd} un</strong></td>
                             <td>R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
                             <td>${statusBadge}</td>
                         </tr>`;
@@ -1026,137 +1374,298 @@
             });
         }
 
+        /* REGISTRAR ORÇAMENTO COM MÚLTIPLOS ITENS E VALIDADE DE 7 DIAS */
         function registrarOrcamento() {
             const nomeCliente = document.getElementById('orc-cliente-selected-nome').value;
             const nivelCliente = document.getElementById('orc-cliente-selected-nivel').value;
-            if(!nomeCliente) return alert('Busque e selecione um cliente da lista!');
+            const telCliente = document.getElementById('orc-cliente-selected-tel').value;
             
-            const cor = document.getElementById('orc-cor').value;
-            const espessura = document.getElementById('orc-espessura').value;
-            const alt = document.getElementById('orc-altura').value;
-            const larg = document.getElementById('orc-largura').value;
-            const nomeAcessorio = document.getElementById('orc-acessorio-selected-nome').value;
-            const precoAcessorio = parseFloat(document.getElementById('orc-acessorio-selected-preco').value);
+            if(!nomeCliente) return showToast('Busque e selecione um cliente da lista!', 'warning');
+            if(linhasMedidas.length === 0) return showToast('Adicione ao menos uma medida!', 'warning');
 
-            const area = (parseFloat(alt) * parseFloat(larg)) / 1000000;
-            const precoM2 = tabelaPrecos[cor]?.[espessura]?.[nivelCliente] || 0;
-            const total = (area * precoM2) + precoAcessorio;
+            let areaTotal = 0;
+            let totalVidros = 0;
+            let totalInsumos = 0;
+
+            const listaMedidasSalvar = linhasMedidas.map(m => {
+                const area = ((m.altura * m.largura) / 1000000) * m.qtd;
+                const precoM2 = tabelaPrecos[m.cor]?.[m.espessura]?.[nivelCliente] || 0;
+                const subtotal = area * precoM2;
+                areaTotal += area;
+                totalVidros += subtotal;
+                return {
+                    cor: m.cor,
+                    espessura: m.espessura,
+                    altura: m.altura,
+                    largura: m.largura,
+                    qtd: m.qtd,
+                    area: area,
+                    precoM2: precoM2,
+                    subtotal: subtotal
+                };
+            });
+
+            const listaAcessoriosSalvar = [];
+            linhasAcessorios.forEach(a => {
+                if(a.idEstoque && a.nome) {
+                    const subtotal = a.preco * a.qtd;
+                    totalInsumos += subtotal;
+                    listaAcessoriosSalvar.push({
+                        idEstoque: a.idEstoque,
+                        nome: a.nome,
+                        preco: a.preco,
+                        qtd: a.qtd,
+                        subtotal: subtotal
+                    });
+                }
+            });
+
+            const totalGeral = totalVidros + totalInsumos;
+            const hoje = new Date().getTime();
+            const validade7Dias = hoje + (7 * 24 * 60 * 60 * 1000);
 
             const novoOrc = {
                 id: Math.floor(1000 + Math.random() * 9000),
                 cliente: nomeCliente,
                 nivel: nivelCliente,
-                item: `${espessura === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : espessura} (${cor})`,
-                altura: alt,
-                largura: larg,
-                area: area,
-                acessorio: nomeAcessorio,
-                valorAcessorio: precoAcessorio,
-                precoM2: precoM2,
-                total: total,
+                tel: telCliente,
+                medidas: listaMedidasSalvar,
+                acessorios: listaAcessoriosSalvar,
+                areaTotal: areaTotal,
+                totalVidros: totalVidros,
+                totalInsumos: totalInsumos,
+                total: totalGeral,
                 status: 'Aguardando',
-                dataCriacao: new Date().getTime()
+                dataCriacao: hoje,
+                dataValidade: validade7Dias
             };
 
             db.collection("orcamentos").add(novoOrc).then(() => {
-                alert('Orçamento gravado com sucesso!');
+                showToast(' Orçamento gerado com sucesso!', 'success');
                 limparBuscasOrcamento();
             });
         }
 
-        function renderizarHistorico() {
+        /* FILTRAGEM LOCAL RÁPIDA NO HISTÓRICO DE PEDIDOS */
+        function filtrarHistoricoLocal() {
+            const texto = document.getElementById('hist-filtro-texto')?.value.toLowerCase() || '';
+            const status = document.getElementById('hist-filtro-status')?.value || 'Todos';
+            
             const tbody = document.querySelector('#table-historico tbody');
             if(!tbody) return;
             tbody.innerHTML = '';
-            dbOrcamentos.sort((a,b) => b.dataCriacao - a.dataCriacao);
 
-            dbOrcamentos.forEach((orc, index) => {
+            let orcFiltrados = dbOrcamentos.filter(orc => {
+                const bateTexto = orc.cliente.toLowerCase().includes(texto) || orc.id.toString().includes(texto);
+                const bateStatus = (status === 'Todos') || (orc.status === status);
+                return bateTexto && bateStatus;
+            });
+
+            orcFiltrados.sort((a,b) => b.dataCriacao - a.dataCriacao);
+
+            orcFiltrados.forEach((orc) => {
                 let colorBadge = 'badge-warning';
                 if(orc.status === 'Pago') colorBadge = 'badge-success';
                 if(orc.status === 'Cancelado') colorBadge = 'badge-danger';
 
+                const indexOriginal = dbOrcamentos.findIndex(o => o.idDoc === orc.idDoc);
+
                 tbody.innerHTML += `<tr>
                     <td>#${orc.id}</td>
                     <td><strong>${orc.cliente}</strong></td>
-                    <td>${orc.item}</td>
-                    <td>${orc.area.toFixed(2)} m²</td>
+                    <td>${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}</td>
+                    <td>${(orc.areaTotal || orc.area || 0).toFixed(2)} m²</td>
                     <td style="color: var(--primary); font-weight: 600;">R$ ${orc.total.toFixed(2).replace('.', ',')}</td>
                     <td><span class="badge ${colorBadge}">${orc.status}</span></td>
                     <td>
-                        <button class="btn-small" style="background-color: var(--bg-input); color: #fff;" onclick="abrirOrcamento(${index})">👁️ Ver</button>
-                        <button class="btn-small" style="background-color: #ffcc00; color: #000;" onclick="gerarPDF(${index})">📄 PDF</button>
-                        <button class="btn-small" style="background-color: #2e7d32; color: white;" onclick="mudarStatus('${orc.idDoc}', 'Pago')">💵</button>
-                        <button class="btn-small" style="background-color: #c62828; color: white;" onclick="mudarStatus('${orc.idDoc}', 'Cancelado')">❌</button>
+                        <button class="btn-small" style="background-color: var(--bg-input); color: #fff;" onclick="abrirOrcamento(${indexOriginal})">👁️ Ver</button>
+                        <button class="btn-small" style="background-color: #ffcc00; color: #000;" onclick="gerarPDF(${indexOriginal})">📄 PDF</button>
+                        <button class="btn-small" style="background-color: #25d366; color: #fff;" onclick="enviarWhatsApp(${indexOriginal})">💬 Whats</button>
+                        ${orc.status !== 'Pago' ? `<button class="btn-small" style="background-color: #2e7d32; color: white;" title="Dar Baixa e Faturar" onclick="mudarStatusEAjustarEstoque('${orc.idDoc}', 'Pago', ${indexOriginal})">💵 Baixar</button>` : ''}
+                        ${orc.status !== 'Cancelado' ? `<button class="btn-small" style="background-color: #c62828; color: white;" onclick="mudarStatusEAjustarEstoque('${orc.idDoc}', 'Cancelado', ${indexOriginal})">❌</button>` : ''}
                     </td>
                 </tr>`;
             });
         }
 
-        function mudarStatus(idDoc, novoStatus) {
+        /* ENVIO DIRETO VIA WHATSAPP COM MENSAGEM FORMATADA */
+        function enviarWhatsApp(index) {
+            const orc = dbOrcamentos[index];
+            let num = (orc.tel || '').replace(/\D/g, '');
+            
+            let mensagem = `Olá *${orc.cliente}*, segue o resumo do seu Orçamento *#${orc.id}* na *Cubo Glass*:%0A%0A`;
+            
+            if(orc.medidas && orc.medidas.length > 0) {
+                mensagem += `*Itens / Vidros:*%0A`;
+                orc.medidas.forEach((m, i) => {
+                    mensagem += `• Peça ${i+1}: ${m.espessura} ${m.cor} (${m.altura}x${m.largura}mm) x${m.qtd}%0A`;
+                });
+            } else if(orc.item) {
+                mensagem += `• ${orc.item} (${orc.altura}x${orc.largura}mm)%0A`;
+            }
+
+            if(orc.acessorios && orc.acessorios.length > 0) {
+                mensagem += `%0A*Componentes / Insumos:*%0A`;
+                orc.acessorios.forEach(a => {
+                    mensagem += `• ${a.nome} (x${a.qtd})%0A`;
+                });
+            } else if(orc.acessorio && orc.acessorio !== 'Nenhum') {
+                mensagem += `%0A*Acessório:* ${orc.acessorio}%0A`;
+            }
+
+            mensagem += `%0A💰 *Valor Total: R$ ${orc.total.toFixed(2).replace('.', ',')}*%0A`;
+            mensagem += `⏳ *Validade:* ${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}%0A%0A`;
+            mensagem += `Ficamos à disposição para fechar o pedido!`;
+
+            if (num) {
+                if(!num.startsWith('55')) num = '55' + num;
+                window.open(`https://wa.me/${num}?text=${mensagem}`, '_blank');
+            } else {
+                window.open(`https://wa.me/?text=${mensagem}`, '_blank');
+            }
+        }
+
+        /* MUDAR STATUS E REALIZAR BAIXA AUTOMÁTICA NO ESTOQUE */
+        function mudarStatusEAjustarEstoque(idDoc, novoStatus, index) {
+            const orc = dbOrcamentos[index];
+            
+            // Se o status estiver mudando para PAGO, dá baixa automática nos produtos do estoque
+            if (novoStatus === 'Pago' && orc.status !== 'Pago') {
+                if (orc.acessorios && orc.acessorios.length > 0) {
+                    orc.acessorios.forEach(item => {
+                        if (item.idEstoque) {
+                            db.collection("estoque").doc(item.idEstoque).get().then(docEst => {
+                                if (docEst.exists) {
+                                    const qtdAtual = docEst.data().qtd || 0;
+                                    const novaQtd = Math.max(0, qtdAtual - item.qtd);
+                                    db.collection("estoque").doc(item.idEstoque).update({ qtd: novaQtd });
+                                }
+                            });
+                        }
+                    });
+                }
+                showToast(`Pedido #${orc.id} faturado! Baixa efetuada no Estoque.`, 'success');
+            }
+
             db.collection("orcamentos").doc(idDoc).update({ status: novoStatus });
         }
 
         function abrirOrcamento(index) {
             const orc = dbOrcamentos[index];
             const body = document.getElementById('modal-body');
+            
+            let htmlVidros = '';
+            if(orc.medidas && orc.medidas.length > 0) {
+                orc.medidas.forEach((m, i) => {
+                    htmlVidros += `<p>• Peça ${i+1}: <strong>${m.espessura} ${m.cor}</strong> - ${m.altura}x${m.largura}mm (x${m.qtd}) = R$ ${m.subtotal.toFixed(2).replace('.',',')}</p>`;
+                });
+            } else {
+                htmlVidros = `<p>• ${orc.item} - ${orc.altura}x${orc.largura}mm = R$ ${((orc.total || 0) - (orc.valorAcessorio || 0)).toFixed(2)}</p>`;
+            }
+
+            let htmlAcessorios = '';
+            if(orc.acessorios && orc.acessorios.length > 0) {
+                orc.acessorios.forEach(a => {
+                    htmlAcessorios += `<p>• ${a.nome} (x${a.qtd}) = R$ ${a.subtotal.toFixed(2).replace('.',',')}</p>`;
+                });
+            } else if(orc.acessorio && orc.acessorio !== 'Nenhum') {
+                htmlAcessorios = `<p>• ${orc.acessorio} = R$ ${(orc.valorAcessorio || 0).toFixed(2)}</p>`;
+            } else {
+                htmlAcessorios = `<p style="color: var(--text-muted);">Nenhum acessório adicional.</p>`;
+            }
+
             body.innerHTML = `
-                <p style="margin-bottom: 8px;"><strong>Pedido:</strong> #${orc.id}</p>
+                <p style="margin-bottom: 8px;"><strong>Orçamento:</strong> #${orc.id}</p>
                 <p style="margin-bottom: 8px;"><strong>Cliente:</strong> ${orc.cliente} <span class="badge badge-${orc.nivel ? orc.nivel.toLowerCase() : 'bronze'}">${orc.nivel}</span></p>
-                <p style="margin-bottom: 8px;"><strong>Especificação:</strong> ${orc.item}</p>
-                <p style="margin-bottom: 8px;"><strong>Corte:</strong> ${orc.altura}mm x ${orc.largura}mm (${orc.area.toFixed(2)} m²)</p>
-                <p style="margin-bottom: 8px;"><strong>Valor m²:</strong> R$ ${orc.precoM2.toFixed(2).replace('.', ',')}</p>
-                <p style="margin-bottom: 8px;"><strong>Insumo Extra:</strong> ${orc.acessorio} (R$ ${orc.valorAcessorio.toFixed(2).replace('.', ',')})</p>
+                <p style="margin-bottom: 15px;"><strong>Validade:</strong> até ${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}</p>
+                
+                <h4 style="color: var(--primary); margin-top: 15px; margin-bottom: 5px;">Vidros e Esquadrias:</h4>
+                ${htmlVidros}
+
+                <h4 style="color: var(--primary); margin-top: 15px; margin-bottom: 5px;">Insumos e Acessórios:</h4>
+                ${htmlAcessorios}
+
                 <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
-                <p style="font-size: 20px; font-weight: 700; color: #fff;">Total Comercial: <span style="color: var(--primary);">R$ ${orc.total.toFixed(2).replace('.', ',')}</span></p>
+                <p style="font-size: 20px; font-weight: 700; color: #fff;">Total do Pedido: <span style="color: var(--primary);">R$ ${orc.total.toFixed(2).replace('.', ',')}</span></p>
             `;
             document.getElementById('orcModal').style.display = 'flex';
         }
 
-        /* GERADOR DE PDF 100% CORRIGIDO (VISÍVEL NO EXATO MOMENTO DO CAPTURE) */
+        /* GERADOR DE PDF MANTIDO INTEGRALMENTE (Sem sair em branco) */
         function gerarPDF(index) {
             const orc = dbOrcamentos[index];
             const containerPDF = document.getElementById('pdf-template');
             
+            let tabelaItensHTML = '';
+            if (orc.medidas && orc.medidas.length > 0) {
+                orc.medidas.forEach(m => {
+                    tabelaItensHTML += `
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #cccccc; font-size: 12px; color: #000;">${m.espessura} (${m.cor})</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #cccccc; text-align: center; font-size: 12px; color: #000;">${m.altura} x ${m.largura} mm (x${m.qtd})</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #cccccc; text-align: center; font-size: 12px; color: #000;">${m.area.toFixed(2)} m²</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #cccccc; text-align: right; font-size: 12px; color: #000;">R$ ${m.subtotal.toFixed(2).replace('.', ',')}</td>
+                        </tr>
+                    `;
+                });
+            } else {
+                tabelaItensHTML = `
+                    <tr>
+                        <td style="padding: 10px; border-bottom: 1px solid #cccccc; font-size: 12px; color: #000;">${orc.item}</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #cccccc; text-align: center; font-size: 12px; color: #000;">${orc.altura} x ${orc.largura} mm</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #cccccc; text-align: center; font-size: 12px; color: #000;">${(orc.area || 0).toFixed(2)} m²</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #cccccc; text-align: right; font-size: 12px; color: #000;">R$ ${((orc.total || 0) - (orc.valorAcessorio || 0)).toFixed(2).replace('.', ',')}</td>
+                    </tr>
+                `;
+            }
+
+            let tabelaAcessoriosHTML = '';
+            if (orc.acessorios && orc.acessorios.length > 0) {
+                orc.acessorios.forEach(a => {
+                    tabelaAcessoriosHTML += `<p style="font-size: 12px; color: #000; margin-bottom: 4px;">• <strong>${a.nome}</strong> - Qtd: ${a.qtd} - R$ ${a.subtotal.toFixed(2).replace('.', ',')}</p>`;
+                });
+            } else if (orc.acessorio && orc.acessorio !== 'Nenhum') {
+                tabelaAcessoriosHTML = `<p style="font-size: 12px; color: #000;">• <strong>${orc.acessorio}</strong> - R$ ${(orc.valorAcessorio || 0).toFixed(2).replace('.', ',')}</p>`;
+            } else {
+                tabelaAcessoriosHTML = `<p style="font-size: 12px; color: #666;">Sem acessórios inclusos neste orçamento.</p>`;
+            }
+
             containerPDF.innerHTML = `
                 <div style="border-bottom: 3px solid #ffcc00; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; color: #000000;">
                     <div>
                         <h1 style="font-size: 22px; color: #111111; margin-bottom: 5px; font-weight: bold;">CUBO GLASS DISTRIBUIDORA</h1>
-                        <p style="font-size: 12px; color: #444444;">Soluções em Vidros, Alumínios, Acessórios, Jateamentos, Acrílicos e Pintura </p>
+                        <p style="font-size: 12px; color: #444444;">Soluções em Vidros, Esquadrias e Acessórios</p>
                     </div>
                     <div style="text-align: right;">
                         <h2 style="font-size: 16px; color: #d4a000; margin-bottom: 5px; font-weight: bold;">ORÇAMENTO #${orc.id}</h2>
                         <p style="font-size: 11px; color: #444444;">Data: ${new Date(orc.dataCriacao).toLocaleDateString('pt-BR')}</p>
+                        <p style="font-size: 11px; color: #c62828; font-weight: bold;">Validade: ${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}</p>
                     </div>
                 </div>
 
                 <div style="background-color: #f2f2f2; padding: 12px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #cccccc; color: #000000;">
                     <h3 style="font-size: 13px; color: #222222; text-transform: uppercase; margin-bottom: 6px; border-bottom: 1px solid #cccccc; padding-bottom: 4px;">Dados do Cliente</h3>
                     <p style="font-size: 14px; margin-bottom: 4px; color: #000000;"><strong>Nome/Razão Social:</strong> ${orc.cliente}</p>
-                    <p style="font-size: 12px; color: #333333;"><strong>Classificação comercial de cadastro:</strong> Tabela ${orc.nivel}</p>
+                    <p style="font-size: 12px; color: #333333;"><strong>Classificação comercial:</strong> Tabela ${orc.nivel}</p>
                 </div>
 
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; background-color: #ffffff; color: #000000;">
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; background-color: #ffffff; color: #000000;">
                     <thead>
                         <tr style="background-color: #111111; color: #ffffff;">
-                            <th style="padding: 10px; text-align: left; font-size: 12px;">Descrição do Item</th>
-                            <th style="padding: 10px; text-align: center; font-size: 12px;">Dimensões</th>
+                            <th style="padding: 10px; text-align: left; font-size: 12px;">Descrição das Peças / Vidros</th>
+                            <th style="padding: 10px; text-align: center; font-size: 12px;">Dimensões / Qtd</th>
                             <th style="padding: 10px; text-align: center; font-size: 12px;">Área Total</th>
-                            <th style="padding: 10px; text-align: right; font-size: 12px;">Valor Unitário M²</th>
+                            <th style="padding: 10px; text-align: right; font-size: 12px;">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td style="padding: 12px 10px; border-bottom: 1px solid #cccccc; font-size: 13px; color: #000000;"><strong>${orc.item}</strong></td>
-                            <td style="padding: 12px 10px; border-bottom: 1px solid #cccccc; text-align: center; font-size: 13px; color: #000000;">${orc.altura} x ${orc.largura} mm</td>
-                            <td style="padding: 12px 10px; border-bottom: 1px solid #cccccc; text-align: center; font-size: 13px; color: #000000;">${orc.area.toFixed(2)} m²</td>
-                            <td style="padding: 12px 10px; border-bottom: 1px solid #cccccc; text-align: right; font-size: 13px; color: #000000;">R$ ${orc.precoM2.toFixed(2).replace('.', ',')}</td>
-                        </tr>
+                        ${tabelaItensHTML}
                     </tbody>
                 </table>
 
                 <div style="background-color: #f2f2f2; padding: 12px; border-radius: 6px; margin-bottom: 25px; border: 1px solid #cccccc; color: #000000;">
                     <h3 style="font-size: 13px; color: #222222; text-transform: uppercase; margin-bottom: 6px; border-bottom: 1px solid #cccccc; padding-bottom: 4px;">Componentes Adicionais / Ferragens</h3>
-                    <p style="font-size: 13px; color: #000000;"><strong>Item incluso:</strong> ${orc.acessorio} - <span style="color: #444444;">R$ ${orc.valorAcessorio.toFixed(2).replace('.', ',')}</span></p>
+                    ${tabelaAcessoriosHTML}
                 </div>
 
                 <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 15px; background-color: #ffffff;">
@@ -1167,11 +1676,10 @@
                 </div>
 
                 <div style="margin-top: 40px; text-align: center; font-size: 10px; color: #777777; border-top: 1px solid #dddddd; padding-top: 10px;">
-                    Este documento é uma simulação de orçamento oficial gerada eletronicamente pelo ERP Cubo Glass Distribuidora.
+                    Este documento é uma simulação de orçamento oficial com validade de 7 dias, gerada eletronicamente pelo ERP Cubo Glass Distribuidora.
                 </div>
             `;
 
-            // Torna visível para o renderizador de imagens capturar pixels
             containerPDF.style.display = 'block';
 
             const opcoes = {
@@ -1182,12 +1690,62 @@
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // Baixa o arquivo e oculta de novo
             html2pdf().set(opcoes).from(containerPDF).save().then(() => {
                 containerPDF.style.display = 'none';
             }).catch(err => {
                 console.error("Erro ao gerar PDF:", err);
                 containerPDF.style.display = 'none';
+            });
+        }
+
+        /* ATUALIZAÇÃO DO DASHBOARD E PREENCHIMENTO ANIMAÇÃO DO CUBO 3D */
+        function atualizarDashboard() {
+            const cElem = document.getElementById('dash-clientes');
+            const oElem = document.getElementById('dash-orcamentos');
+            const fElem = document.getElementById('dash-faturado');
+            if(cElem) cElem.innerText = dbClientes.length;
+            if(oElem) oElem.innerText = dbOrcamentos.length;
+            
+            let totalPagoGeral = 0;
+            dbOrcamentos.forEach(orc => { if(orc.status === 'Pago') totalPagoGeral += orc.total; });
+            if(fElem) fElem.innerText = "R$ " + totalPagoGeral.toFixed(2).replace('.', ',');
+
+            atualizarMetaEProgresso();
+        }
+
+        function atualizarMetaEProgresso() {
+            const tipoMeta = document.getElementById('meta-tipo')?.value || 'mensal';
+            const valorMeta = parseFloat(document.getElementById('meta-valor')?.value) || 50000;
+            
+            const agora = new Date();
+            let totalPeriodo = 0;
+
+            dbOrcamentos.forEach(orc => {
+                if (orc.status === 'Pago') {
+                    const dataPed = new Date(orc.dataCriacao);
+                    if (tipoMeta === 'diaria') {
+                        if (dataPed.toDateString() === agora.toDateString()) totalPeriodo += orc.total;
+                    } else if (tipoMeta === 'semanal') {
+                        const diferencaDias = (agora - dataPed) / (1000 * 3600 * 24);
+                        if (diferencaDias <= 7) totalPeriodo += orc.total;
+                    } else if (tipoMeta === 'mensal') {
+                        if (dataPed.getMonth() === agora.getMonth() && dataPed.getFullYear() === agora.getFullYear()) totalPeriodo += orc.total;
+                    }
+                }
+            });
+
+            const porcentagem = Math.min(100, Math.max(0, (totalPeriodo / valorMeta) * 100));
+
+            const lblRealizado = document.getElementById('lbl-realizado-periodo');
+            const lblPorcentagem = document.getElementById('lbl-porcentagem-meta');
+            if (lblRealizado) lblRealizado.innerText = "R$ " + totalPeriodo.toFixed(2).replace('.', ',');
+            if (lblPorcentagem) lblPorcentagem.innerText = porcentagem.toFixed(1) + "%";
+
+            // Preenche o líquido amarelo das faces do cubo 3D
+            const fills = ['fill-front', 'fill-back', 'fill-right', 'fill-left'];
+            fills.forEach(id => {
+                const elem = document.getElementById(id);
+                if (elem) elem.style.height = porcentagem + "%";
             });
         }
 
@@ -1201,7 +1759,7 @@
             const nivel = document.getElementById('cli-nivel').value;
             db.collection("clientes").add({nome, doc, tel, nivel}).then(() => {
                 document.getElementById('form-add-cliente').reset();
-                alert('Cliente cadastrado globalmente!');
+                showToast('Cliente cadastrado com sucesso!', 'success');
             });
         }
 
@@ -1214,19 +1772,8 @@
             const preco = parseFloat(document.getElementById('est-preco').value);
             db.collection("estoque").add({nome, categoria, marca, qtd, preco}).then(() => {
                 document.getElementById('form-add-estoque').reset();
-                alert('Produto adicionado ao estoque!');
+                showToast('Produto adicionado ao Estoque!', 'success');
             });
-        }
-
-        function atualizarDashboard() {
-            const cElem = document.getElementById('dash-clientes');
-            const oElem = document.getElementById('dash-orcamentos');
-            const fElem = document.getElementById('dash-faturado');
-            if(cElem) cElem.innerText = dbClientes.length;
-            if(oElem) oElem.innerText = dbOrcamentos.length;
-            let totalPago = 0;
-            dbOrcamentos.forEach(orc => { if(orc.status === 'Pago') totalPago += orc.total; });
-            if(fElem) fElem.innerText = "R$ " + totalPago.toFixed(2).replace('.', ',');
         }
 
         document.addEventListener('click', function(e) {
@@ -1234,19 +1781,20 @@
                 const el = document.getElementById('orc-cliente-results');
                 if(el) el.style.display = 'none';
             }
-            if(!e.target.closest('#orc-acessorio-search')) {
-                const el = document.getElementById('orc-acessorio-results');
-                if(el) el.style.display = 'none';
-            }
         });
 
         window.onload = function() {
             carregarMatrizPrecos();
+            adicionarLinhaMedida();
             atualizarDashboard();
         };
     </script>
 </body>
 </html>
 
-            
         
+        
+
+                            
+        
+            
