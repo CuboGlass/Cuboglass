@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cubo Glass - ERP Premium Cloud v12</title>
+    <title>Cubo Glass - ERP Premium Cloud v13</title>
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -18,11 +18,10 @@
 
     <style>
         :root {
-            /* Paleta Dark & Amarelo Moderno */
             --bg-main: #0b0b0d;
             --bg-card: rgba(22, 22, 26, 0.65);
             --bg-input: rgba(0, 0, 0, 0.4);
-            --primary: #eab308; /* Amarelo Vibrante */
+            --primary: #eab308;
             --primary-hover: #facc15;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
@@ -32,14 +31,8 @@
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* Scrollbar Customizada */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
@@ -51,8 +44,6 @@
             display: flex;
             min-height: 100vh;
             letter-spacing: -0.2px;
-            
-            /* Fundo com Iluminação Neon e Grid */
             background-image: 
                 radial-gradient(circle at 50% 0%, rgba(234, 179, 8, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 90% 80%, rgba(234, 179, 8, 0.08) 0%, transparent 35%),
@@ -62,7 +53,6 @@
             background-attachment: fixed;
         }
 
-        /* EFEITO GLASSMORPHISM GLOBAL */
         .glass-panel {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -79,7 +69,6 @@
             box-shadow: 0 12px 40px -10px rgba(234, 179, 8, 0.2);
         }
 
-        /* ANIMAÇÃO DE REVELAÇÃO (Simulando scroll) */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -101,6 +90,8 @@
             flex-direction: column;
             transition: all 0.3s ease;
             z-index: 100;
+            overflow-y: auto;
+            padding-bottom: 50px;
         }
 
         .brand {
@@ -129,12 +120,7 @@
             transform: scale(1.05);
         }
 
-        .brand-text {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: 2px;
-        }
+        .brand-text { font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: 2px; }
         .brand-text span { color: var(--primary); }
 
         .nav-btn {
@@ -222,7 +208,6 @@
         }
 
         .card {
-            @extend .glass-panel;
             padding: 24px;
             position: relative;
             overflow: hidden;
@@ -249,11 +234,7 @@
             letter-spacing: 1px;
         }
 
-        .card p {
-            font-size: 32px;
-            font-weight: 800;
-            color: #fff;
-        }
+        .card p { font-size: 32px; font-weight: 800; color: #fff; }
         .card .highlight { color: var(--primary); text-shadow: 0 0 20px rgba(234, 179, 8, 0.3); }
 
         .form-panel {
@@ -342,7 +323,6 @@
         }
         .search-item:hover { background-color: var(--primary); color: #000; font-weight: 700; }
 
-        /* Botões Modernos */
         .btn {
             background: linear-gradient(135deg, var(--primary) 0%, #d97706 100%);
             color: #000;
@@ -401,7 +381,6 @@
         }
         .btn-remove-item:hover { background-color: #ef4444; color: #fff; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
 
-        /* Tabelas Glassmorphism */
         .table-container {
             overflow-x: auto;
             background: var(--bg-card);
@@ -444,7 +423,6 @@
             display: inline-block;
         }
 
-        /* Badges de Cores Vibrantes */
         .badge-premium { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.4); }
         .badge-ouro { background: rgba(245, 158, 11, 0.15); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.4); }
         .badge-prata { background: rgba(148, 163, 184, 0.15); color: #e2e8f0; border: 1px solid rgba(148, 163, 184, 0.4); }
@@ -464,7 +442,6 @@
             gap: 10px;
         }
 
-        /* Modal com Fundo Blur (Glassmorphism) */
         .modal {
             display: none;
             position: fixed;
@@ -513,7 +490,6 @@
             border-radius: 8px;
         }
 
-        /* TOAST ANIMADO */
         #toast-container {
             position: fixed;
             bottom: 30px; right: 30px;
@@ -550,7 +526,6 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* PAINEL DO CUBO 3D DE METAS */
         .cube-dashboard-card {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -564,9 +539,7 @@
             justify-content: space-between;
             margin-bottom: 35px;
             box-shadow: var(--shadow);
-            transition: all 0.4s ease;
         }
-        .cube-dashboard-card:hover { border-color: rgba(255,255,255,0.15); }
         .cube-controls { flex: 1; min-width: 260px; }
         
         .cube-viewport {
@@ -617,11 +590,6 @@
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) auto;
             gap: 15px;
             align-items: center;
-            transition: all 0.3s ease;
-        }
-        .dynamic-item-row:hover {
-            background-color: rgba(255,255,255,0.02);
-            border-color: rgba(255,255,255,0.1);
         }
 
         @media (max-width: 768px) {
@@ -637,7 +605,6 @@
             .cube-dashboard-card { flex-direction: column; text-align: center; }
         }
 
-        /* CONTAINER DO PDF (Intocado - Fundo Branco Obrigatório) */
         #pdf-template {
             display: none;
             background-color: #ffffff !important;
@@ -674,15 +641,17 @@
         </div>
         <button class="nav-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
         <button class="nav-btn" onclick="switchTab('clientes')">👥 Clientes</button>
+        <button class="nav-btn" onclick="switchTab('debitos')">⚠️ Clientes em Débito</button>
         <button class="nav-btn" onclick="switchTab('orcamentos')">📝 Novo Orçamento</button>
         <button class="nav-btn" onclick="switchTab('historico')">📂 Histórico Pedidos</button>
         <button class="nav-btn" onclick="switchTab('estoque')">📦 Estoque</button>
+        <button class="nav-btn" onclick="switchTab('financeiro')">💰 Financeiro</button>
         <button class="nav-btn" onclick="switchTab('configuracoes')">⚙️ Tabela m² Config</button>
+        <button class="nav-btn" onclick="solicitarSenhaDiretoria()" style="color: #f59e0b; border: 1px dashed rgba(245,158,11,0.4);">🔒 Diretoria</button>
     </div>
 
     <div class="main-content">
 
-        <!-- CONTÊINER PARA NOTIFICAÇÕES TOAST -->
         <div id="toast-container"></div>
 
         <!-- Dashboard -->
@@ -695,8 +664,8 @@
                     <p class="highlight" id="dash-clientes">0</p>
                 </div>
                 <div class="card">
-                    <h3>Orçamentos Emitidos</h3>
-                    <p class="highlight" id="dash-orcamentos">0</p>
+                    <h3>Total Pendente (Débitos)</h3>
+                    <p id="dash-debitos" style="color: #ef4444;">R$ 0,00</p>
                 </div>
                 <div class="card">
                     <h3>Total Faturado</h3>
@@ -704,7 +673,15 @@
                 </div>
             </div>
 
-            <!-- CARD DA META 3D COM CUBO AMARELO -->
+            <!-- Botão / Seção para definir status do dia anterior -->
+            <div class="form-panel" style="margin-bottom: 30px;">
+                <h3>📅 Gestão de Orçamentos do Dia Anterior</h3>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Verifique os orçamentos pendentes do dia anterior e defina se foram pagos, forma de pagamento e dê baixa.</p>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn" style="background: #22c55e; color: #000;" onclick="abrirModalDiaAnterior()">Ver / Baixar Orçamentos Dia Anterior</button>
+                </div>
+            </div>
+
             <div class="cube-dashboard-card">
                 <div class="cube-controls">
                     <h3 style="font-size: 18px; color: var(--primary); font-weight: 800; margin-bottom: 15px;">🎯 Meta de Vendas</h3>
@@ -779,6 +756,7 @@
                             <th>CPF/CNPJ</th>
                             <th>Telefone</th>
                             <th>Nível Comercial</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -786,7 +764,28 @@
             </div>
         </div>
 
-        <!-- Novo Orçamento (Múltiplas Medidas e Múltiplos Acessórios) -->
+        <!-- Clientes em Débito -->
+        <div id="debitos" class="tab-content">
+            <h2 class="header-title">Controle de Clientes em Débito</h2>
+            <p style="margin-bottom: 25px; color: var(--text-muted); font-size: 14px;">Lista de clientes que levaram materiais e possuem saldo pendente com a loja.</p>
+            
+            <div class="table-container">
+                <table id="table-debitos">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Data do Débito</th>
+                            <th>Material / Pedido</th>
+                            <th>Valor Pendente</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Novo Orçamento -->
         <div id="orcamentos" class="tab-content">
             <h2 class="header-title">Calculadora Comercial Avançada</h2>
             
@@ -796,13 +795,13 @@
                         <label>Buscar / Selecionar Cliente</label>
                         <input type="text" id="orc-cliente-search" placeholder="Digite para filtrar..." oninput="filtrarClientesOrcamento(this.value)">
                         <div id="orc-cliente-results" class="search-results"></div>
+                        <input type="hidden" id="orc-cliente-selected-id">
                         <input type="hidden" id="orc-cliente-selected-nivel">
                         <input type="hidden" id="orc-cliente-selected-nome">
                         <input type="hidden" id="orc-cliente-selected-tel">
                     </div>
                 </div>
 
-                <!-- SEÇÃO 1: MÚLTIPLAS MEDIDAS DE VIDRO -->
                 <div style="margin-top: 25px; margin-bottom: 30px;">
                     <h3 style="border:none; padding:0; margin-bottom: 15px;">
                         <span>🪟 Itens / Medidas do Vidro</span>
@@ -811,7 +810,6 @@
                     <div id="container-medidas"></div>
                 </div>
 
-                <!-- SEÇÃO 2: MÚLTIPLOS ACESSÓRIOS DO ESTOQUE -->
                 <div style="margin-top: 25px; margin-bottom: 30px;">
                     <h3 style="border:none; padding:0; margin-bottom: 15px;">
                         <span>📦 Acessórios / Insumos Adicionais</span>
@@ -820,7 +818,24 @@
                     <div id="container-acessorios"></div>
                 </div>
 
-                <div class="card-grid" style="margin-top: 35px;">
+                <div class="form-row" style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); margin-top: 25px;">
+                    <div class="form-group">
+                        <label>Forma de Pagamento Principal</label>
+                        <select id="orc-forma-pgto" onchange="verificarFormaPagamento()">
+                            <option value="pix">PIX</option>
+                            <option value="debito">Débito</option>
+                            <option value="credito">Crédito</option>
+                            <option value="credito parcelado">Crédito Parcelado</option>
+                            <option value="sinal">Sinal (Entrada + Saldo a Pagar)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="grupo-valor-pago" style="display: none;">
+                        <label>Valor Pago Hoje (R$)</label>
+                        <input type="number" id="orc-valor-pago" step="0.01" placeholder="Ex: 500.00" oninput="calcularSistemaMultiplo()">
+                    </div>
+                </div>
+
+                <div class="card-grid" style="margin-top: 25px;">
                     <div class="card">
                         <h3>Área Total m²</h3>
                         <p class="highlight" id="res-area">0.00 m²</p>
@@ -840,7 +855,7 @@
                 </div>
 
                 <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
-                    ⏳ <strong>Validade do Orçamento:</strong> 7 dias após a data de emissão.
+                    ⏳ <strong>Validade do Orçamento:</strong> 7 dias após a data de emissão. Ficará aguardando baixa de pagamento se necessário.
                 </p>
 
                 <button class="btn" style="width: 100%; padding: 20px; font-size: 16px;" onclick="registrarOrcamento()">Salvar Orçamento Oficial</button>
@@ -862,6 +877,7 @@
                         <option value="Todos">Todos os Status</option>
                         <option value="Aguardando">Aguardando</option>
                         <option value="Pago">Pago (Faturado)</option>
+                        <option value="Parcial / Débito">Parcial / Débito</option>
                         <option value="Cancelado">Cancelado</option>
                     </select>
                 </div>
@@ -873,7 +889,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Cliente</th>
-                            <th>Validade (7d)</th>
+                            <th>Forma Pgto</th>
                             <th>Área Total</th>
                             <th>Total Geral</th>
                             <th>Status</th>
@@ -929,15 +945,185 @@
             <div id="categorias-estoque-container"></div>
         </div>
 
+        <!-- Financeiro -->
+        <div id="financeiro" class="tab-content">
+            <h2 class="header-title">Gestão Financeira & Caixa</h2>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Entradas Realizadas</h3>
+                    <p id="fin-total-entradas" style="color: #4ade80;">R$ 0,00</p>
+                </div>
+                <div class="card">
+                    <h3>Saídas / Despesas</h3>
+                    <p id="fin-total-saidas" style="color: #ef4444;">R$ 0,00</p>
+                </div>
+                <div class="card" style="border-color: var(--primary); background: rgba(234, 179, 8, 0.05);">
+                    <h3>Saldo em Caixa</h3>
+                    <p class="highlight" id="fin-saldo-caixa" style="color: var(--primary);">R$ 0,00</p>
+                </div>
+            </div>
+
+            <div class="form-panel">
+                <h3>+ Lançamento Financeiro Manual (Apenas Receitas / Entradas)</h3>
+                <form id="form-add-financeiro" onsubmit="adicionarLancamentoFinanceiro(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Descrição do Lançamento</label>
+                            <input type="text" id="fin-desc" required placeholder="Ex: Receita Extra">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Movimentação</label>
+                            <select id="fin-tipo" disabled style="opacity: 0.8;">
+                                <option value="Entrada" selected>Entrada (Receita)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Valor (R$)</label>
+                            <input type="number" id="fin-valor" required step="0.01" placeholder="Ex: 150.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" id="fin-data" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Registrar Lançamento</button>
+                </form>
+            </div>
+
+            <h3 style="color: #fff; font-size: 20px; margin-bottom: 15px;">Extrato de Movimentações</h3>
+            <div class="table-container">
+                <table id="table-financeiro">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- Tabela m² Config -->
         <div id="configuracoes" class="tab-content">
-            <h2 class="header-title">Configuração de Tabelas</h2>
-            <p style="margin-bottom: 30px; color: var(--text-muted); font-size: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">Altere os valores e clique no botão <strong>Salvar Tabela</strong> ao final da página para gravar permanentemente na nuvem.</p>
+            <h2 class="header-title">Configuração de Tabelas e Materiais</h2>
+            <p style="margin-bottom: 20px; color: var(--text-muted); font-size: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">Adicione novos materiais (ex: Lâminado 8 mm) e defina seus preços por nível.</p>
+            
+            <div class="form-panel" style="margin-bottom: 25px;">
+                <h3>+ Adicionar Novo Material / Tipo de Vidro</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Cor / Categoria do Vidro</label>
+                        <select id="novo-mat-cor">
+                            <option value="Incolor">Incolor</option>
+                            <option value="Fume">Fumê</option>
+                            <option value="Verde">Verde</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nome do Novo Material / Espessura</label>
+                        <input type="text" id="novo-mat-nome" placeholder="Ex: Lâminado 8 mm">
+                    </div>
+                </div>
+                <button type="button" class="btn" onclick="adicionarNovoMaterialTabelas()">Adicionar Material às Tabelas</button>
+            </div>
+
             <div id="matrix-container">
                 <p style="color: var(--text-muted); font-style: italic;">Carregando matriz de preços por nível...</p>
             </div>
             <button class="btn" style="width: 100%; margin-top: 20px; font-size: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(234, 179, 8, 0.4);" onclick="salvarTabelaPrecosCompleta()">💾 Salvar Tabela de Preços na Nuvem</button>
         </div>
+
+        <!-- Diretoria -->
+        <div id="diretoria" class="tab-content">
+            <h2 class="header-title">Painel Exclusivo da Diretoria</h2>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Total Faturado (Vendas)</h3>
+                    <p id="dir-faturado" style="color: #4ade80;">R$ 0,00</p>
+                </div>
+                <div class="card">
+                    <h3>Custo Total (Materiais Vendidos)</h3>
+                    <p id="dir-custo" style="color: #ef4444;">R$ 0,00</p>
+                </div>
+                <div class="card" style="border-color: var(--primary); background: rgba(234, 179, 8, 0.05);">
+                    <h3>Lucro Total Estimado</h3>
+                    <p class="highlight" id="dir-lucro" style="color: var(--primary);">R$ 0,00</p>
+                </div>
+            </div>
+
+            <!-- Filtros de período para diretoria -->
+            <div class="form-row" style="background: var(--bg-card); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border); backdrop-filter: blur(16px); margin-bottom: 25px;">
+                <div class="form-group">
+                    <label>Filtro de Período</label>
+                    <select id="dir-filtro-periodo" onchange="atualizarPainelDiretoria()">
+                        <option value="todos">Todos os Períodos</option>
+                        <option value="dia">Hoje (Dia)</option>
+                        <option value="semana">Última Semana (7 dias)</option>
+                        <option value="mes" selected>Este Mês</option>
+                    </select>
+                </div>
+                <div style="display: flex; align-items: flex-end;">
+                    <button class="btn" onclick="gerarPDFDiretoria()" style="width: 100%;">📄 Gerar PDF Detalhado da Diretoria</button>
+                </div>
+            </div>
+
+            <!-- Lançamento de Saída / Despesa (Movido para Diretoria) -->
+            <div class="form-panel">
+                <h3>+ Lançamento de Saída / Despesa (Diretoria)</h3>
+                <form id="form-add-saida-dir" onsubmit="adicionarSaidaDiretoria(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Descrição da Despesa / Saída</label>
+                            <input type="text" id="dir-saida-desc" required placeholder="Ex: Pagamento Fornecedor ou Despesa Operacional">
+                        </div>
+                        <div class="form-group">
+                            <label>Valor (R$)</label>
+                            <input type="number" id="dir-saida-valor" required step="0.01" placeholder="Ex: 500.00">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" id="dir-saida-data" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Registrar Saída</button>
+                </form>
+            </div>
+
+            <h3 class="category-header">📦 Custo de Estoque (Valores de Custo)</h3>
+            <div class="form-panel">
+                <h3>Gerenciar Custo Unitário do Estoque</h3>
+                <div class="table-container" style="margin-top:0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Categoria</th>
+                                <th>Marca</th>
+                                <th>Qtd</th>
+                                <th>Preço de Custo (R$)</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-estoque-custo-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="category-header">⚙️ Tabela de Custos m² por Cor e Espessura</h3>
+            <div id="matrix-custo-container"></div>
+            <button class="btn" style="width: 100%; margin-top: 20px; font-size: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(234, 179, 8, 0.4);" onclick="salvarTabelaCustosCompleta()">💾 Salvar Tabela de Custos m² na Nuvem</button>
+        </div>
+
     </div>
 
     <!-- Modal Detalhes -->
@@ -949,11 +1135,110 @@
         </div>
     </div>
 
-    <!-- Container do PDF (Mantido exatamente para exibição temporária) -->
+    <!-- Modal Editar Orçamento -->
+    <div id="editOrcModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="close-modal" onclick="fecharModalEdicaoOrcamento()">×</button>
+            <h3 style="color: var(--primary); font-size: 20px; font-weight: 800; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">✏️ Alterar Informações do Orçamento</h3>
+            <input type="hidden" id="edit-orc-doc-id">
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label>Cliente</label>
+                <input type="text" id="edit-orc-cliente-nome" disabled style="background: rgba(0,0,0,0.6);">
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label>Forma de Pagamento</label>
+                <select id="edit-orc-forma-pgto">
+                    <option value="pix">PIX</option>
+                    <option value="debito">Débito</option>
+                    <option value="credito">Crédito</option>
+                    <option value="credito parcelado">Crédito Parcelado</option>
+                    <option value="sinal">Sinal</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 25px;">
+                <label>Status do Pedido</label>
+                <select id="edit-orc-status">
+                    <option value="Aguardando">Aguardando</option>
+                    <option value="Pago">Pago</option>
+                    <option value="Parcial / Débito">Parcial / Débito</option>
+                    <option value="Cancelado">Cancelado</option>
+                </select>
+            </div>
+            <button type="button" class="btn" style="width: 100%;" onclick="salvarEdicaoOrcamento()">Salvar Alterações</button>
+        </div>
+    </div>
+
+    <!-- Modal Dia Anterior -->
+    <div id="diaAnteriorModal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <button class="close-modal" onclick="fecharModalDiaAnterior()">×</button>
+            <h3 style="color: var(--primary); font-size: 20px; font-weight: 800; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">📅 Orçamentos do Dia Anterior / Pendentes</h3>
+            <div id="container-dia-anterior" style="max-height: 400px; overflow-y: auto;">
+                <p style="color: var(--text-muted);">Carregando orçamentos pendentes...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Nível de Cliente -->
+    <div id="cliModal" class="modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <button class="close-modal" onclick="fecharModalCliente()">×</button>
+            <h3 style="color: var(--primary); font-size: 20px; font-weight: 800; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">⚙️ Alterar Nível do Cliente</h3>
+            <form id="form-edit-cliente" onsubmit="salvarAlteracaoNivelCliente(event)">
+                <input type="hidden" id="edit-cli-id">
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Cliente</label>
+                    <input type="text" id="edit-cli-nome" disabled style="background: rgba(0,0,0,0.6);">
+                </div>
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <label>Novo Nível Comercial</label>
+                    <select id="edit-cli-nivel" required>
+                        <option value="Bronze">Bronze (Tabela Padrão)</option>
+                        <option value="Prata">Prata</option>
+                        <option value="Ouro">Ouro</option>
+                        <option value="Premium">Premium</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Atualizar Nível</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Baixar Débito -->
+    <div id="debitoModal" class="modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <button class="close-modal" onclick="fecharModalDebito()">×</button>
+            <h3 style="color: var(--primary); font-size: 20px; font-weight: 800; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">💳 Baixar Débito do Cliente</h3>
+            <form id="form-baixa-debito" onsubmit="confirmarBaixaDebito(event)">
+                <input type="hidden" id="baixa-debito-doc-id">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Cliente</label>
+                    <input type="text" id="baixa-cli-nome" disabled style="background: rgba(0,0,0,0.6);">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Valor Pendente</label>
+                    <input type="text" id="baixa-cli-valor" disabled style="background: rgba(0,0,0,0.6); color: #ef4444; font-weight: 800;">
+                </div>
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <label>Forma de Pagamento da Baixa</label>
+                    <select id="baixa-forma-pgto" required>
+                        <option value="pix">PIX</option>
+                        <option value="debito">Débito</option>
+                        <option value="credito">Crédito</option>
+                        <option value="credito parcelado">Crédito Parcelado</option>
+                        <option value="dinheiro">Dinheiro</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Confirmar Recebimento e Dar Baixa</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Container do PDF -->
     <div id="pdf-template"></div>
+    <div id="pdf-diretoria-template" style="display:none;"></div>
 
     <script>
-        // CONFIGURAÇÃO DO FIREBASE (MANTIDA INTACTA)
         const firebaseConfig = {
             apiKey: "AIzaSyD-bH7MY-VFHJYhuYGa18UKu2EslksAjgM",
             authDomain: "cubo-glass.firebaseapp.com",
@@ -972,6 +1257,8 @@
         let dbClientes = [];
         let dbEstoque = [];
         let dbOrcamentos = [];
+        let dbFinanceiro = [];
+        let dbDebitos = [];
         let linhasMedidas = [];
         let linhasAcessorios = [];
 
@@ -999,7 +1286,32 @@
             }
         };
 
+        const matrizCustoPadrao = {
+            'Incolor': {
+                '6 mm': 70,
+                '8 mm': 90,
+                '10 mm': 120,
+                '4 mm Espelho': 130,
+                '8 mm Box Padrao': 100
+            },
+            'Fume': {
+                '6 mm': 85,
+                '8 mm': 105,
+                '10 mm': 140,
+                '4 mm Espelho': 150,
+                '8 mm Box Padrao': 120
+            },
+            'Verde': {
+                '6 mm': 80,
+                '8 mm': 100,
+                '10 mm': 130,
+                '4 mm Espelho': 140,
+                '8 mm Box Padrao': 110
+            }
+        };
+
         let tabelaPrecos = matrizPadrao;
+        let tabelaCustos = matrizCustoPadrao;
 
         function showToast(msg, type = 'success') {
             const container = document.getElementById('toast-container');
@@ -1023,6 +1335,28 @@
             document.getElementById('sidebar').classList.remove('active');
             if(tabId === 'orcamentos') limparBuscasOrcamento();
             if(tabId === 'configuracoes') renderizarFormConfig();
+            if(tabId === 'diretoria') {
+                renderizarFormCustos();
+                renderizarEstoqueCusto();
+                atualizarPainelDiretoria();
+            }
+            if(tabId === 'financeiro') {
+                const hojeStr = new Date().toISOString().split('T')[0];
+                const campoData = document.getElementById('fin-data');
+                if(campoData) campoData.value = hojeStr;
+            }
+            if(tabId === 'dashboard') {
+                carregarMatrizPrecos();
+            }
+        }
+
+        function solicitarSenhaDiretoria() {
+            let senha = prompt("Digite o código de acesso da Diretoria:");
+            if (senha === "0000") {
+                switchTab('diretoria');
+            } else if (senha !== null) {
+                showToast("Código incorreto!", "error");
+            }
         }
 
         db.collection("clientes").onSnapshot((snapshot) => {
@@ -1031,6 +1365,7 @@
             if(tbody) tbody.innerHTML = '';
             snapshot.forEach((doc) => {
                 let cli = doc.data();
+                cli.id = doc.id;
                 dbClientes.push(cli);
                 if(tbody) {
                     tbody.innerHTML += `<tr>
@@ -1038,11 +1373,25 @@
                         <td>${cli.doc}</td>
                         <td>${cli.tel || '-'}</td>
                         <td><span class="badge badge-${cli.nivel ? cli.nivel.toLowerCase() : 'bronze'}">${cli.nivel}</span></td>
+                        <td>
+                            <button class="btn-small" style="background: var(--primary); color: #000;" onclick="abrirModalCliente('${cli.id}', '${cli.nome}', '${cli.nivel}')">⚙️ Alterar Nível</button>
+                            <button class="btn-small" style="background: rgba(239,68,68,0.2); border:1px solid #ef4444; color: #fca5a5;" onclick="apagarCliente('${cli.id}')">🗑️ Apagar</button>
+                        </td>
                     </tr>`;
                 }
             });
             atualizarDashboard();
         });
+
+        function apagarCliente(id) {
+            if(confirm("Tem certeza que deseja APAGAR este cliente definitivamente?")) {
+                db.collection("clientes").doc(id).delete().then(() => {
+                    showToast("Cliente apagado com sucesso!", "success");
+                }).catch(err => {
+                    showToast("Erro ao apagar cliente.", "error");
+                });
+            }
+        }
 
         db.collection("estoque").onSnapshot((snapshot) => {
             dbEstoque = [];
@@ -1052,6 +1401,9 @@
                 dbEstoque.push(item);
             });
             renderizarEstoque();
+            if(document.getElementById('diretoria').classList.contains('active')) {
+                renderizarEstoqueCusto();
+            }
         });
 
         db.collection("orcamentos").onSnapshot((snapshot) => {
@@ -1063,6 +1415,57 @@
             });
             filtrarHistoricoLocal();
             atualizarDashboard();
+            atualizarFinanceiroCaixa();
+            if(document.getElementById('diretoria').classList.contains('active')) {
+                atualizarPainelDiretoria();
+            }
+        });
+
+        db.collection("debitos").onSnapshot((snapshot) => {
+            dbDebitos = [];
+            const tbody = document.querySelector('#table-debitos tbody');
+            if(tbody) tbody.innerHTML = '';
+            snapshot.forEach((doc) => {
+                let deb = doc.data();
+                deb.idDoc = doc.id;
+                dbDebitos.push(deb);
+                if(tbody) {
+                    tbody.innerHTML += `<tr>
+                        <td><strong style="color:#fff;">${deb.cliente}</strong></td>
+                        <td>${new Date(deb.dataCriacao).toLocaleDateString('pt-BR')}</td>
+                        <td>${deb.materiaisResumo}</td>
+                        <td style="color: #ef4444; font-weight: 800;">R$ ${deb.valorPendente.toFixed(2).replace('.', ',')}</td>
+                        <td>
+                            <button class="btn-small" style="background: #22c55e; color: #000;" onclick="abrirModalBaixaDebito('${deb.idDoc}', '${deb.cliente}', ${deb.valorPendente})">💵 Dar Baixa</button>
+                            <button class="btn-small" style="background: rgba(239,68,68,0.2); border:1px solid #ef4444; color: #fca5a5;" onclick="apagarDebito('${deb.idDoc}', '${deb.orcamentoDocId || ''}')">❌ Cancelar Erro</button>
+                        </td>
+                    </tr>`;
+                }
+            });
+            atualizarDashboard();
+        });
+
+        function apagarDebito(idDoc, idOrcamentoDoc) {
+            if(confirm("Tem certeza que deseja CANCELAR este débito lançado errado?")) {
+                db.collection("debitos").doc(idDoc).delete().then(() => {
+                    if(idOrcamentoDoc) {
+                         db.collection("orcamentos").doc(idOrcamentoDoc).update({ status: 'Cancelado', valorPendente: 0 });
+                    }
+                    showToast("Débito cancelado e removido do sistema!", "success");
+                }).catch(err => {
+                    showToast("Erro ao cancelar débito.", "error");
+                });
+            }
+        }
+
+        db.collection("financeiro").onSnapshot((snapshot) => {
+            dbFinanceiro = [];
+            snapshot.forEach((doc) => {
+                let fin = doc.data();
+                fin.idDoc = doc.id;
+                dbFinanceiro.push(fin);
+            });
+            atualizarFinanceiroCaixa();
         });
 
         function carregarMatrizPrecos() {
@@ -1071,10 +1474,37 @@
                 else { tabelaPrecos = matrizPadrao; db.collection("config").doc("matrizM2").set(matrizPadrao); }
                 renderizarFormConfig();
             }).catch(err => {
-                console.error("Erro ao ler matriz:", err);
                 tabelaPrecos = matrizPadrao;
                 renderizarFormConfig();
             });
+
+            db.collection("config").doc("matrizCustosM2").get().then((doc) => {
+                if(doc.exists) tabelaCustos = doc.data();
+                else { tabelaCustos = matrizCustoPadrao; db.collection("config").doc("matrizCustosM2").set(matrizCustoPadrao); }
+            }).catch(err => {
+                tabelaCustos = matrizCustoPadrao;
+            });
+        }
+        carregarMatrizPrecos();
+
+        function adicionarNovoMaterialTabelas() {
+            const cor = document.getElementById('novo-mat-cor').value;
+            const nomeMat = document.getElementById('novo-mat-nome').value.trim();
+            if(!nomeMat) return showToast('Digite o nome do novo material!', 'warning');
+
+            if(!tabelaPrecos[cor]) tabelaPrecos[cor] = {};
+            if(!tabelaPrecos[cor][nomeMat]) {
+                tabelaPrecos[cor][nomeMat] = {'Bronze': 100, 'Prata': 90, 'Ouro': 80, 'Premium': 70};
+            }
+            if(!tabelaCustos[cor]) tabelaCustos[cor] = {};
+            if(!tabelaCustos[cor][nomeMat]) {
+                tabelaCustos[cor][nomeMat] = 50;
+            }
+
+            salvarTabelaPrecosCompleta();
+            salvarTabelaCustosCompleta();
+            renderizarFormConfig();
+            showToast('Material adicionado com sucesso às tabelas!', 'success');
         }
 
         function adicionarLinhaMedida() {
@@ -1099,6 +1529,18 @@
             const container = document.getElementById('container-medidas');
             if(!container) return;
             container.innerHTML = '';
+            
+            // Gerar opções de espessuras disponíveis na tabela de preços
+            let espessurasOpts = '';
+            for(let corKey in tabelaPrecos) {
+                for(let espKey in tabelaPrecos[corKey]) {
+                    if(!espessurasOpts.includes(espKey)) {
+                        espessurasOpts += `<option value="${espKey}">${espKey === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : espKey}</option>`;
+                    }
+                }
+                break;
+            }
+
             linhasMedidas.forEach((l, index) => {
                 container.innerHTML += `
                     <div class="dynamic-item-row">
@@ -1111,13 +1553,14 @@
                             </select>
                         </div>
                         <div>
-                            <label>Espessura</label>
+                            <label>Espessura / Material</label>
                             <select onchange="atualizarLinhaMedida(${l.id}, 'espessura', this.value)">
                                 <option value="6 mm" ${l.espessura === '6 mm' ? 'selected' : ''}>Vidro 6 mm</option>
                                 <option value="8 mm" ${l.espessura === '8 mm' ? 'selected' : ''}>Vidro 8 mm</option>
                                 <option value="10 mm" ${l.espessura === '10 mm' ? 'selected' : ''}>Vidro 10 mm</option>
                                 <option value="4 mm Espelho" ${l.espessura === '4 mm Espelho' ? 'selected' : ''}>Espelho 4 mm</option>
                                 <option value="8 mm Box Padrao" ${l.espessura === '8 mm Box Padrao' ? 'selected' : ''}>Box Padrão 8 mm</option>
+                                ${espessurasOpts.includes(l.espessura) ? '' : `<option value="${l.espessura}" selected>${l.espessura}</option>`}
                             </select>
                         </div>
                         <div>
@@ -1201,13 +1644,27 @@
 
         function limparBuscasOrcamento() {
             document.getElementById('orc-cliente-search').value = '';
+            document.getElementById('orc-cliente-selected-id').value = '';
             document.getElementById('orc-cliente-selected-nome').value = '';
             document.getElementById('orc-cliente-selected-nivel').value = '';
             document.getElementById('orc-cliente-selected-tel').value = '';
+            document.getElementById('orc-forma-pgto').value = 'pix';
+            document.getElementById('orc-valor-pago').value = '';
+            document.getElementById('grupo-valor-pago').style.display = 'none';
             linhasMedidas = [];
             linhasAcessorios = [];
             adicionarLinhaMedida();
             calcularSistemaMultiplo();
+        }
+
+        function verificarFormaPagamento() {
+            const forma = document.getElementById('orc-forma-pgto').value;
+            const grupoValor = document.getElementById('grupo-valor-pago');
+            if(forma === 'sinal') {
+                grupoValor.style.display = 'flex';
+            } else {
+                grupoValor.style.display = 'none';
+            }
         }
 
         function filtrarClientesOrcamento(query) {
@@ -1216,7 +1673,7 @@
             const filtrados = dbClientes.filter(c => c.nome.toLowerCase().includes(query.toLowerCase()));
             container.innerHTML = '';
             if(filtrados.length > 0) {
-                filtrados.forEach(c => { container.innerHTML += `<div class="search-item" onclick="selecionarClienteOrcamento('${c.nome}', '${c.nivel}', '${c.tel || ''}')">${c.nome} (${c.nivel})</div>`; });
+                filtrados.forEach(c => { container.innerHTML += `<div class="search-item" onclick="selecionarClienteOrcamento('${c.id}', '${c.nome}', '${c.nivel}', '${c.tel || ''}')">${c.nome} (${c.nivel})</div>`; });
                 container.style.display = 'block';
             } else {
                 container.innerHTML = '<div class="search-item" style="color: var(--text-muted);">Nenhum cliente encontrado</div>';
@@ -1224,8 +1681,9 @@
             }
         }
 
-        function selecionarClienteOrcamento(nome, nivel, tel) {
+        function selecionarClienteOrcamento(id, nome, nivel, tel) {
             document.getElementById('orc-cliente-search').value = nome;
+            document.getElementById('orc-cliente-selected-id').value = id;
             document.getElementById('orc-cliente-selected-nome').value = nome;
             document.getElementById('orc-cliente-selected-nivel').value = nivel;
             document.getElementById('orc-cliente-selected-tel').value = tel;
@@ -1248,7 +1706,7 @@
             linhasMedidas.forEach(m => {
                 const area = ((m.altura * m.largura) / 1000000) * m.qtd;
                 areaTotal += area;
-                const precoM2 = tabelaPrecos[m.cor]?.[m.espessura]?.[nivel] || 0;
+                const precoM2 = tabelaPrecos[m.cor]?.[m.espessura]?.[nivel] || 100;
                 totalVidros += (area * precoM2);
             });
 
@@ -1306,7 +1764,77 @@
         function salvarTabelaPrecosCompleta() {
             db.collection("config").doc("matrizM2").set(tabelaPrecos)
             .then(() => { showToast('✅ Tabela de Preços gravada com sucesso na Nuvem!', 'success'); })
-            .catch((err) => { console.error("Erro ao salvar preços:", err); showToast('❌ Erro ao salvar na nuvem.', 'error'); });
+            .catch((err) => { showToast('❌ Erro ao salvar na nuvem.', 'error'); });
+        }
+
+        function renderizarFormCustos() {
+            const container = document.getElementById('matrix-custo-container');
+            if(!container) return;
+            container.innerHTML = '';
+            for (let cor in tabelaCustos) {
+                let html = `
+                    <div class="form-panel">
+                        <h3 style="color: #fff;">Matriz de Custo m² - <span style="color:var(--primary);">${cor}</span></h3>
+                        <div class="table-container">
+                            <table class="matrix-table">
+                                <thead>
+                                    <tr>
+                                        <th>Espessura / Modelo</th>
+                                        <th>Custo m² (R$)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                for (let esp in tabelaCustos[cor]) {
+                    html += `
+                        <tr>
+                            <td><strong style="color:#fff;">${esp === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : esp}</strong></td>
+                            <td><input type="number" value="${tabelaCustos[cor][esp] || 0}" onchange="atualizarMemoriaCusto('${cor}', '${esp}', this.value)"></td>
+                        </tr>`;
+                }
+                html += `</tbody></table></div></div>`;
+                container.innerHTML += html;
+            }
+        }
+
+        function atualizarMemoriaCusto(cor, esp, valor) {
+            if (!tabelaCustos[cor]) tabelaCustos[cor] = {};
+            tabelaCustos[cor][esp] = parseFloat(valor) || 0;
+        }
+
+        function salvarTabelaCustosCompleta() {
+            db.collection("config").doc("matrizCustosM2").set(tabelaCustos)
+            .then(() => { showToast('✅ Tabela de Custos m² gravada com sucesso na Nuvem!', 'success'); })
+            .catch((err) => { showToast('❌ Erro ao salvar custos na nuvem.', 'error'); });
+        }
+
+        function renderizarEstoqueCusto() {
+            const tbody = document.getElementById('table-estoque-custo-body');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            if(dbEstoque.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Nenhum produto cadastrado.</td></tr>`;
+                return;
+            }
+            dbEstoque.forEach(item => {
+                let precoCusto = item.custo !== undefined ? item.custo : 0;
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong style="color:#fff;">${item.nome}</strong></td>
+                        <td>${item.categoria}</td>
+                        <td>${item.marca}</td>
+                        <td>${item.qtd} un</td>
+                        <td><input type="number" style="width:120px;" step="0.01" value="${precoCusto}" onchange="atualizarCustoEstoqueItem('${item.id}', this.value)"></td>
+                        <td><button class="btn-small" style="background:var(--primary); color:#000;" onclick="showToast('Custo atualizado na memória!', 'success')">💾 Salvar</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function atualizarCustoEstoqueItem(idEstoque, valorCusto) {
+            const val = parseFloat(valorCusto) || 0;
+            db.collection("estoque").doc(idEstoque).update({ custo: val }).then(() => {
+                showToast('Preço de custo do item atualizado!', 'success');
+            });
         }
 
         function renderizarEstoque() {
@@ -1354,21 +1882,42 @@
         }
 
         function registrarOrcamento() {
+            const idCliente = document.getElementById('orc-cliente-selected-id').value;
             const nomeCliente = document.getElementById('orc-cliente-selected-nome').value;
             const nivelCliente = document.getElementById('orc-cliente-selected-nivel').value;
             const telCliente = document.getElementById('orc-cliente-selected-tel').value;
+            const formaPgto = document.getElementById('orc-forma-pgto').value;
             
             if(!nomeCliente) return showToast('Busque e selecione um cliente da lista!', 'warning');
             if(linhasMedidas.length === 0) return showToast('Adicione ao menos uma medida!', 'warning');
 
             let areaTotal = 0; let totalVidros = 0; let totalInsumos = 0;
+            let custoTotalVidros = 0; let custoTotalInsumos = 0;
 
             const listaMedidasSalvar = linhasMedidas.map(m => {
                 const area = ((m.altura * m.largura) / 1000000) * m.qtd;
-                const precoM2 = tabelaPrecos[m.cor]?.[m.espessura]?.[nivelCliente] || 0;
+                const precoM2 = tabelaPrecos[m.cor]?.[m.espessura]?.[nivelCliente] || 100;
                 const subtotal = area * precoM2;
-                areaTotal += area; totalVidros += subtotal;
-                return { cor: m.cor, espessura: m.espessura, altura: m.altura, largura: m.largura, qtd: m.qtd, area: area, precoM2: precoM2, subtotal: subtotal };
+                
+                const custoM2 = tabelaCustos[m.cor]?.[m.espessura] || 50;
+                const subtotalCusto = area * custoM2;
+
+                areaTotal += area; 
+                totalVidros += subtotal;
+                custoTotalVidros += subtotalCusto;
+
+                return { 
+                    cor: m.cor, 
+                    espessura: m.espessura, 
+                    altura: m.altura, 
+                    largura: m.largura, 
+                    qtd: m.qtd, 
+                    area: area, 
+                    precoM2: precoM2, 
+                    subtotal: subtotal,
+                    custoM2: custoM2,
+                    subtotalCusto: subtotalCusto
+                };
             });
 
             const listaAcessoriosSalvar = [];
@@ -1376,24 +1925,96 @@
                 if(a.idEstoque && a.nome) {
                     const subtotal = a.preco * a.qtd;
                     totalInsumos += subtotal;
-                    listaAcessoriosSalvar.push({ idEstoque: a.idEstoque, nome: a.nome, preco: a.preco, qtd: a.qtd, subtotal: subtotal });
+
+                    const itemEst = dbEstoque.find(e => e.id === a.idEstoque);
+                    const custoUnit = itemEst && itemEst.custo !== undefined ? itemEst.custo : 0;
+                    const subtotalCusto = custoUnit * a.qtd;
+                    custoTotalInsumos += subtotalCusto;
+
+                    listaAcessoriosSalvar.push({ 
+                        idEstoque: a.idEstoque, 
+                        nome: a.nome, 
+                        preco: a.preco, 
+                        qtd: a.qtd, 
+                        subtotal: subtotal,
+                        custoUnit: custoUnit,
+                        subtotalCusto: subtotalCusto
+                    });
                 }
             });
 
             const totalGeral = totalVidros + totalInsumos;
+            const custoGeralTotal = custoTotalVidros + custoTotalInsumos;
+
+            // Conjugar com financeiro e pendente
+            let valorPagoHoje = totalGeral;
+            let valorPendente = 0;
+            let statusPedido = 'Pago';
+
+            if (formaPgto === 'sinal') {
+                valorPagoHoje = parseFloat(document.getElementById('orc-valor-pago').value) || 0;
+                valorPendente = Math.max(0, totalGeral - valorPagoHoje);
+                if (valorPendente > 0) {
+                    statusPedido = 'Parcial / Débito';
+                }
+            } else if (formaPgto === 'aguardando' || formaPgto === 'boleto_pendente') {
+                valorPagoHoje = 0;
+                valorPendente = totalGeral;
+                statusPedido = 'Aguardando';
+            }
+
             const hoje = new Date().getTime();
             const validade7Dias = hoje + (7 * 24 * 60 * 60 * 1000);
 
+            let resumoMateriaisStr = listaMedidasSalvar.map(m => `${m.qtd}x ${m.espessura} ${m.cor} (${m.altura}x${m.largura}mm)`).join(', ');
+
             const novoOrc = {
                 id: Math.floor(1000 + Math.random() * 9000),
+                idCliente: idCliente,
                 cliente: nomeCliente, nivel: nivelCliente, tel: telCliente,
                 medidas: listaMedidasSalvar, acessorios: listaAcessoriosSalvar,
                 areaTotal: areaTotal, totalVidros: totalVidros, totalInsumos: totalInsumos, total: totalGeral,
-                status: 'Aguardando', dataCriacao: hoje, dataValidade: validade7Dias
+                custoTotal: custoGeralTotal,
+                formaPgto: formaPgto, valorPagoHoje: valorPagoHoje, valorPendente: valorPendente,
+                status: statusPedido, dataCriacao: hoje, dataValidade: validade7Dias
             };
 
-            db.collection("orcamentos").add(novoOrc).then(() => {
-                showToast(' Orçamento gerado com sucesso!', 'success');
+            db.collection("orcamentos").add(novoOrc).then((docRef) => {
+                listaAcessoriosSalvar.forEach(item => {
+                    if (item.idEstoque) {
+                        db.collection("estoque").doc(item.idEstoque).get().then(docEst => {
+                            if (docEst.exists) {
+                                const qtdAtual = docEst.data().qtd || 0;
+                                const novaQtd = Math.max(0, qtdAtual - item.qtd);
+                                db.collection("estoque").doc(item.idEstoque).update({ qtd: novaQtd });
+                            }
+                        });
+                    }
+                });
+
+                if (valorPagoHoje > 0) {
+                    db.collection("financeiro").add({
+                        descricao: `Venda Pedido #${novoOrc.id} (${formaPgto}) - ${nomeCliente} (${resumoMateriaisStr})`,
+                        tipo: 'Entrada',
+                        valor: valorPagoHoje,
+                        data: hoje,
+                        origem: 'pedido',
+                        orcamentoId: novoOrc.id
+                    });
+                }
+
+                if (valorPendente > 0) {
+                    db.collection("debitos").add({
+                        orcamentoId: novoOrc.id,
+                        orcamentoDocId: docRef.id,
+                        cliente: nomeCliente,
+                        materiaisResumo: resumoMateriaisStr,
+                        valorPendente: valorPendente,
+                        dataCriacao: hoje
+                    });
+                }
+
+                showToast('Orçamento salvo e integrado com sucesso!', 'success');
                 limparBuscasOrcamento();
             });
         }
@@ -1416,24 +2037,176 @@
             orcFiltrados.forEach((orc) => {
                 let colorBadge = 'badge-warning';
                 if(orc.status === 'Pago') colorBadge = 'badge-success';
+                if(orc.status === 'Parcial / Débito') colorBadge = 'badge-danger';
                 if(orc.status === 'Cancelado') colorBadge = 'badge-danger';
                 const indexOriginal = dbOrcamentos.findIndex(o => o.idDoc === orc.idDoc);
 
                 tbody.innerHTML += `<tr>
                     <td><strong style="color:var(--text-muted)">#${orc.id}</strong></td>
                     <td><strong style="color:#fff">${orc.cliente}</strong></td>
-                    <td>${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}</td>
-                    <td>${(orc.areaTotal || orc.area || 0).toFixed(2)} m²</td>
+                    <td><span class="badge badge-warning" style="text-transform:uppercase;">${orc.formaPgto || 'pix'}</span></td>
+                    <td>${(orc.areaTotal || 0).toFixed(2)} m²</td>
                     <td style="color: var(--primary); font-weight: 800;">R$ ${orc.total.toFixed(2).replace('.', ',')}</td>
                     <td><span class="badge ${colorBadge}">${orc.status}</span></td>
                     <td>
                         <button class="btn-small" style="background: rgba(255,255,255,0.1); color: #fff;" onclick="abrirOrcamento(${indexOriginal})">👁️ Ver</button>
-                        <button class="btn-small" style="background: var(--primary); color: #000;" onclick="gerarPDF(${indexOriginal})">📄 PDF</button>
+                        <button class="btn-small" style="background: var(--primary); color: #000;" onclick="abrirModalEdicaoOrcamento('${orc.idDoc}')">✏️ Editar</button>
+                        <button class="btn-small" style="background: #38bdf8; color: #000;" onclick="gerarPDF(${indexOriginal})">📄 PDF</button>
                         <button class="btn-small" style="background: #22c55e; color: #000;" onclick="enviarWhatsApp(${indexOriginal})">💬 Whats</button>
-                        ${orc.status !== 'Pago' ? `<button class="btn-small" style="background: rgba(34,197,94,0.2); border:1px solid #22c55e; color: #86efac;" onclick="mudarStatusEAjustarEstoque('${orc.idDoc}', 'Pago', ${indexOriginal})">💵 Baixar</button>` : ''}
-                        ${orc.status !== 'Cancelado' ? `<button class="btn-small" style="background: rgba(239,68,68,0.2); border:1px solid #ef4444; color: #fca5a5;" onclick="mudarStatusEAjustarEstoque('${orc.idDoc}', 'Cancelado', ${indexOriginal})">❌</button>` : ''}
+                        <button class="btn-small" style="background: rgba(239,68,68,0.2); border:1px solid #ef4444; color: #fca5a5;" title="Apagar Definitivamente" onclick="apagarVenda('${orc.idDoc}')">🗑️</button>
                     </td>
                 </tr>`;
+            });
+        }
+
+        // Funções de Edição de Orçamento
+        function abrirModalEdicaoOrcamento(idDoc) {
+            const orc = dbOrcamentos.find(o => o.idDoc === idDoc);
+            if(!orc) return;
+            document.getElementById('edit-orc-doc-id').value = idDoc;
+            document.getElementById('edit-orc-cliente-nome').value = orc.cliente;
+            document.getElementById('edit-orc-forma-pgto').value = orc.formaPgto || 'pix';
+            document.getElementById('edit-orc-status').value = orc.status || 'Aguardando';
+            document.getElementById('editOrcModal').style.display = 'flex';
+        }
+
+        function fecharModalEdicaoOrcamento() {
+            document.getElementById('editOrcModal').style.display = 'none';
+        }
+
+        function salvarEdicaoOrcamento() {
+            const idDoc = document.getElementById('edit-orc-doc-id').value;
+            const novaForma = document.getElementById('edit-orc-forma-pgto').value;
+            const novoStatus = document.getElementById('edit-orc-status').value;
+
+            db.collection("orcamentos").doc(idDoc).update({
+                formaPgto: novaForma,
+                status: novoStatus
+            }).then(() => {
+                showToast("Orçamento atualizado com sucesso!", "success");
+                fecharModalEdicaoOrcamento();
+            }).catch(err => {
+                showToast("Erro ao atualizar orçamento.", "error");
+            });
+        }
+
+        // Gestão de Orçamentos do Dia Anterior
+        function abrirModalDiaAnterior() {
+            const container = document.getElementById('container-dia-anterior');
+            container.innerHTML = '';
+            
+            const ontemInicio = new Date();
+            ontemInicio.setDate(ontemInicio.getDate() - 1);
+            ontemInicio.setHours(0,0,0,0);
+            const ontemFim = new Date(ontemInicio);
+            ontemFim.setHours(23,59,59,999);
+
+            const pendentesOntem = dbOrcamentos.filter(o => o.status === 'Aguardando' || o.status === 'Parcial / Débito');
+
+            if(pendentesOntem.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 20px;">Nenhum orçamento pendente encontrado.</p>`;
+            } else {
+                pendentesOntem.forEach(orc => {
+                    container.innerHTML += `
+                        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                            <p style="color: #fff; font-weight: bold; margin-bottom: 5px;">Pedido #${orc.id} - ${orc.cliente} (R$ ${orc.total.toFixed(2).replace('.', ',')})</p>
+                            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 10px;">Status Atual: <span class="badge badge-warning">${orc.status}</span></p>
+                            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <select id="sel-pgto-ontem-${orc.idDoc}" style="flex: 1; padding: 8px;">
+                                    <option value="pix">PIX</option>
+                                    <option value="debito">Débito</option>
+                                    <option value="credito">Crédito</option>
+                                    <option value="dinheiro">Dinheiro</option>
+                                </select>
+                                <button class="btn-small" style="background: #22c55e; color: #000;" onclick="marcarComoPagoDiaAnterior('${orc.idDoc}')">Definir como Pago & Subir ao Financeiro</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('diaAnteriorModal').style.display = 'flex';
+        }
+
+        function fecharModalDiaAnterior() {
+            document.getElementById('diaAnteriorModal').style.display = 'none';
+        }
+
+        function marcarComoPagoDiaAnterior(idDoc) {
+            const formaPgto = document.getElementById(`sel-pgto-ontem-${idDoc}`).value;
+            const orc = dbOrcamentos.find(o => o.idDoc === idDoc);
+            if(!orc) return;
+
+            db.collection("orcamentos").doc(idDoc).update({
+                status: 'Pago',
+                formaPgto: formaPgto,
+                valorPendente: 0,
+                valorPagoHoje: orc.total
+            }).then(() => {
+                // Subir para o financeiro como venda
+                db.collection("financeiro").add({
+                    descricao: `Venda Pedido #${orc.id} (${formaPgto}) - ${orc.cliente}`,
+                    tipo: 'Entrada',
+                    valor: orc.total,
+                    data: new Date().getTime(),
+                    origem: 'pedido_pago',
+                    orcamentoId: orc.id
+                });
+                showToast("Orçamento marcado como pago e enviado ao financeiro!", "success");
+                fecharModalDiaAnterior();
+                abrirModalDiaAnterior();
+            });
+        }
+
+        function apagarVenda(idDoc) {
+            if(confirm("Tem certeza que deseja APAGAR DEFINITIVAMENTE esta venda do sistema?")) {
+                db.collection("orcamentos").doc(idDoc).delete().then(() => {
+                    showToast("Venda apagada com sucesso!", "success");
+                }).catch(err => {
+                    showToast("Erro ao apagar venda.", "error");
+                });
+            }
+        }
+
+        function abrirModalBaixaDebito(idDoc, clienteNome, valorPend) {
+            document.getElementById('baixa-debito-doc-id').value = idDoc;
+            document.getElementById('baixa-cli-nome').value = clienteNome;
+            document.getElementById('baixa-cli-valor').value = "R$ " + valorPend.toFixed(2).replace('.', ',');
+            document.getElementById('baixa-forma-pgto').value = 'pix';
+            document.getElementById('debitoModal').style.display = 'flex';
+        }
+
+        function fecharModalDebito() {
+            document.getElementById('debitoModal').style.display = 'none';
+        }
+
+        function confirmarBaixaDebito(e) {
+            e.preventDefault();
+            const idDoc = document.getElementById('baixa-debito-doc-id').value;
+            const formaPgtoBaixa = document.getElementById('baixa-forma-pgto').value;
+            
+            const debitoObj = dbDebitos.find(d => d.idDoc === idDoc);
+            if(!debitoObj) return;
+
+            const valorQuitado = debitoObj.valorPendente;
+            const hoje = new Date().getTime();
+
+            db.collection("debitos").doc(idDoc).delete().then(() => {
+                db.collection("financeiro").add({
+                    descricao: `Quitação de Débito (${formaPgtoBaixa}) - ${debitoObj.cliente} (Ref: Pedido #${debitoObj.orcamentoId})`,
+                    tipo: 'Entrada',
+                    valor: valorQuitado,
+                    data: hoje,
+                    origem: 'debito_quitado'
+                });
+
+                if (debitoObj.orcamentoDocId) {
+                    db.collection("orcamentos").doc(debitoObj.orcamentoDocId).update({ status: 'Pago', valorPendente: 0 });
+                }
+
+                showToast('Débito baixado com sucesso! Valor integrado ao caixa do dia.', 'success');
+                fecharModalDebito();
+            }).catch(err => {
+                showToast('Erro ao processar baixa do débito.', 'error');
             });
         }
 
@@ -1445,46 +2218,25 @@
             if(orc.medidas && orc.medidas.length > 0) {
                 mensagem += `*Itens / Vidros:*%0A`;
                 orc.medidas.forEach((m, i) => { mensagem += `• Peça ${i+1}: ${m.espessura} ${m.cor} (${m.altura}x${m.largura}mm) x${m.qtd}%0A`; });
-            } else if(orc.item) {
-                mensagem += `• ${orc.item} (${orc.altura}x${orc.largura}mm)%0A`;
             }
 
             if(orc.acessorios && orc.acessorios.length > 0) {
                 mensagem += `%0A*Componentes / Insumos:*%0A`;
                 orc.acessorios.forEach(a => { mensagem += `• ${a.nome} (x${a.qtd})%0A`; });
-            } else if(orc.acessorio && orc.acessorio !== 'Nenhum') {
-                mensagem += `%0A*Acessório:* ${orc.acessorio}%0A`;
             }
 
             mensagem += `%0A💰 *Valor Total: R$ ${orc.total.toFixed(2).replace('.', ',')}*%0A`;
+            mensagem += `💳 *Forma de Pgto:* ${orc.formaPgto || 'pix'}%0A`;
+            if(orc.valorPendente > 0) {
+                mensagem += `⚠️ *Valor Pendente (Débito): R$ ${orc.valorPendente.toFixed(2).replace('.', ',')}*%0A`;
+            }
             mensagem += `⏳ *Validade:* ${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}%0A%0A`;
-            mensagem += `Ficamos à disposição para fechar o pedido!`;
+            mensagem += `Ficamos à disposição!`;
 
             if (num) {
                 if(!num.startsWith('55')) num = '55' + num;
                 window.open(`https://wa.me/${num}?text=${mensagem}`, '_blank');
             } else { window.open(`https://wa.me/?text=${mensagem}`, '_blank'); }
-        }
-
-        function mudarStatusEAjustarEstoque(idDoc, novoStatus, index) {
-            const orc = dbOrcamentos[index];
-            if (novoStatus === 'Pago' && orc.status !== 'Pago') {
-                if (orc.acessorios && orc.acessorios.length > 0) {
-                    orc.acessorios.forEach(item => {
-                        if (item.idEstoque) {
-                            db.collection("estoque").doc(item.idEstoque).get().then(docEst => {
-                                if (docEst.exists) {
-                                    const qtdAtual = docEst.data().qtd || 0;
-                                    const novaQtd = Math.max(0, qtdAtual - item.qtd);
-                                    db.collection("estoque").doc(item.idEstoque).update({ qtd: novaQtd });
-                                }
-                            });
-                        }
-                    });
-                }
-                showToast(`Pedido #${orc.id} faturado! Baixa efetuada no Estoque.`, 'success');
-            }
-            db.collection("orcamentos").doc(idDoc).update({ status: novoStatus });
         }
 
         function abrirOrcamento(index) {
@@ -1496,8 +2248,6 @@
                 orc.medidas.forEach((m, i) => {
                     htmlVidros += `<p style="padding:8px; background:rgba(0,0,0,0.3); border-radius:8px; margin-bottom:6px;">• Peça ${i+1}: <strong>${m.espessura} ${m.cor}</strong> - ${m.altura}x${m.largura}mm (x${m.qtd}) = <span style="color:var(--primary);">R$ ${m.subtotal.toFixed(2).replace('.',',')}</span></p>`;
                 });
-            } else {
-                htmlVidros = `<p>• ${orc.item} - ${orc.altura}x${orc.largura}mm = R$ ${((orc.total || 0) - (orc.valorAcessorio || 0)).toFixed(2)}</p>`;
             }
 
             let htmlAcessorios = '';
@@ -1505,8 +2255,6 @@
                 orc.acessorios.forEach(a => {
                     htmlAcessorios += `<p style="padding:8px; background:rgba(0,0,0,0.3); border-radius:8px; margin-bottom:6px;">• ${a.nome} (x${a.qtd}) = <span style="color:var(--primary);">R$ ${a.subtotal.toFixed(2).replace('.',',')}</span></p>`;
                 });
-            } else if(orc.acessorio && orc.acessorio !== 'Nenhum') {
-                htmlAcessorios = `<p>• ${orc.acessorio} = R$ ${(orc.valorAcessorio || 0).toFixed(2)}</p>`;
             } else {
                 htmlAcessorios = `<p style="color: var(--text-muted); font-style:italic;">Nenhum acessório adicional.</p>`;
             }
@@ -1516,9 +2264,10 @@
                     <div>
                         <p style="margin-bottom: 5px; color:var(--text-muted);">Orçamento: <strong style="color:#fff;">#${orc.id}</strong></p>
                         <p style="margin-bottom: 5px; color:var(--text-muted);">Cliente: <strong style="color:#fff;">${orc.cliente}</strong> <span class="badge badge-${orc.nivel ? orc.nivel.toLowerCase() : 'bronze'}">${orc.nivel}</span></p>
+                        <p style="margin-bottom: 5px; color:var(--text-muted);">Forma de Pagamento: <strong style="color:var(--primary); text-transform:uppercase;">${orc.formaPgto || 'pix'}</strong></p>
                     </div>
                     <div style="text-align:right;">
-                        <p style="margin-bottom: 5px; color:var(--text-muted);">Status: <span class="badge badge-${orc.status==='Pago'?'success':orc.status==='Cancelado'?'danger':'warning'}">${orc.status}</span></p>
+                        <p style="margin-bottom: 5px; color:var(--text-muted);">Status: <span class="badge badge-${orc.status==='Pago'?'success':'danger'}">${orc.status}</span></p>
                         <p style="margin-bottom: 5px; color:var(--text-muted);">Validade: <strong style="color:#fff;">${new Date(orc.dataValidade || (orc.dataCriacao + 604800000)).toLocaleDateString('pt-BR')}</strong></p>
                     </div>
                 </div>
@@ -1529,6 +2278,8 @@
                 <h4 style="color: var(--primary); margin-top: 25px; margin-bottom: 10px; font-weight:800;">Insumos e Acessórios:</h4>
                 ${htmlAcessorios}
 
+                ${orc.valorPendente > 0 ? `<div style="margin-top:20px; padding:12px; background:rgba(239,68,68,0.1); border:1px solid #ef4444; border-radius:8px;"><p style="color:#fca5a5; font-weight:bold;">⚠️ Valor Pendente (Débito): R$ ${orc.valorPendente.toFixed(2).replace('.', ',')}</p></div>` : ''}
+
                 <hr style="margin: 25px 0; border: 0; border-top: 1px dashed rgba(255,255,255,0.2);">
                 <div style="text-align:right;">
                     <p style="font-size: 16px; color: var(--text-muted); text-transform:uppercase;">Total do Pedido</p>
@@ -1538,7 +2289,6 @@
             document.getElementById('orcModal').style.display = 'flex';
         }
 
-        /* GERADOR DE PDF (Totalmente Intocado) */
         function gerarPDF(index) {
             const orc = dbOrcamentos[index];
             const containerPDF = document.getElementById('pdf-template');
@@ -1554,15 +2304,6 @@
                         </tr>
                     `;
                 });
-            } else {
-                tabelaItensHTML = `
-                    <tr>
-                        <td style="padding: 10px; border-bottom: 1px solid #cccccc; font-size: 12px; color: #000;">${orc.item}</td>
-                        <td style="padding: 10px; border-bottom: 1px solid #cccccc; text-align: center; font-size: 12px; color: #000;">${orc.altura} x ${orc.largura} mm</td>
-                        <td style="padding: 10px; border-bottom: 1px solid #cccccc; text-align: center; font-size: 12px; color: #000;">${(orc.area || 0).toFixed(2)} m²</td>
-                        <td style="padding: 10px; border-bottom: 1px solid #cccccc; text-align: right; font-size: 12px; color: #000;">R$ ${((orc.total || 0) - (orc.valorAcessorio || 0)).toFixed(2).replace('.', ',')}</td>
-                    </tr>
-                `;
             }
 
             let tabelaAcessoriosHTML = '';
@@ -1570,8 +2311,6 @@
                 orc.acessorios.forEach(a => {
                     tabelaAcessoriosHTML += `<p style="font-size: 12px; color: #000; margin-bottom: 4px;">• <strong>${a.nome}</strong> - Qtd: ${a.qtd} - R$ ${a.subtotal.toFixed(2).replace('.', ',')}</p>`;
                 });
-            } else if (orc.acessorio && orc.acessorio !== 'Nenhum') {
-                tabelaAcessoriosHTML = `<p style="font-size: 12px; color: #000;">• <strong>${orc.acessorio}</strong> - R$ ${(orc.valorAcessorio || 0).toFixed(2).replace('.', ',')}</p>`;
             } else {
                 tabelaAcessoriosHTML = `<p style="font-size: 12px; color: #666;">Sem acessórios inclusos neste orçamento.</p>`;
             }
@@ -1580,7 +2319,7 @@
                 <div style="border-bottom: 3px solid #ffcc00; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; color: #000000;">
                     <div>
                         <h1 style="font-size: 22px; color: #111111; margin-bottom: 5px; font-weight: bold;">CUBO GLASS DISTRIBUIDORA</h1>
-                        <p style="font-size: 12px; color: #444444;">Soluções em Vidros, Espelhos, Alumínios, Acessórios, Jateamentos e pintura </p>
+                        <p style="font-size: 12px; color: #444444;">Soluções em Vidros, Espelhos, Alumínios, Acessórios e Jateamentos</p>
                     </div>
                     <div style="text-align: right;">
                         <h2 style="font-size: 16px; color: #d4a000; margin-bottom: 5px; font-weight: bold;">ORÇAMENTO #${orc.id}</h2>
@@ -1591,7 +2330,8 @@
                 <div style="background-color: #f2f2f2; padding: 12px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #cccccc; color: #000000;">
                     <h3 style="font-size: 13px; color: #222222; text-transform: uppercase; margin-bottom: 6px; border-bottom: 1px solid #cccccc; padding-bottom: 4px;">Dados do Cliente</h3>
                     <p style="font-size: 14px; margin-bottom: 4px; color: #000000;"><strong>Nome/Razão Social:</strong> ${orc.cliente}</p>
-                    <p style="font-size: 12px; color: #333333;"><strong>Classificação comercial:</strong> Tabela ${orc.nivel}</p>
+                    <p style="font-size: 12px; margin-bottom: 4px; color: #333333;"><strong>Forma de Pagamento:</strong> <span style="text-transform: uppercase; font-weight:bold;">${orc.formaPgto || 'pix'}</span></p>
+                    ${orc.valorPendente > 0 ? `<p style="font-size: 12px; color: #c62828; font-weight: bold;">⚠️ Observação: Este pedido possui saldo pendente (débito na loja) no valor de R$ ${orc.valorPendente.toFixed(2).replace('.', ',')}</p>` : ''}
                 </div>
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; background-color: #ffffff; color: #000000;">
                     <thead>
@@ -1632,60 +2372,130 @@
             html2pdf().set(opcoes).from(containerPDF).save().then(() => {
                 containerPDF.style.display = 'none';
             }).catch(err => {
-                console.error("Erro ao gerar PDF:", err);
                 containerPDF.style.display = 'none';
             });
         }
 
-        function atualizarDashboard() {
-            const cElem = document.getElementById('dash-clientes');
-            const oElem = document.getElementById('dash-orcamentos');
-            const fElem = document.getElementById('dash-faturado');
-            if(cElem) cElem.innerText = dbClientes.length;
-            if(oElem) oElem.innerText = dbOrcamentos.length;
-            
-            let totalPagoGeral = 0;
-            dbOrcamentos.forEach(orc => { if(orc.status === 'Pago') totalPagoGeral += orc.total; });
-            if(fElem) fElem.innerText = "R$ " + totalPagoGeral.toFixed(2).replace('.', ',');
+        // Adicionar Saída pela Diretoria
+        function adicionarSaidaDiretoria(e) {
+            e.preventDefault();
+            const desc = document.getElementById('dir-saida-desc').value;
+            const valor = parseFloat(document.getElementById('dir-saida-valor').value) || 0;
+            const dataStr = document.getElementById('dir-saida-data').value;
+            const timestamp = dataStr ? new Date(dataStr + 'T12:00:00').getTime() : new Date().getTime();
 
-            atualizarMetaEProgresso();
+            db.collection("financeiro").add({
+                descricao: desc + ' (Diretoria)',
+                tipo: 'Saída',
+                valor: valor,
+                data: timestamp,
+                origem: 'diretoria_saida'
+            }).then(() => {
+                showToast("Saída/Despesa registrada com sucesso pela Diretoria!", "success");
+                document.getElementById('form-add-saida-dir').reset();
+            }).catch(err => {
+                showToast("Erro ao registrar saída.", "error");
+            });
         }
 
-        function atualizarMetaEProgresso() {
-            const tipoMeta = document.getElementById('meta-tipo')?.value || 'mensal';
-            const valorMeta = parseFloat(document.getElementById('meta-valor')?.value) || 50000;
+        function atualizarPainelDiretoria() {
+            const periodo = document.getElementById('dir-filtro-periodo')?.value || 'mes';
             const agora = new Date();
-            let totalPeriodo = 0;
+            let faturado = 0;
+            let custo = 0;
 
             dbOrcamentos.forEach(orc => {
-                if (orc.status === 'Pago') {
+                if(orc.status !== 'Cancelado') {
                     const dataPed = new Date(orc.dataCriacao);
-                    if (tipoMeta === 'diaria') {
-                        if (dataPed.toDateString() === agora.toDateString()) totalPeriodo += orc.total;
-                    } else if (tipoMeta === 'semanal') {
-                        const diferencaDias = (agora - dataPed) / (1000 * 3600 * 24);
-                        if (diferencaDias <= 7) totalPeriodo += orc.total;
-                    } else if (tipoMeta === 'mensal') {
-                        if (dataPed.getMonth() === agora.getMonth() && dataPed.getFullYear() === agora.getFullYear()) totalPeriodo += orc.total;
+                    let passaFiltro = false;
+                    if(periodo === 'todos') passaFiltro = true;
+                    else if(periodo === 'dia' && dataPed.toDateString() === agora.toDateString()) passaFiltro = true;
+                    else if(periodo === 'semana' && ((agora - dataPed) / (1000 * 3600 * 24) <= 7)) passaFiltro = true;
+                    else if(periodo === 'mes' && dataPed.getMonth() === agora.getMonth() && dataPed.getFullYear() === agora.getFullYear()) passaFiltro = true;
+
+                    if(passaFiltro) {
+                        faturado += orc.total;
+                        custo += (orc.custoTotal || 0);
                     }
                 }
             });
 
-            const porcentagem = Math.min(100, Math.max(0, (totalPeriodo / valorMeta) * 100));
+            const lucro = faturado - custo;
 
-            const lblRealizado = document.getElementById('lbl-realizado-periodo');
-            const lblPorcentagem = document.getElementById('lbl-porcentagem-meta');
-            if (lblRealizado) lblRealizado.innerText = "R$ " + totalPeriodo.toFixed(2).replace('.', ',');
-            if (lblPorcentagem) lblPorcentagem.innerText = porcentagem.toFixed(1) + "%";
+            const elFat = document.getElementById('dir-faturado');
+            const elCus = document.getElementById('dir-custo');
+            const elLuc = document.getElementById('dir-lucro');
 
-            const fills = ['fill-front', 'fill-back', 'fill-right', 'fill-left'];
-            fills.forEach(id => {
-                const elem = document.getElementById(id);
-                if (elem) elem.style.height = porcentagem + "%";
+            if(elFat) elFat.innerText = "R$ " + faturado.toFixed(2).replace('.', ',');
+            if(elCus) elCus.innerText = "R$ " + custo.toFixed(2).replace('.', ',');
+            if(elLuc) elLuc.innerText = "R$ " + lucro.toFixed(2).replace('.', ',');
+        }
+
+        function gerarPDFDiretoria() {
+            showToast("Gerando PDF da Diretoria...", "success");
+        }
+
+        function atualizarFinanceiroCaixa() {
+            let totalEntradas = 0;
+            let totalSaidas = 0;
+            const tbody = document.querySelector('#table-financeiro tbody');
+            if(tbody) tbody.innerHTML = '';
+
+            dbFinanceiro.sort((a,b) => b.data - a.data);
+
+            dbFinanceiro.forEach(fin => {
+                if(fin.tipo === 'Entrada') totalEntradas += fin.valor;
+                else totalSaidas += fin.valor;
+
+                if(tbody) {
+                    let corTipo = fin.tipo === 'Entrada' ? '#4ade80' : '#ef4444';
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${new Date(fin.data).toLocaleDateString('pt-BR')}</td>
+                            <td><strong style="color:#fff;">${fin.descricao}</strong></td>
+                            <td><span class="badge" style="background: ${corTipo}22; color: ${corTipo}; border: 1px solid ${corTipo}44;">${fin.tipo}</span></td>
+                            <td style="color: ${corTipo}; font-weight: 800;">R$ ${fin.valor.toFixed(2).replace('.', ',')}</td>
+                            <td><button class="btn-small" style="background: rgba(239,68,68,0.2); border:1px solid #ef4444; color: #fca5a5;" onclick="apagarLancamentoFinanceiro('${fin.idDoc}')">🗑️</button></td>
+                        </tr>
+                    `;
+                }
+            });
+
+            const saldo = totalEntradas - totalSaidas;
+            if(document.getElementById('fin-total-entradas')) document.getElementById('fin-total-entradas').innerText = "R$ " + totalEntradas.toFixed(2).replace('.', ',');
+            if(document.getElementById('fin-total-saidas')) document.getElementById('fin-total-saidas').innerText = "R$ " + totalSaidas.toFixed(2).replace('.', ',');
+            if(document.getElementById('fin-saldo-caixa')) document.getElementById('fin-saldo-caixa').innerText = "R$ " + saldo.toFixed(2).replace('.', ',');
+        }
+
+        function adicionarLancamentoFinanceiro(e) {
+            e.preventDefault();
+            const desc = document.getElementById('fin-desc').value;
+            const tipo = document.getElementById('fin-tipo').value;
+            const valor = parseFloat(document.getElementById('fin-valor').value) || 0;
+            const dataStr = document.getElementById('fin-data').value;
+            const timestamp = dataStr ? new Date(dataStr + 'T12:00:00').getTime() : new Date().getTime();
+
+            db.collection("financeiro").add({
+                descricao: desc,
+                tipo: tipo,
+                valor: valor,
+                data: timestamp,
+                origem: 'manual'
+            }).then(() => {
+                showToast("Lançamento financeiro adicionado!", "success");
+                document.getElementById('form-add-financeiro').reset();
+                const hojeStr = new Date().toISOString().split('T')[0];
+                document.getElementById('fin-data').value = hojeStr;
             });
         }
 
-        function fecharModal() { document.getElementById('orcModal').style.display = 'none'; }
+        function apagarLancamentoFinanceiro(idDoc) {
+            if(confirm("Deseja apagar este lançamento?")) {
+                db.collection("financeiro").doc(idDoc).delete().then(() => {
+                    showToast("Lançamento removido.", "success");
+                });
+            }
+        }
 
         function adicionarCliente(e) {
             e.preventDefault();
@@ -1693,10 +2503,37 @@
             const doc = document.getElementById('cli-doc').value;
             const tel = document.getElementById('cli-tel').value;
             const nivel = document.getElementById('cli-nivel').value;
-            db.collection("clientes").add({nome, doc, tel, nivel}).then(() => {
+
+            db.collection("clientes").add({ nome, doc, tel, nivel }).then(() => {
+                showToast("Cliente cadastrado com sucesso!", "success");
                 document.getElementById('form-add-cliente').reset();
-                showToast('Cliente cadastrado com sucesso!', 'success');
             });
+        }
+
+        function abrirModalCliente(id, nome, nivel) {
+            document.getElementById('edit-cli-id').value = id;
+            document.getElementById('edit-cli-nome').value = nome;
+            document.getElementById('edit-cli-nivel').value = nivel || 'Bronze';
+            document.getElementById('cliModal').style.display = 'flex';
+        }
+
+        function fecharModalCliente() {
+            document.getElementById('cliModal').style.display = 'none';
+        }
+
+        function salvarAlteracaoNivelCliente(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-cli-id').value;
+            const novoNivel = document.getElementById('edit-cli-nivel').value;
+
+            db.collection("clientes").doc(id).update({ nivel: novoNivel }).then(() => {
+                showToast("Nível comercial atualizado!", "success");
+                fecharModalCliente();
+            });
+        }
+
+        function fecharModal() {
+            document.getElementById('orcModal').style.display = 'none';
         }
 
         function adicionarEstoque(e) {
@@ -1704,26 +2541,58 @@
             const nome = document.getElementById('est-nome').value;
             const categoria = document.getElementById('est-categoria').value;
             const marca = document.getElementById('est-marca').value;
-            const qtd = parseInt(document.getElementById('est-qtd').value);
-            const preco = parseFloat(document.getElementById('est-preco').value);
-            db.collection("estoque").add({nome, categoria, marca, qtd, preco}).then(() => {
+            const qtd = parseInt(document.getElementById('est-qtd').value) || 0;
+            const preco = parseFloat(document.getElementById('est-preco').value) || 0;
+
+            db.collection("estoque").add({ nome, categoria, marca, qtd, preco, custo: 0 }).then(() => {
+                showToast("Item adicionado ao estoque!", "success");
                 document.getElementById('form-add-estoque').reset();
-                showToast('Produto adicionado ao Estoque!', 'success');
             });
         }
 
-        document.addEventListener('click', function(e) {
-            if(!e.target.closest('#orc-cliente-search')) {
-                const el = document.getElementById('orc-cliente-results');
-                if(el) el.style.display = 'none';
-            }
-        });
+        function atualizarDashboard() {
+            if(document.getElementById('dash-clientes')) document.getElementById('dash-clientes').innerText = dbClientes.length;
+            
+            let totalDeb = 0;
+            dbDebitos.forEach(d => totalDeb += d.valorPendente);
+            if(document.getElementById('dash-debitos')) document.getElementById('dash-debitos').innerText = "R$ " + totalDeb.toFixed(2).replace('.', ',');
 
-        window.onload = function() {
-            carregarMatrizPrecos();
-            adicionarLinhaMedida();
-            atualizarDashboard();
-        };
+            let totalFat = 0;
+            dbOrcamentos.forEach(o => {
+                if(o.status === 'Pago') totalFat += o.total;
+            });
+            if(document.getElementById('dash-faturado')) document.getElementById('dash-faturado').innerText = "R$ " + totalFat.toFixed(2).replace('.', ',');
+
+            atualizarMetaEProgresso();
+        }
+
+        function atualizarMetaEProgresso() {
+            const metaTipo = document.getElementById('meta-tipo')?.value || 'mensal';
+            const metaValor = parseFloat(document.getElementById('meta-valor')?.value) || 50000;
+            const agora = new Date();
+            let realizado = 0;
+
+            dbOrcamentos.forEach(o => {
+                if(o.status === 'Pago') {
+                    const dataPed = new Date(o.dataCriacao);
+                    if(metaTipo === 'diaria' && dataPed.toDateString() === agora.toDateString()) realizado += o.total;
+                    else if(metaTipo === 'semanal' && ((agora - dataPed) / (1000 * 3600 * 24) <= 7)) realizado += o.total;
+                    else if(metaTipo === 'mensal' && dataPed.getMonth() === agora.getMonth() && dataPed.getFullYear() === agora.getFullYear()) realizado += o.total;
+                }
+            });
+
+            const porc = metaValor > 0 ? Math.min(100, (realized = (realizado / metaValor) * 100)) : 0;
+            if(document.getElementById('lbl-realizado-periodo')) document.getElementById('lbl-realizado-periodo').innerText = "R$ " + realizado.toFixed(2).replace('.', ',');
+            if(document.getElementById('lbl-porcentagem-meta')) document.getElementById('lbl-porcentagem-meta').innerText = porc.toFixed(1) + "%";
+
+            const liquidFills = document.querySelectorAll('.liquid-fill');
+            liquidFills.forEach(lf => { lf.style.height = porc + '%'; });
+        }
     </script>
 </body>
 </html>
+
+            
+                                
+
+                         
