@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cubo Glass - ERP Premium Cloud v13</title>
+    <title>Cubo Glass - ERP Premium Cloud v14</title>
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -795,7 +795,7 @@
                         <input type="text" id="orc-cliente-search" placeholder="Digite para filtrar..." oninput="filtrarClientesOrcamento(this.value)">
                         <div id="orc-cliente-results" class="search-results"></div>
                         <input type="hidden" id="orc-cliente-selected-id">
-                        <input type="hidden" id="orc-cliente-selected-nivel">
+                        <input type="hidden" id="orc-cliente-selected-nivel" value="Bronze">
                         <input type="hidden" id="orc-cliente-selected-nome">
                         <input type="hidden" id="orc-cliente-selected-tel">
                     </div>
@@ -1012,7 +1012,7 @@
         <!-- Tabela m² Config -->
         <div id="configuracoes" class="tab-content">
             <h2 class="header-title">Configuração de Tabelas e Materiais</h2>
-            <p style="margin-bottom: 20px; color: var(--text-muted); font-size: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">Adicione novos materiais (ex: Lâminado 8 mm) e defina seus preços por nível.</p>
+            <p style="margin-bottom: 20px; color: var(--text-muted); font-size: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">Adicione novos materiais (ex: Laminado 8 mm) e defina seus preços por nível com fidelidade absoluta aos cálculos.</p>
             
             <div class="form-panel" style="margin-bottom: 25px;">
                 <h3>+ Adicionar Novo Material / Tipo de Vidro</h3>
@@ -1027,7 +1027,7 @@
                     </div>
                     <div class="form-group">
                         <label>Nome do Novo Material / Espessura</label>
-                        <input type="text" id="novo-mat-nome" placeholder="Ex: Lâminado 8 mm">
+                        <input type="text" id="novo-mat-nome" placeholder="Ex: Laminado 8 mm">
                     </div>
                 </div>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
@@ -1077,7 +1077,7 @@
                 </div>
             </div>
 
-            <!-- Lançamento de Saída / Despesa (Movido para Diretoria) -->
+            <!-- Lançamento de Saída / Despesa -->
             <div class="form-panel">
                 <h3>+ Lançamento de Saída / Despesa (Diretoria)</h3>
                 <form id="form-add-saida-dir" onsubmit="adicionarSaidaDiretoria(event)">
@@ -1134,39 +1134,6 @@
             <button class="close-modal" onclick="fecharModal()">×</button>
             <h3 style="color: var(--primary); font-size: 20px; font-weight: 800; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">📄 Resumo Detalhado do Pedido</h3>
             <div id="modal-body" style="line-height: 1.8; font-size: 15px; color: var(--text-main);"></div>
-        </div>
-    </div>
-
-    <!-- Modal Editar Orçamento -->
-    <div id="editOrcModal" class="modal">
-        <div class="modal-content" style="max-width: 600px;">
-            <button class="close-modal" onclick="fecharModalEdicaoOrcamento()">×</button>
-            <h3 style="color: var(--primary); font-size: 20px; font-weight: 800; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">✏️ Alterar Informações do Orçamento</h3>
-            <input type="hidden" id="edit-orc-doc-id">
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label>Cliente</label>
-                <input type="text" id="edit-orc-cliente-nome" disabled style="background: rgba(0,0,0,0.6);">
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label>Forma de Pagamento</label>
-                <select id="edit-orc-forma-pgto">
-                    <option value="pix">PIX</option>
-                    <option value="debito">Débito</option>
-                    <option value="credito">Crédito</option>
-                    <option value="credito parcelado">Crédito Parcelado</option>
-                    <option value="sinal">Sinal</option>
-                </select>
-            </div>
-            <div class="form-group" style="margin-bottom: 25px;">
-                <label>Status do Pedido</label>
-                <select id="edit-orc-status">
-                    <option value="Aguardando">Aguardando</option>
-                    <option value="Pago">Pago</option>
-                    <option value="Parcial / Débito">Parcial / Débito</option>
-                    <option value="Cancelado">Cancelado</option>
-                </select>
-            </div>
-            <button type="button" class="btn" style="width: 100%;" onclick="salvarEdicaoOrcamento()">Salvar Alterações</button>
         </div>
     </div>
 
@@ -1489,9 +1456,6 @@
             }
         });
 
-        // ==========================================
-        // IMPLEMENTAÇÃO HISTÓRICO LOCAL E PDF ORÇAMENTO
-        // ==========================================
         function filtrarHistoricoLocal() {
             const termo = document.getElementById('hist-filtro-texto')?.value.toLowerCase() || '';
             const status = document.getElementById('hist-filtro-status')?.value || 'Todos';
@@ -1505,7 +1469,6 @@
                 return matchTexto && matchStatus;
             });
 
-            // Ordena do mais novo pro mais velho
             orcamentosFiltrados.sort((a,b) => b.dataCriacao - a.dataCriacao);
 
             orcamentosFiltrados.forEach(o => {
@@ -1524,9 +1487,20 @@
                     <td>
                         <button class="btn-small" style="background: #3b82f6; color: #fff; border: none;" onclick="abrirDetalhesOrcamento('${o.idDoc}')">👁️ Ver</button>
                         <button class="btn-small" style="background: #10b981; color: #fff; border: none;" onclick="gerarPDFOrcamento('${o.idDoc}')">📄 PDF</button>
+                        ${o.status !== 'Cancelado' ? `<button class="btn-small" style="background: #ef4444; color: #fff; border: none;" onclick="cancelarOrcamento('${o.idDoc}')">🚫 Cancelar</button>` : ''}
                     </td>
                 </tr>`;
             });
+        }
+
+        function cancelarOrcamento(idDoc) {
+            if(confirm("Tem certeza que deseja CANCELAR este orçamento/pedido? O status será alterado para Cancelado.")) {
+                db.collection("orcamentos").doc(idDoc).update({ status: 'Cancelado', valorPendente: 0 }).then(() => {
+                    showToast("Orçamento cancelado com sucesso!", "success");
+                }).catch(err => {
+                    showToast("Erro ao cancelar orçamento.", "error");
+                });
+            }
         }
 
         function abrirDetalhesOrcamento(idDoc) {
@@ -1629,8 +1603,6 @@
                 showToast("PDF de Orçamento gerado com sucesso!", "success");
             });
         }
-        // ==========================================
-
 
         db.collection("debitos").onSnapshot((snapshot) => {
             dbDebitos = [];
@@ -1656,9 +1628,6 @@
             atualizarDashboard();
         });
 
-        // Funções para Modais Faltantes
-        function fecharModalEdicaoOrcamento() { document.getElementById('editOrcModal').style.display = 'none'; }
-        
         function abrirModalDiaAnterior() { document.getElementById('diaAnteriorModal').style.display = 'flex'; }
         function fecharModalDiaAnterior() { document.getElementById('diaAnteriorModal').style.display = 'none'; }
         
@@ -1699,7 +1668,6 @@
                 fecharModalDebito();
             });
         }
-
 
         function apagarDebito(idDoc, idOrcamentoDoc) {
             if(confirm("Tem certeza que deseja CANCELAR este débito lançado errado?")) {
@@ -1826,8 +1794,7 @@
 
             let somaFaturado = 0;
             dbOrcamentos.forEach(o => {
-                if(o.status === 'Pago' || o.status === 'Parcial / Débito') {
-                    // Prevenção contra NaN em dados legados
+                if(o.status !== 'Cancelado' && (o.status === 'Pago' || o.status === 'Parcial / Débito')) {
                     let val = isNaN(o.valorPagoHoje) ? (o.total || 0) : o.valorPagoHoje;
                     somaFaturado += val;
                 }
@@ -1845,7 +1812,7 @@
             let realizado = 0;
 
             dbOrcamentos.forEach(o => {
-                if(o.status === 'Pago' || o.status === 'Parcial / Débito') {
+                if(o.status !== 'Cancelado' && (o.status === 'Pago' || o.status === 'Parcial / Débito')) {
                     const dataOrc = new Date(o.dataCriacao);
                     let considerar = false;
 
@@ -1888,7 +1855,7 @@
             let custoTotal = 0;
 
             dbOrcamentos.forEach(o => {
-                if(o.status === 'Pago' || o.status === 'Parcial / Débito') {
+                if(o.status !== 'Cancelado' && (o.status === 'Pago' || o.status === 'Parcial / Débito')) {
                     const dataOrc = new Date(o.dataCriacao);
                     let considerar = false;
 
@@ -1903,7 +1870,6 @@
                     }
 
                     if(considerar) {
-                        // Prevenção contra NaN
                         const valTotal = (o.total || 0);
                         const valPago = isNaN(o.valorPagoHoje) ? valTotal : o.valorPagoHoje;
                         
@@ -1926,9 +1892,6 @@
             if(elLucro) elLucro.innerText = "R$ " + lucroTotal.toFixed(2).replace('.', ',');
         }
 
-        // ==========================================
-        // GERADOR PDF DIRETORIA ATUALIZADO E DETALHADO ITEM A ITEM
-        // ==========================================
         function gerarPDFDiretoria() {
             const filtroPeriodo = document.getElementById('dir-filtro-periodo')?.value || 'mes';
             const agora = new Date();
@@ -1938,7 +1901,7 @@
             let listaVendasPeriodo = [];
 
             dbOrcamentos.forEach(o => {
-                if(o.status === 'Pago' || o.status === 'Parcial / Débito') {
+                if(o.status !== 'Cancelado' && (o.status === 'Pago' || o.status === 'Parcial / Débito')) {
                     const dataOrc = new Date(o.dataCriacao);
                     let considerar = false;
 
@@ -2089,9 +2052,6 @@
             showToast('Campos limpos com sucesso.', 'info');
         }
 
-        // ==========================================
-        // CORREÇÃO: FUNÇÃO DE APAGAR ITEM ESPECÍFICO DO M2 CONFIG
-        // ==========================================
         function apagarMaterialTabela(cor, esp) {
             if(confirm(`Tem certeza que deseja apagar o material "${esp}" (${cor}) das tabelas?`)) {
                 if(tabelaPrecos[cor] && tabelaPrecos[cor][esp] !== undefined) {
@@ -2243,14 +2203,14 @@
             document.getElementById('orc-cliente-search').value = '';
             document.getElementById('orc-cliente-selected-id').value = '';
             document.getElementById('orc-cliente-selected-nome').value = '';
-            document.getElementById('orc-cliente-selected-nivel').value = '';
+            document.getElementById('orc-cliente-selected-nivel').value = 'Bronze';
             document.getElementById('orc-cliente-selected-tel').value = '';
             document.getElementById('orc-forma-pgto').value = 'pix';
             document.getElementById('orc-valor-pago').value = '';
             document.getElementById('grupo-valor-pago').style.display = 'none';
             linhasMedidas = [];
             linhasAcessorios = [];
-            adicionarLinhaMedida();
+            if(linhasMedidas.length === 0) adicionarLinhaMedida();
             calcularSistemaMultiplo();
         }
 
@@ -2261,178 +2221,243 @@
                 grupoValor.style.display = 'flex';
             } else {
                 grupoValor.style.display = 'none';
+                document.getElementById('orc-valor-pago').value = '';
             }
+            calcularSistemaMultiplo();
         }
 
-        function filtrarClientesOrcamento(query) {
-            const container = document.getElementById('orc-cliente-results');
-            if(!query) { container.style.display = 'none'; return; }
-            const filtrados = dbClientes.filter(c => c.nome.toLowerCase().includes(query.toLowerCase()));
-            container.innerHTML = '';
-            if(filtrados.length > 0) {
-                filtrados.forEach(c => { container.innerHTML += `<div class="search-item" onclick="selecionarClienteOrcamento('${c.id}', '${c.nome}', '${c.nivel}', '${c.tel || ''}')">${c.nome} (${c.nivel})</div>`; });
-                container.style.display = 'block';
-            } else {
-                container.innerHTML = '<div class="search-item" style="color: var(--text-muted);">Nenhum cliente encontrado</div>';
-                container.style.display = 'block';
+        function filtrarClientesOrcamento(termo) {
+            const resultsDiv = document.getElementById('orc-cliente-results');
+            if(!termo.trim()) { resultsDiv.style.display = 'none'; return; }
+            
+            let filtrados = dbClientes.filter(c => c.nome.toLowerCase().includes(termo.toLowerCase()) || c.doc.includes(termo));
+            resultsDiv.innerHTML = '';
+            if(filtrados.length === 0) {
+                resultsDiv.style.display = 'none';
+                return;
             }
+
+            filtrados.forEach(c => {
+                resultsDiv.innerHTML += `<div class="search-item" onclick="selecionarClienteOrcamento('${c.id}', '${c.nome}', '${c.nivel}', '${c.tel || ''}')">${c.nome} (${c.doc}) - Nível: ${c.nivel}</div>`;
+            });
+            resultsDiv.style.display = 'block';
         }
 
         function selecionarClienteOrcamento(id, nome, nivel, tel) {
             document.getElementById('orc-cliente-search').value = nome;
             document.getElementById('orc-cliente-selected-id').value = id;
             document.getElementById('orc-cliente-selected-nome').value = nome;
-            document.getElementById('orc-cliente-selected-nivel').value = nivel;
+            document.getElementById('orc-cliente-selected-nivel').value = nivel || 'Bronze';
             document.getElementById('orc-cliente-selected-tel').value = tel;
             document.getElementById('orc-cliente-results').style.display = 'none';
             calcularSistemaMultiplo();
         }
 
+        // ==========================================
+        // CORREÇÃO RIGOROSA DE CÁLCULOS FIÉIS AO NÍVEL E MATERIAL
+        // ==========================================
         function calcularSistemaMultiplo() {
-            const nivel = document.getElementById('orc-cliente-selected-nivel').value;
-            if(!nivel) {
-                document.getElementById('res-area').innerText = "0.00 m²";
-                document.getElementById('res-total-vidros').innerText = "R$ 0,00";
-                document.getElementById('res-total-insumos').innerText = "R$ 0,00";
-                document.getElementById('res-total').innerText = "R$ 0,00";
+            let nivelCliente = document.getElementById('orc-cliente-selected-nivel')?.value || 'Bronze';
+            let totalVidros = 0;
+            let totalInsumos = 0;
+            let areaTotalM2 = 0;
+            let custoTotalCalculado = 0;
+
+            linhasMedidas.forEach(l => {
+                let larguraM = (l.largura || 0) / 1000;
+                let alturaM = (l.altura || 0) / 1000;
+                let areaItem = larguraM * alturaM * (l.qtd || 1);
+                areaTotalM2 += areaItem;
+
+                let precoM2 = 100; // Padrão de segurança
+                if (tabelaPrecos[l.cor] && tabelaPrecos[l.cor][l.espessura]) {
+                    precoM2 = tabelaPrecos[l.cor][l.espessura][nivelCliente] !== undefined ? tabelaPrecos[l.cor][l.espessura][nivelCliente] : 100;
+                }
+                l.precoM2 = precoM2;
+                l.subtotal = areaItem * precoM2;
+                totalVidros += l.subtotal;
+
+                let custoM2 = 50;
+                if (tabelaCustos[l.cor] && tabelaCustos[l.cor][l.espessura] !== undefined) {
+                    custoM2 = tabelaCustos[l.cor][l.espessura];
+                }
+                l.subtotalCusto = areaItem * custoM2;
+                custoTotalCalculado += l.subtotalCusto;
+            });
+
+            linhasAcessorios.forEach(a => {
+                a.subtotal = (a.preco || 0) * (a.qtd || 1);
+                totalInsumos += a.subtotal;
+                custoTotalCalculado += a.subtotal * 0.5; // Estimativa de custo para acessórios se não especificado
+            });
+
+            let totalGeral = totalVidros + totalInsumos;
+
+            const elArea = document.getElementById('res-area');
+            const elVidros = document.getElementById('res-total-vidros');
+            const elInsumos = document.getElementById('res-total-insumos');
+            const elTotal = document.getElementById('res-total');
+
+            if(elArea) elArea.innerText = areaTotalM2.toFixed(2) + " m²";
+            if(elVidros) elVidros.innerText = "R$ " + totalVidros.toFixed(2).replace('.', ',');
+            if(elInsumos) elInsumos.innerText = "R$ " + totalInsumos.toFixed(2).replace('.', ',');
+            if(elTotal) elTotal.innerText = "R$ " + totalGeral.toFixed(2).replace('.', ',');
+
+            return { areaTotalM2, totalVidros, totalInsumos, totalGeral, custoTotalCalculado };
+        }
+
+        function registrarOrcamento() {
+            const clienteNome = document.getElementById('orc-cliente-selected-nome').value.trim();
+            if(!clienteNome) {
+                showToast('Selecione um cliente válido para o orçamento!', 'warning');
+                return;
+            }
+            if(linhasMedidas.length === 0) {
+                showToast('Adicione pelo menos uma medida de vidro!', 'warning');
                 return;
             }
 
-            let areaTotal = 0; let totalVidros = 0; let totalInsumos = 0;
+            const calc = calcularSistemaMultiplo();
+            const formaPgto = document.getElementById('orc-forma-pgto').value;
+            let valorPagoHoje = calc.totalGeral;
+            let valorPendente = 0;
+            let status = 'Pago';
 
-            linhasMedidas.forEach(m => {
-                const area = ((m.altura * m.largura) / 1000000) * m.qtd;
-                areaTotal += area;
-                const precoM2 = tabelaPrecos[m.cor]?.[m.espessura]?.[nivel] || 100;
-                totalVidros += (area * precoM2);
+            if(formaPgto === 'sinal') {
+                valorPagoHoje = parseFloat(document.getElementById('orc-valor-pago').value) || 0;
+                if(valorPagoHoje >= calc.totalGeral) {
+                    valorPagoHoje = calc.totalGeral;
+                    valorPendente = 0;
+                    status = 'Pago';
+                } else {
+                    valorPendente = calc.totalGeral - valorPagoHoje;
+                    status = 'Parcial / Débito';
+                }
+            } else if(formaPgto === 'debito') {
+                status = 'Aguardando';
+            }
+
+            const idOrc = Math.floor(100000 + Math.random() * 900000);
+            const dadosOrcamento = {
+                id: idOrc,
+                cliente: clienteNome,
+                telefone: document.getElementById('orc-cliente-selected-tel').value,
+                medidas: linhasMedidas,
+                acessorios: linhasAcessorios,
+                areaTotal: calc.areaTotalM2,
+                totalVidros: calc.totalVidros,
+                totalInsumos: calc.totalInsumos,
+                total: calc.totalGeral,
+                custoTotal: calc.custoTotalCalculado,
+                formaPgto: formaPgto,
+                valorPagoHoje: valorPagoHoje,
+                valorPendente: valorPendente,
+                status: status,
+                dataCriacao: Date.now()
+            };
+
+            db.collection("orcamentos").add(dadosOrcamento).then((docRef) => {
+                if(valorPendente > 0) {
+                    let resumoMat = linhasMedidas.map(m => `${m.qtd}x ${m.cor} ${m.espessura}`).join(', ');
+                    db.collection("debitos").add({
+                        cliente: clienteNome,
+                        orcamentoDocId: docRef.id,
+                        materiaisResumo: resumoMat,
+                        valorPendente: valorPendente,
+                        dataCriacao: Date.now()
+                    });
+                }
+
+                if(valorPagoHoje > 0) {
+                    db.collection("financeiro").add({
+                        descricao: `Venda Pedido #${idOrc} - ${clienteNome}`,
+                        tipo: 'Entrada',
+                        valor: valorPagoHoje,
+                        data: Date.now(),
+                        origem: 'venda'
+                    });
+                }
+
+                showToast('Orçamento salvo e processado com sucesso!', 'success');
+                switchTab('historico');
+            }).catch(err => {
+                showToast('Erro ao salvar orçamento.', 'error');
             });
-
-            linhasAcessorios.forEach(a => { totalInsumos += (a.preco * a.qtd); });
-
-            const totalGeral = totalVidros + totalInsumos;
-
-            document.getElementById('res-area').innerText = areaTotal.toFixed(2) + " m²";
-            document.getElementById('res-total-vidros').innerText = "R$ " + totalVidros.toFixed(2).replace('.', ',');
-            document.getElementById('res-total-insumos').innerText = "R$ " + totalInsumos.toFixed(2).replace('.', ',');
-            document.getElementById('res-total').innerText = "R$ " + totalGeral.toFixed(2).replace('.', ',');
         }
 
         function renderizarFormConfig() {
             const container = document.getElementById('matrix-container');
             if(!container) return;
-            container.innerHTML = '';
-            for (let cor in tabelaPrecos) {
-                let html = `
-                    <div class="form-panel">
-                        <h3 style="color: #fff;">Matriz Comercial - <span style="color:var(--primary);">${cor}</span></h3>
-                        <div class="table-container">
-                            <table class="matrix-table">
-                                <thead>
-                                    <tr>
-                                        <th>Espessura / Modelo</th>
-                                        <th>Bronze (R$)</th>
-                                        <th>Prata (R$)</th>
-                                        <th>Ouro (R$)</th>
-                                        <th>Premium (R$)</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>`;
-                for (let esp in tabelaPrecos[cor]) {
-                    html += `
-                        <tr>
-                            <td><strong style="color:#fff;">${esp === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : esp}</strong></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Bronze'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Bronze', this.value)"></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Prata'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Prata', this.value)"></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Ouro'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Ouro', this.value)"></td>
-                            <td><input type="number" value="${tabelaPrecos[cor][esp]['Premium'] || 0}" onchange="atualizarMemoriaConfig('${cor}', '${esp}', 'Premium', this.value)"></td>
-                            <td><button class="btn-small" style="background: rgba(239,68,68,0.2); border:1px solid #ef4444; color:#fca5a5;" onclick="apagarMaterialTabela('${cor}', \`${esp}\`)">🗑️ Apagar</button></td>
-                        </tr>`;
+            let html = `<div class="table-container"><table><thead><tr><th>Cor</th><th>Material / Espessura</th><th>Bronze</th><th>Prata</th><th>Ouro</th><th>Premium</th><th>Ações</th></tr></thead><tbody>`;
+            
+            for(let cor in tabelaPrecos) {
+                for(let esp in tabelaPrecos[cor]) {
+                    let p = tabelaPrecos[cor][esp];
+                    html += `<tr>
+                        <td><strong style="color:var(--primary);">${cor}</strong></td>
+                        <td>${esp}</td>
+                        <td class="matrix-table"><input type="number" value="${p['Bronze']}" id="m_${cor}_${esp}_Bronze"></td>
+                        <td class="matrix-table"><input type="number" value="${p['Prata']}" id="m_${cor}_${esp}_Prata"></td>
+                        <td class="matrix-table"><input type="number" value="${p['Ouro']}" id="m_${cor}_${esp}_Ouro"></td>
+                        <td class="matrix-table"><input type="number" value="${p['Premium']}" id="m_${cor}_${esp}_Premium"></td>
+                        <td><button class="btn-small" style="background: rgba(239,68,68,0.2); border:1px solid #ef4444; color:#fca5a5;" onclick="apagarMaterialTabela('${cor}', '${esp}')">🗑️ Apagar</button></td>
+                    </tr>`;
                 }
-                html += `</tbody></table></div></div>`;
-                container.innerHTML += html;
             }
-        }
-
-        function atualizarMemoriaConfig(cor, esp, nivel, valor) {
-            if (!tabelaPrecos[cor]) tabelaPrecos[cor] = {};
-            if (!tabelaPrecos[cor][esp]) tabelaPrecos[cor][esp] = {};
-            tabelaPrecos[cor][esp][nivel] = parseFloat(valor) || 0;
+            html += `</tbody></table></div>`;
+            container.innerHTML = html;
         }
 
         function salvarTabelaPrecosCompleta() {
-            db.collection("config").doc("matrizM2").set(tabelaPrecos)
-            .then(() => { showToast('✅ Tabela de Preços gravada com sucesso na Nuvem!', 'success'); })
-            .catch((err) => { showToast('❌ Erro ao salvar na nuvem.', 'error'); });
+            for(let cor in tabelaPrecos) {
+                for(let esp in tabelaPrecos[cor]) {
+                    ['Bronze', 'Prata', 'Ouro', 'Premium'].forEach(nivel => {
+                        let input = document.getElementById(`m_${cor}_${esp}_${nivel}`);
+                        if(input) {
+                            tabelaPrecos[cor][esp][nivel] = parseFloat(input.value) || 0;
+                        }
+                    });
+                }
+            }
+            db.collection("config").doc("matrizM2").set(tabelaPrecos).then(() => {
+                showToast('Tabela de Preços salva na nuvem com sucesso!', 'success');
+            }).catch(err => {
+                showToast('Erro ao salvar tabela.', 'error');
+            });
         }
 
         function renderizarFormCustos() {
             const container = document.getElementById('matrix-custo-container');
             if(!container) return;
-            container.innerHTML = '';
-            for (let cor in tabelaCustos) {
-                let html = `
-                    <div class="form-panel">
-                        <h3 style="color: #fff;">Matriz de Custo m² - <span style="color:var(--primary);">${cor}</span></h3>
-                        <div class="table-container">
-                            <table class="matrix-table">
-                                <thead>
-                                    <tr>
-                                        <th>Espessura / Modelo</th>
-                                        <th>Custo m² (R$)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>`;
-                for (let esp in tabelaCustos[cor]) {
-                    html += `
-                        <tr>
-                            <td><strong style="color:#fff;">${esp === '8 mm Box Padrao' ? 'Box Padrão 8 mm' : esp}</strong></td>
-                            <td><input type="number" value="${tabelaCustos[cor][esp] || 0}" onchange="atualizarMemoriaCusto('${cor}', '${esp}', this.value)"></td>
-                        </tr>`;
+            let html = `<div class="table-container"><table><thead><tr><th>Cor</th><th>Material / Espessura</th><th>Preço de Custo m² (R$)</th></tr></thead><tbody>`;
+            
+            for(let cor in tabelaCustos) {
+                for(let esp in tabelaCustos[cor]) {
+                    let custoVal = tabelaCustos[cor][esp];
+                    html += `<tr>
+                        <td><strong style="color:var(--primary);">${cor}</strong></td>
+                        <td>${esp}</td>
+                        <td class="matrix-table"><input type="number" value="${custoVal}" id="c_${cor}_${esp}"></td>
+                    </tr>`;
                 }
-                html += `</tbody></table></div></div>`;
-                container.innerHTML += html;
             }
-        }
-
-        function atualizarMemoriaCusto(cor, esp, valor) {
-            if (!tabelaCustos[cor]) tabelaCustos[cor] = {};
-            tabelaCustos[cor][esp] = parseFloat(valor) || 0;
+            html += `</tbody></table></div>`;
+            container.innerHTML = html;
         }
 
         function salvarTabelaCustosCompleta() {
-            db.collection("config").doc("matrizCustosM2").set(tabelaCustos)
-            .then(() => { showToast('✅ Tabela de Custos m² gravada com sucesso na Nuvem!', 'success'); })
-            .catch((err) => { showToast('❌ Erro ao salvar custos na nuvem.', 'error'); });
-        }
-
-        function renderizarEstoqueCusto() {
-            const tbody = document.getElementById('table-estoque-custo-body');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            if(dbEstoque.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Nenhum produto cadastrado.</td></tr>`;
-                return;
+            for(let cor in tabelaCustos) {
+                for(let esp in tabelaCustos[cor]) {
+                    let input = document.getElementById(`c_${cor}_${esp}`);
+                    if(input) {
+                        tabelaCustos[cor][esp] = parseFloat(input.value) || 0;
+                    }
+                }
             }
-            dbEstoque.forEach(item => {
-                let precoCusto = item.custo !== undefined ? item.custo : 0;
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong style="color:#fff;">${item.nome}</strong></td>
-                        <td>${item.categoria}</td>
-                        <td>${item.marca}</td>
-                        <td>${item.qtd} un</td>
-                        <td><input type="number" style="width:120px;" step="0.01" value="${precoCusto}" onchange="atualizarCustoEstoqueItem('${item.id}', this.value)"></td>
-                        <td><button class="btn-small" style="background:var(--primary); color:#000;" onclick="showToast('Custo atualizado na memória!', 'success')">💾 Salvar</button></td>
-                    </tr>
-                `;
-            });
-        }
-
-        function atualizarCustoEstoqueItem(idEstoque, valorCusto) {
-            const val = parseFloat(valorCusto) || 0;
-            db.collection("estoque").doc(idEstoque).update({ custo: val }).then(() => {
-                showToast('Preço de custo do item atualizado!', 'success');
+            db.collection("config").doc("matrizCustosM2").set(tabelaCustos).then(() => {
+                showToast('Tabela de Custos m² salva na nuvem com sucesso!', 'success');
+            }).catch(err => {
+                showToast('Erro ao salvar custos.', 'error');
             });
         }
 
@@ -2440,179 +2465,82 @@
             const container = document.getElementById('categorias-estoque-container');
             if(!container) return;
             container.innerHTML = '';
-            const categorias = ['ferragens', 'aluminios', 'selantes', 'puxadores', 'kit box', 'kit pia'];
             
-            categorias.forEach(cat => {
-                const itensFiltrados = dbEstoque.filter(i => i.categoria === cat);
-                let html = `
-                    <div class="category-header">📦 <span>${cat.toUpperCase()}</span></div>
+            let categorias = {};
+            dbEstoque.forEach(item => {
+                let cat = item.categoria || 'geral';
+                if(!categorias[cat]) categorias[cat] = [];
+                categorias[cat].push(item);
+            });
+
+            for(let cat in categorias) {
+                let itensHtml = '';
+                categorias[cat].forEach(item => {
+                    itensHtml += `<tr>
+                        <td><strong style="color:#fff;">${item.nome}</strong></td>
+                        <td>${item.marca}</td>
+                        <td>${item.qtd}</td>
+                        <td style="color: var(--primary);">R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
+                        <td>
+                            <button class="btn-small" style="background: rgba(239,68,68,0.2); border:1px solid #ef4444; color: #fca5a5;" onclick="apagarEstoque('${item.id}')">🗑️ Apagar</button>
+                        </td>
+                    </tr>`;
+                });
+
+                container.innerHTML += `
+                    <h3 class="category-header" style="text-transform: capitalize;">📦 Categoria: ${cat}</h3>
                     <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Item</th>
+                                    <th>Descrição</th>
                                     <th>Marca</th>
-                                    <th>Estoque Disponível</th>
-                                    <th>Preço Un. Venda</th>
-                                    <th>Status</th>
+                                    <th>Qtd</th>
+                                    <th>Preço Venda</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody>`;
-                if(itensFiltrados.length === 0) {
-                    html += `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Nenhum produto cadastrado.</td></tr>`;
-                } else {
-                    itensFiltrados.forEach(item => {
-                        let statusBadge = '<span class="badge badge-success">Disponível</span>';
-                        if (item.qtd <= 0) statusBadge = '<span class="badge badge-danger">Esgotado</span>';
-                        else if (item.qtd <= 5) statusBadge = '<span class="badge badge-warning">Mínimo</span>';
+                            <tbody>${itensHtml}</tbody>
+                        </table>
+                    </div>
+                `;
+            }
+        }
 
-                        html += `<tr>
-                            <td><strong style="color:#fff;">${item.nome}</strong></td>
-                            <td>${item.marca}</td>
-                            <td><strong style="color:var(--primary); font-size:15px;">${item.qtd} un</strong></td>
-                            <td>R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
-                            <td>${statusBadge}</td>
-                        </tr>`;
-                    });
-                }
-                html += `</tbody></table></div>`;
-                container.innerHTML += html;
+        function renderizarEstoqueCusto() {
+            const tbody = document.getElementById('table-estoque-custo-body');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            dbEstoque.forEach(item => {
+                tbody.innerHTML += `<tr>
+                    <td><strong>${item.nome}</strong></td>
+                    <td>${item.categoria}</td>
+                    <td>${item.marca}</td>
+                    <td>${item.qtd}</td>
+                    <td class="matrix-table"><input type="number" step="0.01" value="${item.custo || 0}" id="custo_est_${item.id}"></td>
+                    <td><button class="btn-small" style="background: var(--primary); color:#000;" onclick="salvarCustoEstoque('${item.id}')">💾 Salvar Custo</button></td>
+                </tr>`;
             });
         }
 
-        // ==========================================
-        // CORREÇÃO: REGISTRAR ORÇAMENTO COMPLETO
-        // ==========================================
-        function registrarOrcamento() {
-            const idCliente = document.getElementById('orc-cliente-selected-id').value;
-            const nomeCliente = document.getElementById('orc-cliente-selected-nome').value;
-            const nivelCliente = document.getElementById('orc-cliente-selected-nivel').value;
-            const telCliente = document.getElementById('orc-cliente-selected-tel').value;
-            const formaPgto = document.getElementById('orc-forma-pgto').value;
-            
-            if(!nomeCliente) return showToast('Busque e selecione um cliente da lista!', 'warning');
-            if(linhasMedidas.length === 0) return showToast('Adicione ao menos uma medida!', 'warning');
-
-            let areaTotal = 0; let totalVidros = 0; let totalInsumos = 0;
-            let custoTotalVidros = 0; let custoTotalInsumos = 0;
-
-            const listaMedidasSalvar = linhasMedidas.map(m => {
-                const area = ((m.altura * m.largura) / 1000000) * m.qtd;
-                const precoM2 = tabelaPrecos[m.cor]?.[m.espessura]?.[nivelCliente] || 100;
-                const subtotal = area * precoM2;
-                
-                const custoM2 = tabelaCustos[m.cor]?.[m.espessura] || 50;
-                const subtotalCusto = area * custoM2;
-
-                areaTotal += area; 
-                totalVidros += subtotal;
-                custoTotalVidros += subtotalCusto;
-
-                return { 
-                    cor: m.cor, 
-                    espessura: m.espessura, 
-                    altura: m.altura, 
-                    largura: m.largura, 
-                    qtd: m.qtd, 
-                    area: area, 
-                    precoM2: precoM2, 
-                    subtotal: subtotal,
-                    custoM2: custoM2,
-                    subtotalCusto: subtotalCusto
-                };
-            });
-
-            const listaAcessoriosSalvar = [];
-            linhasAcessorios.forEach(a => {
-                if(a.idEstoque && a.nome) {
-                    const subtotal = a.preco * a.qtd;
-                    totalInsumos += subtotal;
-
-                    const itemEst = dbEstoque.find(e => e.id === a.idEstoque);
-                    const custoUnit = itemEst && itemEst.custo !== undefined ? itemEst.custo : 0;
-                    const subtotalCusto = custoUnit * a.qtd;
-                    custoTotalInsumos += subtotalCusto;
-
-                    listaAcessoriosSalvar.push({ 
-                        idEstoque: a.idEstoque, 
-                        nome: a.nome, 
-                        preco: a.preco, 
-                        qtd: a.qtd, 
-                        subtotal: subtotal,
-                        custoUnit: custoUnit,
-                        subtotalCusto: subtotalCusto
-                    });
-                }
-            });
-
-            const totalGeral = totalVidros + totalInsumos;
-            const custoGeralTotal = custoTotalVidros + custoTotalInsumos;
-
-            let valorPagoHoje = totalGeral;
-            let valorPendente = 0;
-            let statusPedido = 'Pago';
-
-            if (formaPgto === 'sinal') {
-                valorPagoHoje = parseFloat(document.getElementById('orc-valor-pago').value) || 0;
-                valorPendente = totalGeral - valorPagoHoje;
-                statusPedido = 'Parcial / Débito';
-            } else if (formaPgto === 'debito' || formaPgto === 'credito' || formaPgto === 'credito parcelado') {
-                statusPedido = 'Aguardando';
-                valorPagoHoje = 0;
-                valorPendente = totalGeral;
-            }
-
-            const novoOrcamento = {
-                id: Math.floor(Math.random() * 1000000).toString(),
-                clienteId: idCliente,
-                cliente: nomeCliente,
-                telefone: telCliente,
-                formaPgto: formaPgto,
-                medidas: listaMedidasSalvar,
-                acessorios: listaAcessoriosSalvar,
-                areaTotal: areaTotal,
-                totalVidros: totalVidros,
-                totalInsumos: totalInsumos,
-                total: totalGeral,
-                custoTotal: custoGeralTotal,
-                valorPagoHoje: valorPagoHoje,
-                valorPendente: valorPendente,
-                status: statusPedido,
-                dataCriacao: Date.now()
-            };
-
-            db.collection("orcamentos").add(novoOrcamento).then((docRef) => {
-                // Registrar Débito
-                if(valorPendente > 0) {
-                    db.collection("debitos").add({
-                        clienteId: idCliente,
-                        cliente: nomeCliente,
-                        orcamentoDocId: docRef.id,
-                        valorPendente: valorPendente,
-                        dataCriacao: Date.now(),
-                        materiaisResumo: `Pedido #${novoOrcamento.id} - ${listaMedidasSalvar.length} Vidros / ${listaAcessoriosSalvar.length} Insumos`
-                    });
-                }
-                
-                // Dar baixa no estoque
-                listaAcessoriosSalvar.forEach(a => {
-                    const itemRef = db.collection("estoque").doc(a.idEstoque);
-                    itemRef.get().then(snap => {
-                        if(snap.exists) {
-                            const currentQtd = snap.data().qtd || 0;
-                            itemRef.update({ qtd: Math.max(0, currentQtd - a.qtd) });
-                        }
-                    });
-                });
-
-                showToast('Orçamento oficial salvo com sucesso!', 'success');
-                limparBuscasOrcamento();
-                switchTab('historico');
+        function salvarCustoEstoque(id) {
+            const input = document.getElementById(`custo_est_${id}`);
+            if(!input) return;
+            const novoCusto = parseFloat(input.value) || 0;
+            db.collection("estoque").doc(id).update({ custo: novoCusto }).then(() => {
+                showToast("Custo do item atualizado com sucesso!", "success");
             }).catch(err => {
-                showToast('Erro ao salvar orçamento.', 'error');
+                showToast("Erro ao atualizar custo.", "error");
             });
+        }
+
+        function apagarEstoque(id) {
+            if(confirm("Deseja apagar este item do estoque?")) {
+                db.collection("estoque").doc(id).delete().then(() => {
+                    showToast("Item removido do estoque!", "success");
+                });
+            }
         }
     </script>
 </body>
 </html>
-        
