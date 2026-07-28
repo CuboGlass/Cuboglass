@@ -1175,6 +1175,7 @@
         }
 
         function gerarPdfDiretoria() {
+                function gerarPdfDiretoria() {
             if(!window.jspdf) return alert('Biblioteca PDF carregando...');
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'mm', 'a4');
@@ -1194,7 +1195,7 @@
             
             doc.setTextColor(200, 200, 200);
             doc.setFontSize(9);
-            doc.text("Demonstração do Resultado do Exercício (DRE Gerencial)", 14, 22);
+            doc.text("Relatório Financeiro da Diretoria (DRE Analítico)", 14, 22);
 
             let vFat = 0, vCmv = 0, vSai = 0;
             const dataLocalStr = getLocalDateStr();
@@ -1205,6 +1206,87 @@
                 if(p === 'mes_atual') return d.startsWith(mesAtual);
                 return true;
             };
+
+            // Filtra as vendas e saídas do período selecionado
+            const vendasFiltradas = estado.vendas.filter(v => filt(v.data));
+            vendasFiltradas.forEach(v => { vFat += v.total; vCmv += v.custo; });
+            estado.saidas.filter(s => filt(s.data)).forEach(s => { vSai += s.valor; });
+            
+            const lucroBruto = vFat - vCmv;
+            const vLucro = lucroBruto - vSai;
+
+            doc.setTextColor(50, 50, 50);
+            doc.setFontSize(10);
+            const dataEmissao = new Date().toLocaleString('pt-BR');
+            doc.text(`Data de Emissão: ${dataEmissao}`, 14, 40);
+            doc.text(`Período do Relatório DRE: ${p.toUpperCase()}`, 14, 46);
+
+            // ================= TABELA 1: RESUMO DRE =================
+            const bodyDre = [
+                ['(+) Receita Bruta de Vendas (Faturamento)', formataBRL(vFat)],
+                ['(-) Custo das Mercadorias Vendidas (CMV)', formataBRL(vCmv)],
+                ['(=) Lucro Bruto Operacional', formataBRL(lucroBruto)],
+                ['(-) Despesas Operacionais e Contas (Saídas)', formataBRL(vSai)],
+                ['(=) Lucro Líquido Real Consolidado', formataBRL(vLucro)]
+            ];
+
+            doc.autoTable({
+                startY: 52,
+                head: [['Indicador / Descrição Financeira', 'Consolidado (R$)']],
+                body: bodyDre,
+                headStyles: { fillColor: [15, 15, 20], textColor: [255, 183, 3], fontStyle: 'bold' },
+                alternateRowStyles: { fillColor: [245, 245, 247] },
+                styles: { fontSize: 10, cellPadding: 6 },
+                columnStyles: {
+                    1: { halign: 'right', fontStyle: 'bold' }
+                }
+            });
+
+            // ================= TABELA 2: DETALHAMENTO DE VENDAS =================
+            const startYDetalhamento = doc.lastAutoTable.finalY + 15;
+            
+            doc.setTextColor(50, 50, 50);
+            doc.setFontSize(11);
+            doc.setFont('Inter', 'bold');
+            doc.text("Detalhamento de Vendas e Margens (Por Pedido)", 14, startYDetalhamento);
+
+            const bodyVendas = vendasFiltradas.map(v => [
+                v.data.split('-').reverse().join('/'),
+                v.cliente,
+                v.desc + (v.detalhes ? `\n(${v.detalhes})` : ''),
+                formataBRL(v.total),
+                formataBRL(v.custo),
+                formataBRL(v.lucro)
+            ]);
+
+            doc.autoTable({
+                startY: startYDetalhamento + 4,
+                head: [['Data', 'Cliente', 'Item Específico', 'Valor Venda', 'Custo (CMV)', 'Lucro Item']],
+                body: bodyVendas,
+                headStyles: { fillColor: [50, 50, 55], textColor: [255, 255, 255], fontStyle: 'bold' },
+                alternateRowStyles: { fillColor: [245, 245, 247] },
+                styles: { fontSize: 8, cellPadding: 4, valign: 'middle' },
+                columnStyles: {
+                    3: { halign: 'right', fontStyle: 'bold', textColor: [0, 100, 0] },    // Venda (Verde escuro)
+                    4: { halign: 'right', fontStyle: 'bold', textColor: [180, 0, 0] },    // Custo (Vermelho escuro)
+                    5: { halign: 'right', fontStyle: 'bold', textColor: [218, 115, 0] }   // Lucro (Amarelo escuro/Laranja)
+                }
+            });
+
+            // Rodapé
+            const pageCount = doc.internal.getNumberOfPages();
+            doc.setFont('Inter', 'normal');
+            doc.setTextColor(150, 150, 150);
+            doc.setFontSize(8);
+            for(let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.text("Cubo Glass Distribuidora — Documento Confidencial da Diretoria", 14, 285);
+                doc.text(`Página ${i} de ${pageCount}`, 185, 285);
+            }
+
+            doc.save(`dre_analitico_${p}.pdf`);
+        }
+
 
             estado.vendas.filter(v => filt(v.data)).forEach(v => { vFat += v.total; vCmv += v.custo; });
             estado.saidas.filter(s => filt(s.data)).forEach(s => { vSai += s.valor; });
