@@ -559,7 +559,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-    <!-- Script Principal com Firebase Integrado -->
+    <!-- Script Principal com Firebase e PDF Atualizado Integrado -->
     <script>
         // ================= COLE SUAS CHAVES DO FIREBASE ABAIXO =================
         const firebaseConfig = {
@@ -581,7 +581,6 @@
 };
         // =======================================================================
 
-        // Inicializar Firebase (Se as chaves estiverem configuradas)
         let db = null;
         let usarFirebase = false;
 
@@ -633,7 +632,6 @@
             }
         }
 
-        // Sincronização com Firebase Firestore
         async function salvarBD() {
             if (usarFirebase && db) {
                 try {
@@ -1102,41 +1100,102 @@
             pLucro.className = vLucro < 0 ? 'fs-4 fw-black text-danger text-truncate mb-0' : 'fs-4 fw-black text-amberMain text-truncate mb-0';
         }
 
+        // ================= FUNÇÃO DE PDF MELHORADA =================
         function gerarPdfVendas() {
             if(!window.jspdf) return alert('Biblioteca PDF carregando...');
-            const doc = new window.jspdf.jsPDF();
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            
             const dataFiltro = document.getElementById('filtro-data-venda').value;
             const vends = estado.vendas.filter(v => dataFiltro ? v.data === dataFiltro : true);
             
-            doc.setFontSize(14);
-            doc.text("Cubo Glass - Fechamento de Vendas", 14, 15);
-            doc.setFontSize(9);
-            doc.text(`Filtro: ${dataFiltro ? dataFiltro.split('-').reverse().join('/') : 'Geral'}`, 14, 21);
+            // Cabeçalho institucional (Cores: Preto e Amarelo / Dourado)
+            doc.setFillColor(15, 15, 20);
+            doc.rect(0, 0, 210, 30, 'F');
+            doc.setFillColor(255, 183, 3);
+            doc.rect(0, 30, 210, 2, 'F');
 
-            let fat = 0;
+            doc.setTextColor(255, 183, 3);
+            doc.setFont('Inter', 'bold');
+            doc.setFontSize(16);
+            doc.text("CUBO GLASS DISTRIBUIDORA", 14, 15);
+            
+            doc.setTextColor(200, 200, 200);
+            doc.setFontSize(9);
+            doc.text("Relatório Analítico de Vendas e Pedidos Diários", 14, 22);
+
+            // Informações de Período e Emissão
+            doc.setTextColor(50, 50, 50);
+            doc.setFontSize(10);
+            const dataEmissao = new Date().toLocaleString('pt-BR');
+            doc.text(`Data de Emissão: ${dataEmissao}`, 14, 40);
+            doc.text(`Filtro Aplicado: ${dataFiltro ? dataFiltro.split('-').reverse().join('/') : 'Geral (Todo o Histórico)'}`, 14, 46);
+
+            let fatGeral = 0;
             const body = vends.map(v => {
-                fat += v.total;
-                return [v.data.split('-').reverse().join('/'), v.cliente, v.desc, v.pagamento, formataBRL(v.total)];
+                fatGeral += v.total;
+                return [
+                    v.data.split('-').reverse().join('/'), 
+                    v.cliente, 
+                    v.desc + (v.detalhes ? ` (${v.detalhes})` : ''), 
+                    v.pagamento.toUpperCase(), 
+                    formataBRL(v.total)
+                ];
             });
 
             doc.autoTable({
-                startY: 26, 
-                head: [['Data', 'Cliente', 'Item', 'Pgto', 'Total']], 
+                startY: 52,
+                head: [['Data', 'Cliente', 'Descrição do Item / Projeto', 'Pagamento', 'Valor Total']],
                 body: body,
-                headStyles: { fillColor: [255, 183, 3], textColor: [0,0,0] },
-                styles: { fontSize: 8 }
+                headStyles: { fillColor: [15, 15, 20], textColor: [255, 183, 3], fontStyle: 'bold' },
+                alternateRowStyles: { fillColor: [245, 245, 247] },
+                styles: { fontSize: 9, cellPadding: 5 },
+                columnStyles: {
+                    4: { halign: 'right', fontStyle: 'bold' }
+                }
             });
-            doc.text(`Total Geral: ${formataBRL(fat)}`, 14, doc.lastAutoTable.finalY + 8);
-            doc.save(`vendas_${dataFiltro || 'geral'}.pdf`);
+
+            // Caixa de Resumo Final
+            const finalY = doc.lastAutoTable.finalY + 10;
+            doc.setFillColor(240, 240, 240);
+            doc.roundedRect(14, finalY, 182, 16, 2, 2, 'F');
+            doc.setTextColor(0, 0, 0);
+            doc.setFont('Inter', 'bold');
+            doc.setFontSize(11);
+            doc.text(`VALOR TOTAL FATURADO NO PERÍODO:`, 18, finalY + 11);
+            doc.setTextColor(218, 115, 0);
+            doc.text(`${formataBRL(fatGeral)}`, 140, finalY + 11);
+
+            // Rodapé
+            doc.setTextColor(150, 150, 150);
+            doc.setFontSize(8);
+            doc.text("Cubo Glass Distribuidora — Sistema Pro V4", 14, 285);
+
+            doc.save(`relatorio_vendas_${dataFiltro || 'geral'}.pdf`);
         }
 
         function gerarPdfDiretoria() {
             if(!window.jspdf) return alert('Biblioteca PDF carregando...');
-            const doc = new window.jspdf.jsPDF();
-            const p = document.getElementById('dir-periodo').value;
-            doc.setFontSize(14);
-            doc.text("DRE Gerencial - Cubo Glass", 14, 15);
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
             
+            const p = document.getElementById('dir-periodo').value;
+            
+            // Cabeçalho institucional (DRE)
+            doc.setFillColor(15, 15, 20);
+            doc.rect(0, 0, 210, 30, 'F');
+            doc.setFillColor(255, 183, 3);
+            doc.rect(0, 30, 210, 2, 'F');
+
+            doc.setTextColor(255, 183, 3);
+            doc.setFont('Inter', 'bold');
+            doc.setFontSize(16);
+            doc.text("CUBO GLASS DISTRIBUIDORA", 14, 15);
+            
+            doc.setTextColor(200, 200, 200);
+            doc.setFontSize(9);
+            doc.text("Demonstração do Resultado do Exercício (DRE Gerencial)", 14, 22);
+
             let vFat = 0, vCmv = 0, vSai = 0;
             const dataLocalStr = getLocalDateStr();
             const mesAtual = dataLocalStr.substring(0,7);
@@ -1149,26 +1208,45 @@
 
             estado.vendas.filter(v => filt(v.data)).forEach(v => { vFat += v.total; vCmv += v.custo; });
             estado.saidas.filter(s => filt(s.data)).forEach(s => { vSai += s.valor; });
-            const vLucro = vFat - vCmv - vSai;
+            const lucroBruto = vFat - vCmv;
+            const vLucro = lucroBruto - vSai;
+
+            doc.setTextColor(50, 50, 50);
+            doc.setFontSize(10);
+            const dataEmissao = new Date().toLocaleString('pt-BR');
+            doc.text(`Data de Emissão: ${dataEmissao}`, 14, 40);
+            doc.text(`Período do Relatório DRE: ${p.toUpperCase()}`, 14, 46);
 
             const body = [
-                ['(+) Receita Bruta', formataBRL(vFat)],
-                ['(-) CMV', formataBRL(vCmv)],
-                ['(=) Lucro Bruto', formataBRL(vFat - vCmv)],
-                ['(-) Despesas', formataBRL(vSai)],
-                ['(=) Lucro Líquido', formataBRL(vLucro)]
+                ['(+) Receita Bruta de Vendas (Faturamento)', formataBRL(vFat)],
+                ['(-) Custo das Mercadorias Vendidas (CMV)', formataBRL(vCmv)],
+                ['(=) Lucro Bruto Operacional', formataBRL(lucroBruto)],
+                ['(-) Despesas Operacionais e Contas (Saídas)', formataBRL(vSai)],
+                ['(=) Lucro Líquido Real Consolidado', formataBRL(vLucro)]
             ];
 
-            doc.autoTable({ startY: 25, body: body, theme: 'grid', styles: { fontSize: 9 } });
-            doc.save(`dre_${p}.pdf`);
+            doc.autoTable({
+                startY: 52,
+                head: [['Indicador / Descrição Financeira', 'Consolidado (R$)']],
+                body: body,
+                headStyles: { fillColor: [15, 15, 20], textColor: [255, 183, 3], fontStyle: 'bold' },
+                alternateRowStyles: { fillColor: [245, 245, 247] },
+                styles: { fontSize: 10, cellPadding: 6 },
+                columnStyles: {
+                    1: { halign: 'right', fontStyle: 'bold' }
+                }
+            });
+
+            // Rodapé
+            doc.setTextColor(150, 150, 150);
+            doc.setFontSize(8);
+            doc.text("Cubo Glass Distribuidora — Documento Confidencial da Diretoria", 14, 285);
+
+            doc.save(`dre_gerencial_${p}.pdf`);
         }
 
         window.onload = initApp;
     </script>
 </body>
 </html>
-                       
-                        
-
-        
-            
+                     
