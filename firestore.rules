@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    /*
+      ATENÇÃO:
+      Estas regras são apenas um ponto de partida para testes.
+      Antes de colocar o sistema em produção, ative autenticação
+      e troque por regras baseadas em request.auth.
+    */
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
