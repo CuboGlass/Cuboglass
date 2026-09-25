@@ -12,12 +12,21 @@ import {
    A segurança deve ser feita pelas Firestore Security Rules.
    ========================================================= */
 const firebaseConfig = {
-  apiKey: "COLE_SUA_API_KEY_AQUI", // <<< COLOQUE SUA API KEY NESTA LINHA
-  authDomain: "SEU-PROJETO.firebaseapp.com",
-  projectId: "SEU-PROJETO",
-  storageBucket: "SEU-PROJETO.firebasestorage.app",
-  messagingSenderId: "SEU_MESSAGING_SENDER_ID",
-  appId: "SEU_APP_ID"
+
+  apiKey: "AIzaSyD-bH7MY-VFHJYhuYGa18UKu2EslksAjgM",
+
+  authDomain: "cubo-glass.firebaseapp.com",
+
+  projectId: "cubo-glass",
+
+  storageBucket: "cubo-glass.firebasestorage.app",
+
+  messagingSenderId: "1010303888432",
+
+  appId: "1:1010303888432:web:4892849f840824542e91f5",
+
+  measurementId: "G-958FX0F2D5"
+
 };
 
 const app = initializeApp(firebaseConfig);
