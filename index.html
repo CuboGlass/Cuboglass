@@ -1,107 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cubo Glass — Controle de Margem</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <aside class="sidebar">
-    <div class="brand"><span>CUBO</span><small>GLASS</small></div>
-    <button class="nav active" data-view="dashboard">Dashboard</button>
-    <button class="nav" data-view="clientes">Clientes</button>
-    <button class="nav" data-view="produtos">Produtos</button>
-    <button class="nav" data-view="precos">Preços negociados</button>
-    <button class="nav" data-view="vendas">Vendas</button>
-    <button class="nav" data-view="simulador">Simulador</button>
-    <button class="nav" data-view="relatorios">Relatórios</button>
-    <div class="sidebar-bottom">
-      <label>Meta da carteira</label>
-      <input id="metaInput" type="number" step="0.01" value="42.24">
-      <span>%</span>
-      <p id="dbStatus">Conectando...</p>
-    </div>
-  </aside>
-
-  <main class="main">
-    <header class="topbar">
-      <div>
-        <h1 id="pageTitle">Dashboard</h1>
-        <p id="pageSubtitle">Visão consolidada da margem da carteira.</p>
-      </div>
-      <button id="refreshBtn" class="btn secondary">Atualizar</button>
-    </header>
-
-    <section id="dashboard" class="view active">
-      <div class="cards">
-        <div class="card"><span>Faturamento</span><strong id="kpiFaturamento">R$ 0,00</strong></div>
-        <div class="card"><span>Custo</span><strong id="kpiCusto">R$ 0,00</strong></div>
-        <div class="card"><span>Lucro bruto</span><strong id="kpiLucro">R$ 0,00</strong></div>
-        <div class="card highlight"><span>Margem da carteira</span><strong id="kpiMargem">0,00%</strong><small id="kpiMeta">Meta: 42,24%</small></div>
-        <div class="card"><span>m² / unidades</span><strong id="kpiQtd">0,00</strong></div>
-        <div class="card"><span>Clientes ativos</span><strong id="kpiClientes">0</strong></div>
-      </div>
-      <div class="grid-2">
-        <div class="panel"><div class="panel-title">Margem por cliente</div><div id="clientChart" class="bars"></div></div>
-        <div class="panel"><div class="panel-title">Últimas vendas</div><div id="recentSales"></div></div>
-      </div>
-    </section>
-
-    <section id="clientes" class="view">
-      <div class="toolbar"><input id="clientSearch" class="search" placeholder="Filtrar clientes..."><button id="addClientBtn" class="btn primary">+ Cliente</button></div>
-      <div class="panel table-wrap"><table><thead><tr><th>Cliente</th><th>CNPJ/CPF</th><th>Tabela</th><th>Faturamento</th><th>Margem</th><th>Ações</th></tr></thead><tbody id="clientsTable"></tbody></table></div>
-    </section>
-
-    <section id="produtos" class="view">
-      <div class="toolbar"><input id="productSearch" class="search" placeholder="Filtrar produtos..."><button id="addProductBtn" class="btn primary">+ Produto</button></div>
-      <div class="panel table-wrap"><table><thead><tr><th>Produto</th><th>Categoria</th><th>Unidade</th><th>Custo</th><th>Ações</th></tr></thead><tbody id="productsTable"></tbody></table></div>
-    </section>
-
-    <section id="precos" class="view">
-      <div class="toolbar"><input id="priceSearch" class="search" placeholder="Filtrar cliente ou produto..."><button id="addPriceBtn" class="btn primary">+ Preço negociado</button></div>
-      <div class="panel table-wrap"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Custo</th><th>Preço</th><th>Margem</th><th>Ações</th></tr></thead><tbody id="pricesTable"></tbody></table></div>
-    </section>
-
-    <section id="vendas" class="view">
-      <div class="toolbar"><input id="saleSearch" class="search" placeholder="Filtrar cliente ou produto..."><button id="addSaleBtn" class="btn primary">+ Nova venda</button></div>
-      <div class="panel table-wrap"><table><thead><tr><th>Data</th><th>Cliente</th><th>Produto</th><th>Qtd.</th><th>Faturamento</th><th>Custo</th><th>Margem</th><th>Ações</th></tr></thead><tbody id="salesTable"></tbody></table></div>
-    </section>
-
-    <section id="simulador" class="view">
-      <div class="panel form-panel">
-        <h2>Simulador de negociação</h2>
-        <p>Teste um novo preço sem alterar a venda real.</p>
-        <div class="form-grid">
-          <label>Cliente<select id="simClient"></select></label>
-          <label>Produto<select id="simProduct"></select></label>
-          <label>Novo preço<input id="simPrice" type="number" step="0.01"></label>
-          <label>Quantidade estimada<input id="simQty" type="number" step="0.01" value="100"></label>
-        </div>
-        <div class="sim-result">
-          <div><span>Margem da negociação</span><strong id="simItemMargin">0,00%</strong></div>
-          <div><span>Margem atual da carteira</span><strong id="simCurrentMargin">0,00%</strong></div>
-          <div><span>Nova margem estimada</span><strong id="simNewMargin">0,00%</strong></div>
-          <div><span>Impacto</span><strong id="simImpact">0,00 p.p.</strong></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="relatorios" class="view">
-      <div class="panel">
-        <div class="toolbar"><input id="reportSearch" class="search" placeholder="Filtrar cliente..."><button id="exportCsvBtn" class="btn secondary">Exportar CSV</button></div>
-        <div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Faturamento</th><th>Custo</th><th>Lucro</th><th>Margem</th><th>Participação</th><th>Qtd.</th></tr></thead><tbody id="reportTable"></tbody></table></div>
-      </div>
-    </section>
-  </main>
-
-  <div id="modal" class="modal hidden">
-    <div class="modal-box">
-      <div class="modal-head"><h2 id="modalTitle">Cadastro</h2><button id="closeModal" class="icon">×</button></div>
-      <form id="modalForm"></form>
-    </div>
-  </div>
-
-  <script type="module" src="app.js"></script>
-</body>
-</html>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cubo Glass — Margem</title><link rel="stylesheet" href="style.css"></head><body>
+<header><div><b>CUBO <i>GLASS</i></b><small>Controle de carteira e margem</small></div><strong>Meta: <em id="target">42,24%</em></strong></header>
+<nav><button class="active" data-p="dash">Dashboard</button><button data-p="clients">Clientes</button><button data-p="products">Produtos</button><button data-p="tables">Tabelas</button><button data-p="sim">Simulador</button><button data-p="report">Relatório</button></nav>
+<main>
+<section id="dash" class="page active"><div class="title"><div><h1>Visão geral</h1><p>Margem projetada da carteira, sem lançamento de vendas.</p></div></div><div id="msg"></div><div class="cards"><article>Faturamento mensal<strong id="rev">R$ 0,00</strong></article><article>Custo estimado<strong id="cost">R$ 0,00</strong></article><article>Lucro bruto<strong id="profit">R$ 0,00</strong></article><article class="gold">Margem da carteira<strong id="mar">0,00%</strong></article><article>Distância da meta<strong id="gap">0,00 p.p.</strong></article><article>Clientes<strong id="ncli">0</strong></article></div><div class="grid"><div class="panel"><div class="head"><h2>Clientes e margens</h2><input id="ds" placeholder="Filtrar cliente"></div><table><thead><tr><th>Cliente</th><th>Tabela</th><th>Fat./mês</th><th>Custo</th><th>Margem</th></tr></thead><tbody id="dashRows"></tbody></table></div><div class="panel"><h2>Regra do cálculo</h2><p>O faturamento médio mensal de cada cliente é o peso dele na carteira.</p><p><b>Margem total</b> = (faturamento total − custo estimado total) ÷ faturamento total.</p><p>A média das margens dos clientes não é usada.</p></div></div></section>
+<section id="clients" class="page"><div class="title"><div><h1>Clientes</h1><p>Cadastre o cliente e escolha a tabela de valores.</p></div><button class="primary" onclick="clientModal()">+ Novo cliente</button></div><div class="toolbar"><input id="cs" placeholder="Pesquisar cliente / CPF / CNPJ"><select id="ct"><option value="">Todas as tabelas</option></select></div><div class="panel"><table><thead><tr><th>Cliente</th><th>CPF/CNPJ</th><th>Tabela</th><th>Fat. médio/mês</th><th>Margem</th><th>Ações</th></tr></thead><tbody id="clientRows"></tbody></table></div></section>
+<section id="products" class="page"><div class="title"><div><h1>Produtos</h1><p>Custos utilizados para formar as tabelas.</p></div><button class="primary" onclick="productModal()">+ Novo produto</button></div><div class="toolbar"><input id="ps" placeholder="Pesquisar produto"></div><div class="panel"><table><thead><tr><th>Produto</th><th>Categoria</th><th>Unidade</th><th>Custo</th><th>Ações</th></tr></thead><tbody id="productRows"></tbody></table></div></section>
+<section id="tables" class="page"><div class="title"><div><h1>Tabelas de preço</h1><p>Defina preços diferentes para cada grupo de clientes.</p></div><button class="primary" onclick="tableModal()">+ Nova tabela</button></div><div class="toolbar"><input id="ts" placeholder="Pesquisar tabela"></div><div id="tableRows"></div></section>
+<section id="sim" class="page"><div class="title"><div><h1>Simulador</h1><p>Veja o efeito de trocar um cliente de tabela antes de salvar.</p></div></div><div class="panel sim"><label>Cliente<select id="sc"></select></label><label>Nova tabela<select id="st"></select></label><div class="simcards"><article>Margem atual<strong id="sm0">0,00%</strong></article><article>Margem do cliente<strong id="smc">0,00%</strong></article><article class="gold">Nova margem da carteira<strong id="sm1">0,00%</strong></article><article>Impacto<strong id="smp">0,00 p.p.</strong></article></div><button class="primary" id="apply">Aplicar tabela ao cliente</button><p class="hint">Nada é alterado até clicar no botão.</p></div></section>
+<section id="report" class="page"><div class="title"><div><h1>Relatório</h1><p>Resumo projetado da carteira.</p></div><button onclick="csv()">Exportar CSV</button></div><div class="panel"><table><thead><tr><th>Cliente</th><th>Tabela</th><th>Faturamento</th><th>Custo</th><th>Lucro</th><th>Margem</th><th>Participação</th></tr></thead><tbody id="reportRows"></tbody></table></div></section>
+</main><div id="modal" class="modal"><div class="box"><button class="x" onclick="closeModal()">×</button><div id="form"></div></div></div><script type="module" src="app.js"></script></body></html>
